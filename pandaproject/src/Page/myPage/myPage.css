@@ -1,0 +1,35 @@
+h1 {
+  border-bottom: 3px solid rgba(0, 0, 0, 0.7);
+}
+
+.page_wrap {
+  display: flex;
+  justify-content: space-between; /* sideArea와 mainArea를 좌우로 배치 */
+  padding: 20px;
+  width: 70%;
+  margin-left: 15%;
+}
+
+/* 사이드바 영역 스타일 */
+.sideArea {
+  width: 15%; /* 사이드바의 너비 */
+  padding: 5px;
+  box-sizing: border-box; /* padding 값을 너비에 포함시키기 위해 */
+  height: 1000px;
+  margin-left: 70px;
+  border-right: 1px solid black;
+  cursor: pointer;
+}
+
+/* 메인 메뉴 영역 스타일 */
+.mainArea {
+  width: 75%; /* 메인 메뉴 공간의 너비 */
+  padding: 20 px; /* 내부 여백 */
+  margin-right: 70px;
+  margin-left: 20px;
+  box-sizing: border-box; /* padding 값을 너비에 포함시키기 위해 */
+  height: 1000px;
+}
+.selected {
+  background-color: #f0f0f0;
+}

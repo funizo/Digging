@@ -1,0 +1,15 @@
+.tabs_inline a{
+    margin-right: 20px;
+    color:  #222;
+  }
+.tabs{
+    max-width: 1280px;
+    padding: 0px 20px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+}
+.tabs_container{
+  margin: 0 auto;
+  max-width: 1280px;
+}

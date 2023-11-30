@@ -1,0 +1,36 @@
+.novel img {
+  max-width: 300px;
+  max-height: 500px;
+}
+
+.learning img {
+  max-width: 300px;
+  max-height: 500px;
+}
+
+.magazine img {
+  max-width: 300px;
+  max-height: 500px;
+}
+.TabBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .image-container {
+    display: flex;
+    flex: 0 0 calc(33% - 20px);
+    max-width: calc(33% - 20px);
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .image-container img {
+    width: 100%; /* 이미지를 컨테이너에 꽉 채우기 */
+    height: auto; /* 비율 유지 */
+    margin-bottom: 30px;
+  }
+}
