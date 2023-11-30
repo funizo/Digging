@@ -1,8 +1,7 @@
 import { SlMagnifier } from "react-icons/sl";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useState, useRef, useEffect } from "react";
-import { useNavigate,Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import "./toolbar.css";
 
 function ToolBar() {
@@ -40,7 +39,7 @@ function ToolBar() {
       <header>
         <div className="user-actions">
           <div className="join">
-            <Link to="/signup">회원가입</Link>
+            <a href="/signup">회원가입</a>
           </div>
 
           <div className="login">
@@ -48,8 +47,7 @@ function ToolBar() {
           </div>
 
           <div className="mypage">
-            <a href="/">
-              {/* PUBLIC_URL 환경 변수를사용하여 퍼블릭에 접근해서 불러오기 */}
+            <a href="/mypage">
               <img
                 src={`${process.env.PUBLIC_URL}/img/mypage.png`}
                 alt="마이페이지"
@@ -124,7 +122,7 @@ function ToolBar() {
           <div className="nav-logo">
             <img
               className="logo-img"
-              src={`${process.env.PUBLIC_URL}/img/logo2.png`}
+              src={`${process.env.PUBLIC_URL}/img/logo.png`}
               alt="로고"
             ></img>
             <div className="sitename">
