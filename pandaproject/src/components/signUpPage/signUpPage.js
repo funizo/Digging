@@ -4,13 +4,9 @@ import Post from "../post";
 import "./signUpPage.css";
 
 const SignUpPage = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [address, setAddress] = useState("");
-  const [subaddress, setSubaddress] = useState("");
   const [showAddress, setShowAddress] = useState(false);
 
   const handleAddressButtonClick = () => {
@@ -18,27 +14,49 @@ const SignUpPage = () => {
   };
   // Post 컴포넌트에서 선택한 주소를 처리
   const handlePostComplete = (data) => {
-    setAddress(data.address);
-    setShowAddress(false); // Post 컴포넌트를 숨김
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      address:data.address,
+    }));
+    setShowAddress(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
+    if (userData.password !== confirmPassword) {
       setError("비밀번호가 일치하지 않습니다.");
     } else {
-      console.log("가입 정보:", {
-        username,
-        email,
-        password,
-        address,
-        subaddress,
-      });
+      try {
+        const res = await fetch("http://localhost:8080/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
+        if (res.ok) {
+          console.log("서버전송완료");
+          window.location.href = '/';
+        } else {
+          console.log("서버전송실패")
+        } 
+      } catch(e) {
+        console.log("서버에 요청중 오류가 발생",e)
+      }
     }
   };
 
+  const [userData, setUserData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    address: "",
+    subaddress: "",
+  });
+
   
+
 
 
   return (
@@ -51,18 +69,18 @@ const SignUpPage = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <input
-              placeholder="  닉네임"
+              placeholder="  아이디"
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={userData.username}
+              onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, username: e.target.value }))}
             />
           </div>
           <div>
             <input
               placeholder="  이메일"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={userData.email}
+              onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, email: e.target.value }))}
             />
           </div>
           <div>
@@ -70,8 +88,8 @@ const SignUpPage = () => {
               placeholder="  주소"
               className="address"
               type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              value={userData.address}
+              onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, address: e.target.value }))}
               onClick={handleAddressButtonClick}
             />
             <div>
@@ -79,16 +97,16 @@ const SignUpPage = () => {
                 placeholder="  상세주소"
                 className="input-subaddress"
                 type="text"
-                value={subaddress}
-                onChange={(e) => setSubaddress(e.target.value)}
+                value={userData.subaddress}
+                onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, subaddress: e.target.value }))}
               />
             </div>
 
             {showAddress && (
               <Post
-                setcompany={{ address: address }}
+                setcompany={{ address: setUserData.address }}
                 onComplete={handlePostComplete}
-                subaddress={subaddress}
+                subaddress={setUserData.subaddress}
               />
             )}
           </div>
@@ -96,8 +114,8 @@ const SignUpPage = () => {
             <input
               placeholder="  비밀번호"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={userData.password}
+              onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, password: e.target.value }))}
             />
           </div>
           <div>

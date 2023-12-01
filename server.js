@@ -1,8 +1,12 @@
 const express = require('express')
+const bodyParser = require('body-parser');
 const app = express()
 const path = require('path')
-app.use(express.json())
 const cors = require('cors')
+const bcrypt = require('bcrypt');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json())
 app.use(express.json())
 app.use(cors())
 const { MongoClient } = require('mongodb')
@@ -42,6 +46,19 @@ app.get('/mypage' ,async (req, res) => {
 })
 
 
+app.post('/signup' ,async (req, res) => {
+  const userData = req.body;
+  console.log(userData);
+  
+  await db.collection('user').insertOne({
+    username:userData.username,
+    email:userData.email,
+    password:userData.password,
+    address:userData.address,
+    subaddress:userData.subaddress
+  });
+  res.sendFile(path.join(__dirname, 'pandaproject/build/index.html'));
+})
 
 
 
