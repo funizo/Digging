@@ -13,7 +13,7 @@ function UncontrolledExample() {
               className="d-block w-100"
               style={{ objectFit: "cover" }}
               img
-              src="http://tdinteriorsinc.com/wp-content/uploads/2013/03/landscape-7-800x400.jpg"
+              src="img/panda-slide-001.png"
               alt="First slide"
             />
           </Carousel.Item>
@@ -22,7 +22,7 @@ function UncontrolledExample() {
               className="d-block w-100"
               style={{ objectFit: "cover" }}
               img
-              src="http://tdinteriorsinc.com/wp-content/uploads/2013/03/landscape-7-800x400.jpg"
+              src="img/panda-slide-002.png"
               alt="Second slide"
             />
           </Carousel.Item>
@@ -30,7 +30,7 @@ function UncontrolledExample() {
             <img
               className="d-block w-100"
               style={{ objectFit: "cover" }}
-              src="http://tdinteriorsinc.com/wp-content/uploads/2013/03/landscape-7-800x400.jpg"
+              src="img/panda-slide-003.png"
               alt="Third slide"
             />
           </Carousel.Item>

@@ -122,12 +122,9 @@ function ToolBar() {
           <div className="nav-logo">
             <img
               className="logo-img"
-              src={`${process.env.PUBLIC_URL}/img/logo.png`}
+              src={`${process.env.PUBLIC_URL}img/logo-digging.png?${new Date().getTime()}`}
               alt="로고"
             ></img>
-            <div className="sitename">
-              <a href="/">책판다</a>
-            </div>
           </div>
         </a>
 
@@ -138,7 +135,7 @@ function ToolBar() {
             <a href="#home">공유해요</a>
           </div>
           <button className="searchbutton">
-            <SlMagnifier />
+            <SlMagnifier/>
           </button>
         </div>
       </div>
