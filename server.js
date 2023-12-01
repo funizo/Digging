@@ -18,7 +18,7 @@ new MongoClient(url).connect().then((client)=>{
   db = client.db('panda')
 }).catch((err)=>{
   console.log(err)
-})
+}) 
 
 
 
