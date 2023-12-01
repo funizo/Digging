@@ -4,6 +4,9 @@ import "../../App.css";
 import "./slide.css";
 
 function UncontrolledExample() {
+
+  
+
   return (
     <div className="box">
       <div className="carousel-container">
@@ -11,7 +14,7 @@ function UncontrolledExample() {
           <Carousel.Item>
             <img
               className="d-block w-100"
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", "border-radius":"15px" }}
               img
               src="img/panda-slide-001.png"
               alt="First slide"
@@ -20,7 +23,7 @@ function UncontrolledExample() {
           <Carousel.Item>
             <img
               className="d-block w-100"
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", "border-radius":"15px" }}
               img
               src="img/panda-slide-002.png"
               alt="Second slide"
@@ -29,7 +32,7 @@ function UncontrolledExample() {
           <Carousel.Item>
             <img
               className="d-block w-100"
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", "border-radius":"15px" }}
               src="img/panda-slide-003.png"
               alt="Third slide"
             />

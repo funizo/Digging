@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <Toolbar />
-      <Tabs/>
+      {/* <Tabs/> */}
       <Slide />
       <Content />
       <Footer />
