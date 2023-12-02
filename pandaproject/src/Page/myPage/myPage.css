@@ -2,12 +2,20 @@ h1 {
   border-bottom: 3px solid rgba(0, 0, 0, 0.7);
 }
 
+
 .page_wrap {
   display: flex;
+  flex-direction: column;
   justify-content: space-between; /* sideArea와 mainArea를 좌우로 배치 */
   padding: 20px;
-  width: 70%;
-  margin-left: 15%;
+  width: 1280px;
+  margin: auto;
+  
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
 }
 
 /* 사이드바 영역 스타일 */
@@ -16,7 +24,6 @@ h1 {
   padding: 5px;
   box-sizing: border-box; /* padding 값을 너비에 포함시키기 위해 */
   height: 1000px;
-  margin-left: 70px;
   border-right: 1px solid black;
   cursor: pointer;
 }
