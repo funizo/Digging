@@ -1,19 +1,32 @@
 import React, { useState } from "react";
 import "./loginPage.css";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 
-const LoginPage = ({ handleLogin }) => {
+
+const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (username === "user" && password === "password") {
-      handleLogin();
-    } else {
-      setError("아이디 또는 비밀번호가 틀렸습니다.");
+    try {
+      const result = await fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: username, pw: password }),
+      })
+
+      if (result) {
+        navigate('/')
+      }
+    } catch (e) {
+      console.error(e)
+      setError("아이디 또는 비밀번호가 틀렸습니다.")
     }
   };
 

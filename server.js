@@ -60,6 +60,21 @@ app.post('/signup' ,async (req, res) => {
   res.sendFile(path.join(__dirname, 'pandaproject/build/index.html'));
 })
 
+app.post('/login', async(req, res) => {
+  const { id, pw } = req.body;
+
+  const result = await db.collection('user').findOne({
+    username: id,
+    password: pw,
+  })
+
+  if (result) {
+    res.status(200).json('1')
+  } else {
+    res.status(404)
+  }
+})
+
 
 
 

@@ -34,39 +34,40 @@ function MyPage() {
   return (
     <div>
       
-      {data.title}
-      
       <Toolbar />
-      <h1>마이페이지</h1>
+      
       <div className="page_wrap">
-        <div className="sideArea">
-          <p
-            className={menu === 1 ? "selected" : ""}
-            onClick={() => {
-              setMenu(1);
-            }}
+        <h1>마이페이지</h1>
+        <div className="content">
+          <div className="sideArea">
+            <p
+              className={menu === 1 ? "selected" : ""}
+              onClick={() => {
+                setMenu(1);
+              }}
+              >
+              내정보
+            </p>
+            <p
+              className={menu === 2 ? "selected" : ""}
+              onClick={() => {
+                setMenu(2);
+              }}
             >
-            내정보
-          </p>
-          <p
-            className={menu === 2 ? "selected" : ""}
-            onClick={() => {
-              setMenu(2);
-            }}
-          >
-            찜 목록
-          </p>
-          <p
-            className={menu === 3 ? "selected" : ""}
-            onClick={() => {
-              setMenu(3);
-            }}
-          >
-            설정
-          </p>
-        </div>
-        <div className="mainArea">
-          <MenuContent menu={menu} data={data}/>
+              찜 목록
+            </p>
+            <p
+              className={menu === 3 ? "selected" : ""}
+              onClick={() => {
+                setMenu(3);
+              }}
+              >
+              설정
+            </p>
+          </div>
+          <div className="mainArea">
+            <MenuContent menu={menu} data={data}/>
+          </div>
         </div>
       </div>
       <Footer />

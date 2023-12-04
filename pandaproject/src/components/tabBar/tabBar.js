@@ -1,3 +1,5 @@
+//필요없으면 지우기
+
 import { Nav } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
@@ -8,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import "react-loading-skeleton/dist/skeleton.css";
 import "./tabBar.css";
-
+/** @deprecated 설명 */
 function TabBar() {
   const [tab, setTab] = useState(0);
   const navigate = useNavigate();
