@@ -130,7 +130,7 @@ app.post('/login' , (req,res,next) => {
     if (!user) return res.status(401).json({ error: info.message });
 
     const token = generateToken(user);
-    const expiration = new Date(Date.now() + 60 * 1000); // 1분
+    const expiration = new Date(Date.now() + 60 * 60 * 1000); // 1시간
     res.json({ token, expiration: expiration.getTime() });
     console.log('Server Log:', { token, expiration });
  

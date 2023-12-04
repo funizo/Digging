@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./loginPage.css";
 import { Link, useNavigate,  } from "react-router-dom";
+import Footer from "../../components/footer/footer";
 
 const LoginPage = () => {
   const [userData, setUserData] = useState({
@@ -47,7 +48,7 @@ const LoginPage = () => {
   return (
     <div>
       <Link to="/" className="logo">
-        <img src="img/logo.png" width="150" height="200" alt="로고" />
+        <img src={`${process.env.PUBLIC_URL}/img/logo-digging.png?${new Date().getTime()}`} alt="로고" />
       </Link>
       <div className="container">
         <h2>Login</h2>
@@ -93,6 +94,7 @@ const LoginPage = () => {
           </Link>
         </form>
       </div>
+      <Footer/>
     </div>
   );
 };

@@ -146,7 +146,7 @@ function ToolBar() {
           <div className="nav-logo">
             <img
               className="logo-img"
-              src={`${process.env.PUBLIC_URL}img/logo-digging.png?${new Date().getTime()}`}
+              src={`${process.env.PUBLIC_URL}/img/logo-digging.png?${new Date().getTime()}`}
               alt="로고"
             ></img>
           </div>
