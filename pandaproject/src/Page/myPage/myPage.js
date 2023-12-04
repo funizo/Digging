@@ -25,9 +25,7 @@ function MyPage() {
     },[]
   );
 
-  useEffect(() => {
-    console.log("데이터 ",data);
-  },[data])
+
 
   
 
