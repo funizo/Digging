@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import Post from "../post";
 import "./signUpPage.css";
 
@@ -8,7 +8,7 @@ const SignUpPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [showAddress, setShowAddress] = useState(false);
-
+  const navigate = useNavigate();
   const handleAddressButtonClick = () => {
     setShowAddress((prevShowAddress) => !prevShowAddress);
   };
@@ -37,7 +37,7 @@ const SignUpPage = () => {
         });
         if (res.ok) {
           console.log("서버전송완료");
-          window.location.href = '/';
+          navigate('/');
         } else {
           console.log("서버전송실패")
         } 
