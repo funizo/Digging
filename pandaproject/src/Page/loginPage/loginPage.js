@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import "./loginPage.css";
-import { Link ,useNavigate} from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const [userData,setUserData] = useState({
-    username:"",
-    password:"",
+  const [userData, setUserData] = useState({
+    username: "",
+    password: "",
   });
 
   const [error, setError] = useState("");
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    console.log("1")
     e.preventDefault();
 
     try {
@@ -25,14 +22,21 @@ const LoginPage = () => {
         },
         body: JSON.stringify(userData),
       });
+
       if (result.ok) {
-        console.log("서버전송완료");
+        const data = await result.json();
+        const { token } = data;
+  
+        localStorage.setItem("token", token);  // 서버에서 "ok" 문자열을 보내므로 토큰 대신에 "ok"를 저장
+        console.log("로그인 성공");
         navigate('/');
       } else {
-        console.log("서버에서 오류가 발생했습니다.");
+        const errorData = await result.json();
+        console.log("서버에서 오류가 발생했습니다.", errorData.error);
+        setError("로그인 실패");
       }
-    } catch (e) {
-      console.log("서버에 요청중 오류가 발생",e);
+    } catch (error) {
+      console.error("서버에 요청 중 오류가 발생", error);
     }
   };
 
@@ -50,7 +54,12 @@ const LoginPage = () => {
               className="id_input"
               type="text"
               value={userData.username}
-              onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, username: e.target.value }))}
+              onChange={(e) =>
+                setUserData((prevUserData) => ({
+                  ...prevUserData,
+                  username: e.target.value,
+                }))
+              }
             />
           </div>
           <div className="password">
@@ -59,7 +68,12 @@ const LoginPage = () => {
               className="pw_input"
               type="password"
               value={userData.password}
-              onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, password: e.target.value }))}
+              onChange={(e) =>
+                setUserData((prevUserData) => ({
+                  ...prevUserData,
+                  password: e.target.value,
+                }))
+              }
             />
           </div>
           <div className="login_button">
