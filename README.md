@@ -7,7 +7,7 @@ react폴더이동후<br>
 npm i <br>
 npm run build<br>
 server.js있는폴더에서
-npm i nodemon<br>
+npm i<br>
 nodemon server.js<br>
 react폴더안에서<br>
 npm start
