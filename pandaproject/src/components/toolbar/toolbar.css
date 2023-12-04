@@ -176,6 +176,7 @@ button {
 .mypage a {
   color: rgba(34, 34, 34, 0.8);
   font-size: 12px;
+  cursor: pointer;
 }
 
 @media (max-width: 960px) {

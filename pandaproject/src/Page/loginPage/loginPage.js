@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./loginPage.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,  } from "react-router-dom";
 
 const LoginPage = () => {
   const [userData, setUserData] = useState({
@@ -25,11 +25,15 @@ const LoginPage = () => {
 
       if (result.ok) {
         const data = await result.json();
-        const { token } = data;
+        const { token, expiration } = data;
+
+        const expirationDate = new Date(expiration);
   
-        localStorage.setItem("token", token);  // 서버에서 "ok" 문자열을 보내므로 토큰 대신에 "ok"를 저장
+        localStorage.setItem("token", token); 
+        localStorage.setItem("tokenExpiration", expirationDate.getTime()); 
         console.log("로그인 성공");
         navigate('/');
+        console.log("login-expiration",expirationDate);
       } else {
         const errorData = await result.json();
         console.log("서버에서 오류가 발생했습니다.", errorData.error);

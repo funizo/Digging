@@ -1,12 +1,21 @@
 import { SlMagnifier } from "react-icons/sl";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import "./toolbar.css";
 
 function ToolBar() {
   const [selectedAlarmCategory, setSelectedAlarmCategory] = useState("null");
   const [showAlarmDropdown, setShowAlarmDropdown] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('tokenExpiration');
+    setIsLoggedIn(false);
+    navigate('/login');
+  };
 
   const alaramRef = useRef(null);
   const handleOutsideClick = (e) => {
@@ -14,12 +23,23 @@ function ToolBar() {
       setShowAlarmDropdown(false); // 외부를 클릭하면 알람이 닫히도록 합니다.
     }
   };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleOutsideClick);
 
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
+  }, []);
+  useEffect(() => {
+    // 만료 시간을 가져오기
+    const expirationDate = localStorage.getItem('tokenExpiration');
+    const nowDate = Date.now();
+
+    // 토큰이 있고 만료 시간이 지나지 않았으면 로그인 상태로 설정
+    if (expirationDate && nowDate < expirationDate) {
+      setIsLoggedIn(true);
+    }
   }, []);
 
   const toggleAlarmDropdown = () => {
@@ -43,7 +63,11 @@ function ToolBar() {
           </div>
 
           <div className="login">
-            <a href="/login">로그인</a>
+            {isLoggedIn ?(
+            <a onClick={handleLogout}>로그아웃</a>
+            ) : (
+              <Link to ="/login">로그인</Link>
+              )}
           </div>
 
           <div className="mypage">

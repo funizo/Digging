@@ -90,6 +90,9 @@ passport.use(new JwtStrategy(jwtOptions, (jwtPayload, cb) => {
   });
 }));
 
+app.get('/verify', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.json({ message: '토큰이 유효합니다.' });
+});
 
 passport.serializeUser((user, done) => {
   process.nextTick(() => {
@@ -121,15 +124,29 @@ app.post('/signup' ,async (req, res) => {
   res.json({ message: 'ok' });
 });
 
-
 app.post('/login' , (req,res,next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err) return res.status(500).json({ error: err.message });
     if (!user) return res.status(401).json({ error: info.message });
 
     const token = generateToken(user);
-    res.json({ token });
+    const expiration = new Date(Date.now() + 60 * 1000); // 1분
+    res.json({ token, expiration: expiration.getTime() });
+    console.log('Server Log:', { token, expiration });
+ 
   })(req, res, next);
+});
+app.post('/logout', (req, res) => {
+  // 클라이언트 측에서의 토큰 및 만료 시간 삭제
+  res.clearCookie('token');
+  res.clearCookie('tokenExpiration');
+
+  // 또는 클라이언트 측에서 사용하는 로컬 스토리지의 값 삭제
+  localStorage.removeItem('token');
+  localStorage.removeItem('tokenExpiration');
+
+  res.json({ message: '로그아웃 성공' });
+  
 });
 
 app.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
