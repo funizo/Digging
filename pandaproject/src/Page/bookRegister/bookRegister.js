@@ -61,13 +61,14 @@ function BookRegister() {
         }
     }
 
-    
+    console.log(userInfo);
     return (
         <div>
             <ToolBar/>
-            <div className="input_container">
+            
+            <div>
                 <form onSubmit={handleSubmit} enctype="multipart/form-data">
-                    <div>
+                    <div className="input_container">
                         <input
                         placeholder="  제목"
                         style={{width:"80%"}}
@@ -76,7 +77,7 @@ function BookRegister() {
                         onChange={(e) => setWriteData((prevWriteData) => ({ ...prevWriteData, title: e.target.value }))}
                         />
                     </div>
-                    <div>
+                    <div className="input_container">
                         <input
                         placeholder="  내용"
                         type="text"
@@ -85,15 +86,16 @@ function BookRegister() {
                         onChange={(e) => setWriteData((prevWriteData) => ({ ...prevWriteData, content: e.target.value }))}
                         />
                     </div>
-                    <div>
+                    <div className="input_container">
                         <input
                         placeholder="  가격"
+                        style={{width:"80%"}}
                         type="text"
                         value={writeData.price}
                         onChange={(e) => setWriteData((prevWriteData) => ({ ...prevWriteData, price: e.target.value }))}
                         />
                     </div>
-                    <div>
+                    <div className="input_container">
                         <input
                         placeholder="  이미지"
                         type="file"
@@ -102,7 +104,7 @@ function BookRegister() {
                         onChange={handleFileChange}
                         />
                     </div>
-                    <button type="submit">작성하기</button>
+                    <button type="submit" style={{ margin: "auto", width: "100px", display: "block" }}>작성하기</button>
                 </form>
             </div>
             <Footer/>

@@ -8,7 +8,7 @@
   grid-template-columns: repeat(4, 1fr); 
   row-gap: 16px;
   max-width: 1280px;
-  padding: 0px 20px;
+  padding: 0px 100px;
 }
 .card-container{
   max-width: 235px;
