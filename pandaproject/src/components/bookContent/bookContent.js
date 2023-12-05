@@ -1,16 +1,16 @@
-import novel from "../../data/novel";
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
 import Toolbar from "../toolbar/toolbar";
-import "./novelContent.css";
+import "./bookContent.css";
 import Footer from "../footer/footer";
 
 function NovelContent() {
+
   const navigate  = useNavigate();
-  const [novelData, setNovelData] = useState(novel);
   const [loading, setLoading] = useState(true);
+  const [bookData, setBookData] = useState([]);
 
   useEffect(() => {
       const timer = setTimeout(() => {
@@ -19,8 +19,26 @@ function NovelContent() {
       return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('http://localhost:8080/category/book');
+        if (!res.ok) {
+          throw new Error('서버 응답 실패');
+        }
+        const data = await res.json();
+        setBookData(data.result);
+        console.log(bookData);
+      } catch (error) {
+        console.error('데이터를 불러오는 중 에러 발생:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const goToBookDetail = (id, bookData) => {
-      navigate(`/category/novel/detail/${id}`, { state: { bookData } });
+      navigate(`/category/book/detail/${id}`, { state: { bookData } });
       console.log('bookData',id)
   }
 
@@ -28,25 +46,26 @@ function NovelContent() {
       
       <div className='novel'>
           <Toolbar/>
-          <h2>소설</h2>
+          <h2>도서</h2>
           {loading ? (
-              novelData.map((_, i) => (
+              bookData.map((_, i) => (
                   <div className="image-container" key={i}>
                       <TabContentSkeleton />
                   </div>
       ))
   ) : (
       <div className="novel-container">
-      {novelData.map((a, i) => (
+      {bookData.map((a, i) => (
           <div className="image-container" key={i} onClick={() => goToBookDetail(a.id, a)}>
           {/* <Link to={`././detail/${a.id}`} key={a.id}> */}
-              <TabContent key={i} novelData={novelData[i]} i={i} />
+              <TabContent key={i} bookData={bookData[i]} i={i} />
           {/* </Link> */}
       </div>
       
       ))}
           </div>
       )}
+      <a href="/bookregister" className="write">글쓰기</a>
       
       <Footer/>
   </div>
@@ -71,17 +90,16 @@ function TabContentSkeleton() {
 }
 
 function TabContent(props,i) {
-  
+    
       return (
           <div className='novel-item'>
               <div className='novel-img-box'>
-              <img src={props.novelData.img} alt=""/>
+              <img src={props.bookData.bookImg} alt="" />
               </div>
               <div className='text-content'>
-              <p className='novel-card-category'>{props.novelData.category}</p>
-              <p className='novel-card-title'>{props.novelData.title}</p>
-              <p className='novel-card-writer'>{props.novelData.writer}</p>
-              <p className='novel-card-price'>{Number(props.novelData.price).toLocaleString()}원</p>
+              <p className='novel-card-title'>{props.bookData.bookTitle}</p>
+              <p className='novel-card-writer'>{props.bookData.username}</p>
+              <p className='novel-card-price'>{Number(props.bookData.price).toLocaleString()}원</p>
               
               </div>
           </div>

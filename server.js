@@ -10,29 +10,40 @@ const jwt = require('jsonwebtoken');
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-
+require('dotenv').config()
 const { MongoClient } = require('mongodb');
 const { ObjectId } = require('mongodb') ;
 const MongoStore = require('connect-mongo');
+
+const { S3Client } = require('@aws-sdk/client-s3')
+const multer = require('multer')
+const multerS3 = require('multer-s3')
+const s3 = new S3Client({
+  region : 'ap-northeast-2',
+  credentials : {
+      accessKeyId : process.env.S3_KEY,
+      secretAccessKey : process.env.S3_SECRET
+  }
+})
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'digging',
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString()) //업로드시 파일명 변경가능
+    }
+  })
+})
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 app.use(passport.initialize());
-app.use(session({
-  secret: '1234',
-  resave : false,
-  saveUninitialized : false,
-  cookie : { maxAge : 60 * 60 * 1000 },
-  store: MongoStore.create({
-    mongoUrl:'mongodb+srv://panda:1234@panda.1pgmndf.mongodb.net/?retryWrites=true&w=majority',
-    dbName: 'panda'
-  })
-}));
 
-app.use(passport.session())
 let db
-const url = 'mongodb+srv://panda:1234@panda.1pgmndf.mongodb.net/?retryWrites=true&w=majority'
+const url = process.env.DB_URL;
 new MongoClient(url).connect().then((client)=>{
   console.log('DB연결성공')
   db = client.db('panda')
@@ -64,6 +75,8 @@ passport.use(new LocalStrategy(async (EnterId, EnterPw, cb) => {
     return cb(null, false, { message: '비밀번호 불일치' });
   }
 }));
+
+
 function generateToken(user) {
   return jwt.sign({ 
     id: user._id, 
@@ -94,19 +107,6 @@ app.get('/verify', passport.authenticate('jwt', { session: false }), (req, res) 
   res.json({ message: '토큰이 유효합니다.' });
 });
 
-passport.serializeUser((user, done) => {
-  process.nextTick(() => {
-    done(null, { id: user._id, username: user.username })
-  })
-})
-
-passport.deserializeUser(async(user, done) => {
-  let result = await db.collection('user').findOne({_id : new ObjectId(user.id) })  
-  return done(null, result)
-  });
-
-
-
 
 
 
@@ -124,6 +124,27 @@ app.post('/signup' ,async (req, res) => {
   res.json({ message: 'ok' });
 });
 
+app.post('/bookregister' , upload.single('image'), async (req, res) => {
+  // console.log(req.body);
+  const writeData = req.body;
+
+  await db.collection('book').insertOne({
+    id: writeData.id,
+    username: writeData.username,
+    bookTitle:writeData.title,
+    bookContent:writeData.content,
+    price:writeData.price,
+    bookImg:req.file ? req.file.location:'',
+  });
+  res.json({ message: 'ok' });
+})
+
+app.get('/category/book' , async (req, res) => {
+  const result = await db.collection('book').find().toArray()
+  res.json({result:result})
+})
+
+
 app.post('/login' , (req,res,next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err) return res.status(500).json({ error: err.message });
@@ -136,6 +157,8 @@ app.post('/login' , (req,res,next) => {
  
   })(req, res, next);
 });
+
+
 app.post('/logout', (req, res) => {
   // 클라이언트 측에서의 토큰 및 만료 시간 삭제
   res.clearCookie('token');
@@ -162,6 +185,8 @@ app.get('/mypage', passport.authenticate('jwt', { session: false }), (req, res) 
     subaddress: req.user.subaddress,
   });
 });
+
+
 
 
 
