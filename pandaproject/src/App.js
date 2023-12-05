@@ -4,20 +4,22 @@ import Toolbar from "./components/toolbar/toolbar";
 import Slide from "./components/slide/slide";
 import Footer from "./components/footer/footer";
 import Content from "./components/temp_content/temp_content";
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import jwt_decode from "jwt-decode";
 
 function App() {
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
     console.log("실행");
     // 만료 시간을 가져오기
     //인터벌을 테스트 후 삭제
-    const intervalId = setInterval(() => {
+    
       const expirationDate = localStorage.getItem("tokenExpiration");
       const nowDate = Date.now();
-  
+      
       console.log("nowDate", nowDate);
       console.log("expirationDate123", expirationDate);
   
@@ -26,9 +28,17 @@ function App() {
         console.log("토큰이 만료되어 자동 로그아웃됩니다.");
         logout();
       }
-    }, 1000);
+    },);
   
-    return () => clearInterval(intervalId);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      // 토큰이 존재할 경우 디코드하여 사용자 정보 설정
+      const decoded = jwt_decode(token);
+      setUserInfo(decoded);
+    }
   }, []);
 
   const logout = () => {
@@ -41,7 +51,7 @@ function App() {
   
   return (
     <div className="App">
-      <Toolbar />
+      <Toolbar userInfo={userInfo}/>
       {/* <Tabs/> */}
       <Slide />
       <Content />

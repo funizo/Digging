@@ -4,7 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import "./toolbar.css";
 
-function ToolBar() {
+function ToolBar(props) {
+
   const [selectedAlarmCategory, setSelectedAlarmCategory] = useState("null");
   const [showAlarmDropdown, setShowAlarmDropdown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -59,7 +60,11 @@ function ToolBar() {
       <header>
         <div className="user-actions">
           <div className="join">
-            <a href="/signup">회원가입</a>
+            {isLoggedIn ?(
+              <p style={{fontSize:'12px'}}>어서오세요</p>
+            ) : (
+              <a href="/signup">회원가입</a>
+            )}
           </div>
 
           <div className="login">
