@@ -12,6 +12,11 @@ footer {
   border-bottom: 2px solid #ccc; /* 구분선 추가 */
   border-radius: 10%;
   padding-bottom: 20px;
+  
+}
+#logo img{
+  width: 150px;
+  height: 50px;
 }
 
 #footer2 {

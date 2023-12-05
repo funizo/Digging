@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./loginPage.css";
-import { Link ,useNavigate} from "react-router-dom";
-
+import { Link, useNavigate,  } from "react-router-dom";
+import Footer from "../../components/footer/footer";
 
 const LoginPage = () => {
-  const [userData,setUserData] = useState({
-    username:"",
-    password:"",
+  const [userData, setUserData] = useState({
+    username: "",
+    password: "",
   });
 
   const [error, setError] = useState("");
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    console.log("1")
     e.preventDefault();
 
     try {
@@ -25,21 +23,32 @@ const LoginPage = () => {
         },
         body: JSON.stringify(userData),
       });
+
       if (result.ok) {
-        console.log("서버전송완료");
+        const data = await result.json();
+        const { token, expiration } = data;
+
+        const expirationDate = new Date(expiration);
+  
+        localStorage.setItem("token", token); 
+        localStorage.setItem("tokenExpiration", expirationDate.getTime()); 
+        console.log("로그인 성공");
         navigate('/');
+        console.log("login-expiration",expirationDate);
       } else {
-        console.log("서버에서 오류가 발생했습니다.");
+        const errorData = await result.json();
+        console.log("서버에서 오류가 발생했습니다.", errorData.error);
+        setError("로그인 실패");
       }
-    } catch (e) {
-      console.log("서버에 요청중 오류가 발생",e);
+    } catch (error) {
+      console.error("서버에 요청 중 오류가 발생", error);
     }
   };
 
   return (
     <div>
       <Link to="/" className="logo">
-        <img src="img/logo.png" width="150" height="200" alt="로고" />
+        <img src={`${process.env.PUBLIC_URL}/img/logo-digging.png?${new Date().getTime()}`} alt="로고" />
       </Link>
       <div className="container">
         <h2>Login</h2>
@@ -50,7 +59,12 @@ const LoginPage = () => {
               className="id_input"
               type="text"
               value={userData.username}
-              onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, username: e.target.value }))}
+              onChange={(e) =>
+                setUserData((prevUserData) => ({
+                  ...prevUserData,
+                  username: e.target.value,
+                }))
+              }
             />
           </div>
           <div className="password">
@@ -59,7 +73,12 @@ const LoginPage = () => {
               className="pw_input"
               type="password"
               value={userData.password}
-              onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, password: e.target.value }))}
+              onChange={(e) =>
+                setUserData((prevUserData) => ({
+                  ...prevUserData,
+                  password: e.target.value,
+                }))
+              }
             />
           </div>
           <div className="login_button">
@@ -75,6 +94,7 @@ const LoginPage = () => {
           </Link>
         </form>
       </div>
+      <Footer/>
     </div>
   );
 };

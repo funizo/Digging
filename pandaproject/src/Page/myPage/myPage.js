@@ -1,39 +1,28 @@
 import Toolbar from "../../components/toolbar/toolbar";
 import Footer from "../../components/footer/footer";
 import "./myPage.css";
-import { useState,useEffect } from "react";
-import axios from 'axios'
+import { useState, useEffect } from "react";
+import jwt_decode from "jwt-decode";
 
+import axios from 'axios'
 
 function MyPage() {
   const [menu, setMenu] = useState(1);
-  const [data,setData]  = useState("");
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    const getData = () => {
-      axios.get("http://localhost:8080/mypage")
-      .then((res) => {
-          // console.log(res.data);
-          console.log(res.data);
-          setData(res.data);
-  
-      }).catch((err) => {
-          console.log(err);
-      })
-    };
-    getData();
-    },[]
-  );
+    const token = localStorage.getItem('token');
 
-
-
-  
+    if (token) {
+      // 토큰이 존재할 경우 디코드하여 사용자 정보 설정
+      const decoded = jwt_decode(token);
+      setUserInfo(decoded);
+    }
+  }, []);
 
   return (
     <div>
-      
       <Toolbar />
-      
       <div className="page_wrap">
         <h1>마이페이지</h1>
         <div className="content">
@@ -43,7 +32,7 @@ function MyPage() {
               onClick={() => {
                 setMenu(1);
               }}
-              >
+            >
               내정보
             </p>
             <p
@@ -59,12 +48,12 @@ function MyPage() {
               onClick={() => {
                 setMenu(3);
               }}
-              >
+            >
               설정
             </p>
           </div>
           <div className="mainArea">
-            <MenuContent menu={menu} data={data}/>
+            <MenuContent menu={menu} userInfo={userInfo} />
           </div>
         </div>
       </div>
@@ -77,10 +66,12 @@ function MenuContent(props) {
   if (props.menu === 1) {
     return (
       <div>
-        <p>아이디:{props.data.title}</p>
-        <p>이름:</p>
-        <p>주소:</p>
-        <p>이메일:</p>
+        <p>아이디: {props.userInfo?.id}</p>
+        <p>이름: {props.userInfo?.username}</p>
+        <p>주소: {props.userInfo?.address}</p>
+        <p>상세주소: {props.userInfo?.subaddress}</p>
+        <p>이메일: {props.userInfo?.email}</p>
+        {console.log(props.userInfo)}
       </div>
     );
   }
