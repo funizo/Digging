@@ -22,7 +22,7 @@ function PopularContent(props) {
   return (
 
     <div className="card-box">
-      <a href="/category/novel" className="card-link">
+      <a href="/category/book" className="card-link">
         <img
           className="card-image"
           src={props.popularData.img}

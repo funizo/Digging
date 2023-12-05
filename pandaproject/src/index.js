@@ -4,9 +4,10 @@ import "./index.css";
 import App from "./App";
 import Login from "./Page/loginPage/loginPage";
 import Signup from "./components/signUpPage/signUpPage";
-import Novel from "./components/novelContent/novelContent";
+import Book from "./components/bookContent/bookContent";
 import Category from "./components/category";
 import Detail from "./components/detail/detail";
+import BookRegister from "./Page/bookRegister/bookRegister";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MyPage from "./Page/myPage/myPage";
@@ -21,11 +22,11 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/category" element={<Category />} />
-        <Route path="/category/novel" element={<Novel />} />
-        <Route path="/category/novel/detail/:id" element={<Detail />} />
+        <Route path="/category/book" element={<Book />} />
+        <Route path="/category/book/detail/:id" element={<Detail />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/board" element={<Board />} />
-
+        <Route path="/bookRegister" element={<BookRegister />} />
         <Route path="*" element={<div>없는페이지에요</div>} />
       </Routes>
     </BrowserRouter>
