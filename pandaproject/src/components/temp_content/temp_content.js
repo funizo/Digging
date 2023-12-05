@@ -5,24 +5,34 @@ import "./temp_content.css";
 
 function Content() {
   const [popularData, setPopularData] = useState(popularItem);
-
+  const [categoryUrl,setCategoryUrl] = useState([
+    "/category/fashion","/category/Electronic","/category/toy",
+    "/category/goods","/category/ticket","/category/book",
+    "/category/personal","/category/event"
+  ]);
+  
   return (
     <div className="poular-content">
     <div className="content-container">
  {popularData.map((item) => (
   <div className="card-container" key={item.id}>
-    <PopularContent key={item.id} popularData={item} />
+    <PopularContent key={item.id} popularData={item} categoryUrl={categoryUrl[item.id]}/>
   </div>
     ))}
         </div>
-        </div>
+  </div>
     )}
+
+
+
 function PopularContent(props) {
   
+
   return (
 
+
     <div className="card-box">
-      <a href="/category/book" className="card-link">
+      <a href={props.categoryUrl} className="card-link">
         <img
           className="card-image"
           src={props.popularData.img}
