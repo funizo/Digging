@@ -1,7 +1,7 @@
 import Toolbar from "../toolbar/toolbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState,useEffect } from "react";
-import "./detail.css";
+import "./bookDetail.css";
 import Footer from "../footer/footer";
 import jwt_decode from "jwt-decode";
 
@@ -52,7 +52,7 @@ function Detail() {
   const handleDelete = async() => {
     if(userInfo.id === bookData.id) {
       try {
-        const response = await fetch('http://localhost:8080/category/book/detail', {
+        const response = await fetch('http://localhost:8080/category/book/bookdetail', {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

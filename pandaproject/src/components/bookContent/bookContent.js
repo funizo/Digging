@@ -48,7 +48,7 @@ function NovelContent() {
     }, []);
 
     const goToBookDetail = (id, bookData) => {
-        navigate(`/category/book/detail/${id}`, { state: { bookData } });
+        navigate(`/category/book/bookdetail/${id}`, { state: { bookData } });
     }
 
     return(
