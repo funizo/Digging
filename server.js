@@ -186,10 +186,38 @@ app.get('/mypage', passport.authenticate('jwt', { session: false }), (req, res) 
   });
 });
 
+// app.delete('/category/book/:id', async (req, res) => {
+//   await db.collection('book').deleteOne({_id: new ObjectId(req.params.id),
+    
+//   });
+//   res.send('삭제완료')
+// })
 
+app.delete('/category/book/detail', async (req, res) => {
+  console.log(req.body._id)
+  try {
+    const bookId = req.body._id
+    await db.collection('book').deleteOne({ _id: new ObjectId(bookId) });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: '서버 오류' });
+  }
+  res.send("삭제완료")
+});
 
-
-
+app.post('/edit', upload.single('image') ,async (req, res) => {
+    let objId = new ObjectId(req.body._id);
+    await db.collection('book').updateOne({_id:objId}
+    ,{$set:{
+      id: req.body.id,
+      username: req.body.username,
+      bookTitle:req.body.title,
+      bookContent: req.body.content,
+      price:req.body.price,
+      bookImg:req.file ? req.file.location:''
+    }})
+    res.json({ message: 'ok' });
+})
 
 
 

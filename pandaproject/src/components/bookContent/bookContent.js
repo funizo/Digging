@@ -39,7 +39,6 @@ function NovelContent() {
             }
             const data = await res.json();
             setBookData(data.result);
-            console.log(bookData);
         } catch (error) {
             console.error('데이터를 불러오는 중 에러 발생:', error);
         }
@@ -50,7 +49,6 @@ function NovelContent() {
 
     const goToBookDetail = (id, bookData) => {
         navigate(`/category/book/detail/${id}`, { state: { bookData } });
-        console.log('bookData',id)
     }
 
     return(
@@ -90,33 +88,33 @@ function NovelContent() {
 
 
 function TabContentSkeleton() {
-  return (
-      <div className="skeleton-container">
-          <h3 className="skeleton-title"><Skeleton duration={1} width={300} height={100} /></h3>
-          <h3 className="skeleton-title"><Skeleton duration={1} width={300} height={20} /></h3>
-          <p className="skeleton-text"><Skeleton  duration={1} width={80} height={15} /></p>
-          <p className="skeleton-text-small"><Skeleton  duration={1} width={60} height={15} /></p>
-      </div>
-  )
-}
+    return (
+        <div className="skeleton-container">
+            <h3 className="skeleton-title"><Skeleton duration={1} width={300} height={100} /></h3>
+            <h3 className="skeleton-title"><Skeleton duration={1} width={300} height={20} /></h3>
+            <p className="skeleton-text"><Skeleton  duration={1} width={80} height={15} /></p>
+            <p className="skeleton-text-small"><Skeleton  duration={1} width={60} height={15} /></p>
+        </div>
+    )
+    }
 
-function TabContent(props,i) {
+    function TabContent(props,i) {
+        
+        return (
+            <div className='novel-item'>
+                <div className='novel-img-box'>
+                <img src={props.bookData.bookImg} alt="" />
+                </div>
+                <div className='text-content'>
+                <p className='novel-card-title'>{props.bookData.bookTitle}</p>
+                <p className='novel-card-writer'>{props.bookData.username}</p>
+                <p className='novel-card-price'>{Number(props.bookData.price).toLocaleString()}원</p>
+                
+                </div>
+            </div>
+            
+        )
     
-      return (
-          <div className='novel-item'>
-              <div className='novel-img-box'>
-              <img src={props.bookData.bookImg} alt="" />
-              </div>
-              <div className='text-content'>
-              <p className='novel-card-title'>{props.bookData.bookTitle}</p>
-              <p className='novel-card-writer'>{props.bookData.username}</p>
-              <p className='novel-card-price'>{Number(props.bookData.price).toLocaleString()}원</p>
-              
-              </div>
-          </div>
-          
-      )
-  
 }
 
 export default NovelContent

@@ -1,6 +1,7 @@
+import "./index.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
 import Login from "./Page/loginPage/loginPage";
 import Signup from "./components/signUpPage/signUpPage";
@@ -9,9 +10,10 @@ import Category from "./components/category";
 import Detail from "./components/detail/detail";
 import BookRegister from "./Page/bookRegister/bookRegister";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MyPage from "./Page/myPage/myPage";
 import Board from "./components/board/board";
+import Edit from "./Page/edit/edit"
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -28,6 +30,7 @@ root.render(
         <Route path="/board" element={<Board />} />
         <Route path="/bookRegister" element={<BookRegister />} />
         <Route path="*" element={<div>없는페이지에요</div>} />
+        <Route path="/edit/:id" element={<Edit />} />
       </Routes>
     </BrowserRouter>
   
