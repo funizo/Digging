@@ -24,33 +24,35 @@ function Detail() {
     } 
   }, []);
   
+  console.log(bookData)
   
   const handleAddToWishlist = async () => {
     setIsAddedToWishlist(!isAddedToWishlist);
-    //백엔드 와 통신내용 추가 필요 
+     
     try {
-      const response = await fetch('/api/addToWishlist', {
+      const formData = new FormData();
+      formData.append('title', bookData.bookTitle);
+      formData.append('content', bookData.bookContent);
+      formData.append('image', bookData.bookImg);
+      formData.append('price', bookData.price);
+      formData.append('id',userInfo.id);
+      formData.append('username',userInfo.username);
+      const response = await fetch('http://localhost:8080/addToWishlist', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // 서버에 도서 ID 등 필요한 데이터를 전송
-        body: JSON.stringify({ bookId: bookData.id }),
+        body: formData,
       });
       if (response.ok) {
-        // 성공 시 서버로부터 업데이트된 찜 수량을 받아와 상태에 저장
         const data = await response.json();
         setWishlistCount(data.wishlistCount);
       } else {
-        // 실패 시 에러 처리
         console.error('찜하기 요청 실패');
       }
     } catch (error) {
       console.error('네트워크 오류', error);
     }
   };
+
   const handleDelete = async() => {
-    if(userInfo.id === bookData.id) {
       try {
         const response = await fetch('http://localhost:8080/category/book/bookdetail', {
           method: 'DELETE',
@@ -66,9 +68,6 @@ function Detail() {
       } catch (error) {
         console.log(error);
       }
-    } else {
-      alert("삭제할수없습니다")
-    }
   }
   const handleBuy = () => {
       navigate("/login");
@@ -81,9 +80,7 @@ function Detail() {
   };
 
   const handleEdit = () => {
-    if (userInfo.id === bookData.id ) {
       navigate(`/edit/${bookData.id}`, {state:{bookData}});
-    }
   }
 
   return (
@@ -108,20 +105,21 @@ function Detail() {
       </div>
       <div className="wishlist">
         {/* 관심 상품으로 찜하기 버튼 */}
-        <button className="button_wishlist" onClick={handleAddToWishlist}>
-            {isAddedToWishlist ? "찜 해제" : "관심 상품으로 찜하기"}
+        <button className="button_wishlist" onClick={handleAddToWishlist} style={
+          { display: userInfo && (userInfo.id === bookData.id || userInfo.id === '65703c972d7eba2e853faa06') ? 'block' : 'none' }
+          }>
+            {isAddedToWishlist ? "찜" : "관심 상품으로 찜하기"}
         </button>
         <button className="button_wishlist" onClick={handleDelete} style={
-            { display: userInfo && userInfo.id === bookData.id ? 'block' : 'none' }
+            { display: userInfo && (userInfo.id === bookData.id || userInfo.id === '65703c972d7eba2e853faa06') ? 'block' : 'none' }
           }>
             삭제하기
         </button>
         <button className="button_wishlist" onClick={handleEdit} style={
-            { display: userInfo && userInfo.id === bookData.id ? 'block' : 'none' }
+            { display: userInfo && (userInfo.id === bookData.id || userInfo.id === '65703c972d7eba2e853faa06') ? 'block' : 'none' }
           }>
             수정하기
         </button>
-        <p>찜 수량: {wishlistCount}</p>
       </div>
 
       <div>하단 추천제품 링크및 이미지 삽입공간</div>

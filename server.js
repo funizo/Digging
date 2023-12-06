@@ -186,14 +186,9 @@ app.get('/mypage', passport.authenticate('jwt', { session: false }), (req, res) 
   });
 });
 
-// app.delete('/category/book/:id', async (req, res) => {
-//   await db.collection('book').deleteOne({_id: new ObjectId(req.params.id),
-    
-//   });
-//   res.send('삭제완료')
-// })
 
-app.delete('/category/book/detail', async (req, res) => {
+
+app.delete('/category/book/bookdetail', async (req, res) => {
   console.log(req.body._id)
   try {
     const bookId = req.body._id
@@ -217,6 +212,20 @@ app.post('/edit', upload.single('image') ,async (req, res) => {
       bookImg:req.file ? req.file.location:''
     }})
     res.json({ message: 'ok' });
+})
+
+
+app.post('/addToWishlist', upload.single('image') ,async (req, res) => {
+  let objId = new ObjectId(req.body.id);
+  console.log(req.body)
+  console.log(objId);
+  await db.collection('user').updateOne({_id:objId}
+  ,{$set:{
+      bookTitle:req.body.title,
+      price:req.body.price,
+      bookImg:req.body.image
+  }})
+  res.json({ message: 'ok' });
 })
 
 
