@@ -11,6 +11,7 @@ const Write = ({ onPostSubmit }) => {
   const decoded = token ? jwt_decode(token) : null;
   const [boardData, setBoardData] = useState({
     id: decoded?.id || "",
+    number: "",
     title: "",
     content: "",
     writer: decoded?.username || "",
@@ -67,6 +68,7 @@ const Write = ({ onPostSubmit }) => {
     // 폼 초기화
     setBoardData({
       id: "",
+      number: "",
       title: "",
       content: "",
       writer: "",

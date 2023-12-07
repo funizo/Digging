@@ -7,27 +7,27 @@ import "./board.css";
 function Board() {
   const [boardData, setBoardData] = useState([]);
   const [page, setPage] = useState(1);
-  const pageSize = 2; // 한 페이지에 보여줄 게시글 수
+  const pageSize = 10; // 페이지당 보여줄 항목 수
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8080/board?page=${page}&pageSize=${pageSize}`
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setBoardData(data);
-        } else {
-          console.error("Failed to fetch board data");
-        }
-      } catch (error) {
-        console.error("Error fetching board data:", error.message);
+  const handlePaging = async (pageNumber) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/board?page=${pageNumber}`
+      );
+      if (!response.ok) {
+        throw new Error("서버 응답 에러");
       }
-    };
+      const data = await response.json();
+      setBoardData(data.result);
+    } catch (error) {
+      console.error("데이터를 가져오는 중 에러 발생:", error);
+    }
+  };
 
-    fetchData();
-  }, [page, pageSize]);
+  // 페이지가 변경될 때마다 데이터를 가져오는 함수 호출
+  useEffect(() => {
+    handlePaging(page);
+  }, [page]);
 
   const goToPrevPage = () => {
     if (page > 1) {
@@ -52,6 +52,8 @@ function Board() {
           </Link>
         </div>
         <table className="table">
+          {/* ... */}
+          {/* 테이블 데이터 표시 부분은 여기에 있어야 함 */}
           <thead>
             <tr>
               <th>번호</th>
@@ -64,7 +66,7 @@ function Board() {
           <tbody>
             {boardData.map((post, index) => (
               <tr key={index}>
-                <td>{index + 1}</td>
+                <td>{(page - 1) * pageSize + index + 1}</td>
                 <td>{post.title}</td>
                 <td>{post.writer}</td>
                 <td>2</td>

@@ -14,6 +14,7 @@ import MyPage from "./Page/myPage/myPage";
 import Board from "./components/board/board";
 import Edit from "./Page/edit/edit";
 import Manager from "./Page/manager/manger";
+import Write from "./components/board/write";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -27,6 +28,7 @@ root.render(
       <Route path="/category/book/bookdetail/:id" element={<BookDetail />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/board" element={<Board />} />
+      <Route path="/board/write" element={<Write />} />
       <Route path="/bookRegister" element={<BookRegister />} />
       <Route path="*" element={<div>없는페이지에요</div>} />
       <Route path="/edit/:id" element={<Edit />} />

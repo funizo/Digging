@@ -10,30 +10,38 @@ const jwt = require("jsonwebtoken");
 const LocalStrategy = require("passport-local").Strategy;
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
-const mongoose = require("mongoose");
+require("dotenv").config();
 const { MongoClient } = require("mongodb");
 const { ObjectId } = require("mongodb");
 const MongoStore = require("connect-mongo");
+
+const { S3Client } = require("@aws-sdk/client-s3");
+const multer = require("multer");
+const multerS3 = require("multer-s3");
+const s3 = new S3Client({
+  region: "ap-northeast-2",
+  credentials: {
+    accessKeyId: process.env.S3_KEY,
+    secretAccessKey: process.env.S3_SECRET,
+  },
+});
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: "digging",
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString()); //업로드시 파일명 변경가능
+    },
+  }),
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 app.use(passport.initialize());
-app.use(
-  session({
-    secret: "1234",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 60 * 60 * 1000 },
-    store: MongoStore.create({
-      mongoUrl:
-        "mongodb+srv://panda:1234@panda.1pgmndf.mongodb.net/?retryWrites=true&w=majority",
-      dbName: "panda",
-    }),
-  })
-);
 
-app.use(passport.session());
 let db;
 const url =
   "mongodb+srv://panda:1234@panda.1pgmndf.mongodb.net/?retryWrites=true&w=majority";
@@ -114,19 +122,6 @@ app.get(
   }
 );
 
-passport.serializeUser((user, done) => {
-  process.nextTick(() => {
-    done(null, { id: user._id, username: user.username });
-  });
-});
-
-passport.deserializeUser(async (user, done) => {
-  let result = await db
-    .collection("user")
-    .findOne({ _id: new ObjectId(user.id) });
-  return done(null, result);
-});
-
 app.post("/signup", async (req, res) => {
   const userData = req.body;
   console.log(userData);
@@ -181,6 +176,7 @@ app.post("/login", (req, res, next) => {
     console.log("Server Log:", { token, expiration });
   })(req, res, next);
 });
+
 app.post("/logout", (req, res) => {
   // 클라이언트 측에서의 토큰 및 만료 시간 삭제
   res.clearCookie("token");
@@ -214,47 +210,6 @@ app.get(
     });
   }
 );
-
-app.post("/board", async (req, res) => {
-  const boardData = req.body;
-  const today = new Date();
-  const year = today.getFullYear().toString().slice(-2);
-  const month = ("0" + (today.getMonth() + 1)).slice(-2);
-  const day = ("0" + today.getDate()).slice(-2);
-  const formattedDate = `${year}. ${month}. ${day}`;
-  boardData.date = formattedDate;
-
-  await db.collection("board").insertOne({
-    id: boardData.id,
-    number: boardData.number,
-    title: boardData.title,
-    content: boardData.content,
-    writer: boardData.writer,
-    views: boardData.views,
-    date: boardData.date,
-  });
-  res.json({ message: "ok" });
-});
-
-app.get("/board", async (req, res) => {
-  try {
-    const boardData = await db.collection("board").find({}).toArray();
-    res.json(boardData);
-  } catch (error) {
-    console.error("패치 에러:", error.message);
-    res.status(500).json({ error: "서버에러" });
-  }
-});
-
-app.get("/board/:id", async (req, res) => {
-  let result = await db
-    .collection("board")
-    .find()
-    .skip((req.params.id - 1) * 5)
-    .limit(5)
-    .toArray();
-  res.render("board.ejs", { 게시판: result });
-});
 
 app.delete("/category/book/bookdetail", async (req, res) => {
   console.log(req.body._id);
@@ -301,6 +256,28 @@ app.post("/addToWishlist", upload.single("image"), async (req, res) => {
     }
   );
   res.json({ message: "ok" });
+});
+
+app.get("/board", async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = 10;
+    const skip = (page - 1) * pageSize;
+
+    const result = await db
+      .collection("board")
+      .find()
+      .skip(skip)
+      .limit(pageSize)
+      .toArray();
+
+    res.json({ result });
+  } catch (error) {
+    console.error("게시판 데이터를 가져오는 중 에러 발생:", error);
+    res
+      .status(500)
+      .json({ message: "게시판 데이터를 가져오는 중 에러가 발생했습니다." });
+  }
 });
 
 //이거 맨밑으로
