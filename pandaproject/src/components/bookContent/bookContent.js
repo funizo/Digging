@@ -13,7 +13,8 @@ function NovelContent() {
     const [loading, setLoading] = useState(true);
     const [bookData, setBookData] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
-    
+    const [searchData, setSearchData] = useState("");
+
     useEffect(() => {
         const token = localStorage.getItem('token');
 
@@ -47,6 +48,26 @@ function NovelContent() {
         fetchData();
     }, []);
 
+
+    console.log(searchData);
+    const handleSearch = async(e) => {
+        e.preventDefault();
+     if (searchData === '') {
+        alert("내용을 작성해 주세요");
+        } else {
+            try {
+                const res = await fetch(`http://localhost:8080/search?val=${searchData}`);
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                const data = await res.json();
+                setBookData(data.result);
+            } catch(e) {
+                console.log("서버 요청중 오류발생",e);
+            }
+        }
+    }
+
     const goToBookDetail = (id, bookData) => {
         navigate(`/category/book/bookdetail/${id}`, { state: { bookData } });
     }
@@ -55,7 +76,10 @@ function NovelContent() {
         
         <div className='novel'>
             <Toolbar/>
-            <h2>도서</h2>
+            <a href="/category/book" style={{display: 'flex', justifyContent:"center",fontSize:"25px" }}>도서</a>
+            <input className="search" onChange={(e) => setSearchData(e.target.value)}/>
+            <button className="search-send" onClick={handleSearch}>검색</button>
+
             {loading ? (
                 bookData.map((_, i) => (
                     <div className="image-container" key={i}>

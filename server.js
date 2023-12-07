@@ -144,6 +144,12 @@ app.get('/category/book' , async (req, res) => {
   res.json({result:result})
 })
 
+app.get('/search', async (req, res)=>{
+  const result = await db.collection('book').find({bookTitle : {$regex : req.query.val} }).toArray()
+  console.log(result)
+  res.json({result : result})
+}) 
+
 
 app.post('/login' , (req,res,next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
