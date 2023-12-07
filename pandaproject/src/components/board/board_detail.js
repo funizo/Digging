@@ -10,11 +10,11 @@ function BoardDetail() {
   const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  console.log("postDetail11111111111111111111",postDetail);
-  console.log("userInfo",userInfo);
+  console.log("postDetail11111111111111111111", postDetail);
+  console.log("userInfo", userInfo);
   const isAuthor = userInfo?.id === postDetail?.id;
   const handleEdit = () => {
-    navigate(`/board_edit/${postId}`); 
+    navigate(`/board_edit/${postId}`);
   };
   const handleDelete = async () => {
     try {
@@ -29,8 +29,7 @@ function BoardDetail() {
       );
 
       if (response.ok) {
-     
-        navigate("/board"); 
+        navigate("/board");
       } else {
         const errorMessage = await response.text();
         console.error(
@@ -75,7 +74,6 @@ function BoardDetail() {
     <div>
       <Toolbar />
       <div className="post-detail-container">
-        
         {postDetail ? (
           <div>
             <h2>{postDetail.title}</h2>
@@ -91,11 +89,9 @@ function BoardDetail() {
       <div>
         <div>
           <div className="">
-          {isAuthor && <span onClick={handleEdit}>수정</span>}
+            {isAuthor && <span onClick={handleEdit}>수정</span>}
           </div>
-          <div>
-          {isAuthor && <span onClick={handleDelete}>삭제</span>}
-          </div>
+          <div>{isAuthor && <span onClick={handleDelete}>삭제</span>}</div>
         </div>
       </div>
       <Footer />
@@ -104,19 +100,3 @@ function BoardDetail() {
 }
 
 export default BoardDetail;
-import Toolbar from "../../components/toolbar/toolbar";
-import Footer from "../../components/footer/footer";
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
-import "./write.css";
-
-function BoardDetail() {
-    return(
-        <div>
-            <Toolbar/>
-            <Footer/>
-        </div>
-    )
-}
-export default BoardDetail

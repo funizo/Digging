@@ -15,7 +15,6 @@ import Board from "./components/board/board";
 import Edit from "./Page/edit/edit";
 import Manager from "./Page/manager/manger";
 import Write from "./components/board/write";
-import Write from "./components/board/write";
 import BoardEdit from "./components/board/board_edit";
 import BoardDetail from "./components/board/board_detail";
 
