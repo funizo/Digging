@@ -15,6 +15,9 @@ import Board from "./components/board/board";
 import Edit from "./Page/edit/edit";
 import Manager from "./Page/manager/manger";
 import Write from "./components/board/write";
+import Write from "./components/board/write";
+import BoardEdit from "./components/board/board_edit";
+import BoardDetail from "./components/board/board_detail";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -29,7 +32,10 @@ root.render(
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/board" element={<Board />} />
       <Route path="/board/write" element={<Write />} />
-      <Route path="/bookRegister" element={<BookRegister />} />
+      <Route path="/bookRegister" element={<BookRegister />} />{" "}
+      <Route path="/board/write" element={<Write />} />
+      <Route path="/board_edit/:postId" element={<BoardEdit />} />
+      <Route path="/board_detail/:postId" element={<BoardDetail />} />
       <Route path="*" element={<div>없는페이지에요</div>} />
       <Route path="/edit/:id" element={<Edit />} />
       <Route path="/manager" element={<Manager />} />
