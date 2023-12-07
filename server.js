@@ -166,8 +166,121 @@ app.get('/mypage', passport.authenticate('jwt', { session: false }), (req, res) 
 
 
 
+app.post("/board", async (req, res) => {
+const boardData = req.body;
+const today = new Date();
+const year = today.getFullYear().toString().slice(-2); 
+const month = ('0' + (today.getMonth() + 1)).slice(-2); 
+const day = ('0' + today.getDate()).slice(-2);
+const formattedDate = `${year}. ${month}. ${day}`;
+boardData.date = formattedDate;
+
+console.log('Received views:', boardData.views, 'Type:', typeof boardData.views);
+
+await db.collection("board").insertOne({
+    id: boardData.id,
+    title: boardData.title,
+    content: boardData.content,
+    writer: boardData.writer,
+    views: boardData.views,
+    date: boardData.date,
+  });
+  res.json({ message: "ok" });
+});
 
 
+ 
+app.get('/board', async (req, res) => {
+  try {
+    const boardData = await db.collection('board').find({}).toArray();
+    res.json(boardData);
+  } catch (error) {
+    console.error('패치 에러:', error.message);
+    res.status(500).json({ error: '서버에러' });
+  }
+});
+
+app.post('/board_detail/:postId', async (req, res) => {
+  const postId = req.params.postId;
+  try {
+    // 클라이언트에서 전달한 postId를 사용하여 해당 게시물을 찾음
+    const post = await db.collection('board').findOne({ _id: new ObjectId(postId) });
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+    const result = await db.collection('board').updateOne(
+      { _id: new ObjectId(postId) },
+      { $inc: { views: 1 } } // views를 1 증가시킴
+    );
+    if (result.matchedCount === 1) {
+      res.json({ message: 'OK' });
+    } else {
+      res.status(404).json({ message: 'Post not found' });
+    }
+  } catch (error) {
+    console.error('Error updating views:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.get('/board_detail/:postId', async (req, res) => {
+  const postId = req.params.postId;
+  try {
+    // 클라이언트에서 전달한 postId를 사용하여 해당 게시물을 찾음
+    const post = await db.collection('board').findOne({ _id: new ObjectId(postId) });
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    res.json(post);
+  } catch (error) {
+    console.error('Error fetching post detail:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.put('/board_edit/:postId', async (req, res) => {
+  const { postId } = req.params;
+  const updatedData = req.body;
+console.log("postId",postId)
+console.log("updatedData",updatedData)
+  try {
+    await db.collection('board').updateOne(
+      { _id: new ObjectId(postId)},
+      {
+        $set: {
+          title: updatedData.title,
+          content: updatedData.content,
+        },
+      }
+    );
+    
+    res.json({ message: 'ok' });
+  } catch (error) {
+    console.error('수정 에러:', error.message);
+    res.status(500).json({ error: '서버 에러' });
+  }
+  
+  app.delete('/board_delete/:postId', async (req, res) => {
+    const { postId } = req.params;
+  
+    try {
+      const result = await db.collection('board').deleteOne({
+        _id: new ObjectId(postId),
+      });
+  
+      if (result.deletedCount === 1) {
+        res.json({ message: 'ok' });
+      } else {
+        res.status(404).json({ error: '게시물을 찾을 수 없습니다.' });
+      }
+    } catch (error) {
+      console.error('삭제 에러:', error.message);
+      res.status(500).json({ error: '서버 에러' });
+    }
+  });
+});
 //이거 맨밑으로
 app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'pandaproject/build/index.html'))

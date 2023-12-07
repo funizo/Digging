@@ -160,7 +160,7 @@ function ToolBar(props) {
         <div className="d-flex">
           <div className="nav_list">
             <a href="/">HOME</a>
-            <a href="#home">찾아요</a>
+            <a href="/board">찾아요</a>
             <a href="#home">공유해요</a>
           </div>
           <button className="searchbutton">

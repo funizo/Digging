@@ -11,6 +11,9 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MyPage from "./Page/myPage/myPage";
 import Board from "./components/board/board";
+import Write from "./components/board/write";
+import BoardEdit from "./components/board/board_edit";
+import BoardDetail from "./components/board/board_detail";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -25,6 +28,9 @@ root.render(
         <Route path="/category/novel/detail/:id" element={<Detail />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/board" element={<Board />} />
+        <Route path="/board/write" element={<Write />} />
+        <Route path="/board_edit/:postId" element={<BoardEdit />} />
+        <Route path="/board_detail/:postId" element={<BoardDetail />} />
 
         <Route path="*" element={<div>없는페이지에요</div>} />
       </Routes>
