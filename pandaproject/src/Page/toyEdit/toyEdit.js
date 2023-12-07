@@ -1,20 +1,20 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import Footer from "./../../components/footer/footer";
-import Toolbar from "./../../components/toolbar/toolbar";
+import Footer from "../../components/footer/footer";
+import Toolbar from "../../components/toolbar/toolbar";
 import { useState,useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import "./edit.css"
+import "./toyEdit.css"
 
 function Edit() {
     const location = useLocation();
     const navigate = useNavigate();
-    const bookData = location.state?.bookData || {};
+    const toyData = location.state?.toyData || {};
     const [userInfo, setUserInfo] = useState(null);
     const [writeData,setWriteData] = useState({
-        title:bookData.bookTitle,
-        content:bookData.bookContent,
-        price:bookData.price,
-        _id:bookData._id,
+        title:toyData.toyTitle,
+        content:toyData.toyContent,
+        price:toyData.price,
+        _id:toyData._id,
         image:null
     })
     useEffect(() => {
@@ -46,14 +46,14 @@ function Edit() {
                 formData.append('id',userInfo.id);
                 formData.append('_id',writeData._id);
                 formData.append('username',userInfo.username);
-                const res = await fetch("http://localhost:8080/edit", {
+                const res = await fetch("http://localhost:8080/toy/toyedit", {
                     method: "POST",
                     body: formData,
                 });
 
                 if (res.ok) {
                     console.log("서버 전송 완료");
-                    navigate('/category/book');
+                    navigate('/category/toy');
                 } else {
                     console.log("서버 전송 실패");
                 }

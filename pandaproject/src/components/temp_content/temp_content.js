@@ -6,7 +6,7 @@ import "./temp_content.css";
 function Content() {
   const [popularData, setPopularData] = useState(popularItem);
   const [categoryUrl,setCategoryUrl] = useState([
-    "/category/fashion","/category/Electronic","/category/toy",
+    "/category/fashion","/category/electronic","/category/toy",
     "/category/goods","/category/ticket","/category/book",
     "/category/personal","/category/event"
   ]);

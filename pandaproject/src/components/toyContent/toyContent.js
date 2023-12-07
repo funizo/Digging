@@ -3,15 +3,15 @@ import { useNavigate, Link } from "react-router-dom";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
 import Toolbar from "../toolbar/toolbar";
-import "./bookContent.css";
+import "./toyContent.css";
 import Footer from "../footer/footer";
 import jwt_decode from "jwt-decode";
 
-function NovelContent() {
+function ToyContent() {
 
     const navigate  = useNavigate();
     const [loading, setLoading] = useState(true);
-    const [bookData, setBookData] = useState([]);
+    const [toyData, setToyData] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
     const [searchData, setSearchData] = useState("");
 
@@ -34,12 +34,12 @@ function NovelContent() {
     useEffect(() => {
         const fetchData = async () => {
         try {
-            const res = await fetch('http://localhost:8080/category/book');
+            const res = await fetch('http://localhost:8080/category/toy');
             if (!res.ok) {
             throw new Error('서버 응답 실패');
             }
             const data = await res.json();
-            setBookData(data.result);
+            setToyData(data.result);
         } catch (error) {
             console.error('데이터를 불러오는 중 에러 발생:', error);
         }
@@ -56,49 +56,49 @@ function NovelContent() {
         alert("내용을 작성해 주세요");
         } else {
             try {
-                const res = await fetch(`http://localhost:8080/book/search?val=${searchData}`);
+                const res = await fetch(`http://localhost:8080/toy/search?val=${searchData}`);
                 if (!res.ok) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
                 }
                 const data = await res.json();
-                setBookData(data.result);
+                setToyData(data.result);
             } catch(e) {
                 console.log("서버 요청중 오류발생",e);
             }
         }
     }
 
-    const goToBookDetail = (id, bookData) => {
-        navigate(`/category/book/bookdetail/${id}`, { state: { bookData } });
+    const goToToyDetail = (id, toyData) => {
+        navigate(`/category/toy/toydetail/${id}`, { state: { toyData } });
     }
 
     return(
         
         <div className='novel'>
             <Toolbar/>
-            <a href="/category/book" style={{display: 'flex', justifyContent:"center",fontSize:"25px" }}>도서</a>
+            <a href="/category/toy" style={{display: 'flex', justifyContent:"center",fontSize:"25px" }}>장난감</a>
             <input className="search" onChange={(e) => setSearchData(e.target.value)}/>
             <button className="search-send" onClick={handleSearch}>검색</button>
 
             {loading ? (
-                bookData.map((_, i) => (
+                toyData.map((_, i) => (
                     <div className="image-container" key={i}>
                         <TabContentSkeleton />
                     </div>
         ))
     ) : (
         <div className="novel-container">
-        {bookData.map((a, i) => (
-            <div className="image-container" key={i} onClick={() => goToBookDetail(a.id, a)}>
+        {toyData.map((a, i) => (
+            <div className="image-container" key={i} onClick={() => goToToyDetail(a.id, a)}>
             {/* <Link to={`././detail/${a.id}`} key={a.id}> */}
-                <TabContent key={i} bookData={bookData[i]} i={i} />
+                <TabContent key={i} toyData={toyData[i]} i={i} />
             {/* </Link> */}
         </div>
         
         ))}
             </div>
         )}
-        <a href={userInfo === null ? null : '/bookregister'} onClick={() => userInfo === null && alert("로그인해주세요")} className="write">글쓰기</a>
+        <a href={userInfo === null ? null : '/toyregister'} onClick={() => userInfo === null && alert("로그인해주세요")} className="write">글쓰기</a>
         
         <Footer/>
     </div>
@@ -127,12 +127,12 @@ function TabContentSkeleton() {
         return (
             <div className='novel-item'>
                 <div className='novel-img-box'>
-                <img src={props.bookData.bookImg} alt="" />
+                <img src={props.toyData.toyImg} alt="" />
                 </div>
                 <div className='text-content'>
-                <p className='novel-card-title'>{props.bookData.bookTitle}</p>
-                <p className='novel-card-writer'>{props.bookData.username}</p>
-                <p className='novel-card-price'>{Number(props.bookData.price).toLocaleString()}원</p>
+                <p className='novel-card-title'>{props.toyData.toyTitle}</p>
+                <p className='novel-card-writer'>{props.toyData.username}</p>
+                <p className='novel-card-price'>{Number(props.toyData.price).toLocaleString()}원</p>
                 
                 </div>
             </div>
@@ -141,4 +141,4 @@ function TabContentSkeleton() {
     
 }
 
-export default NovelContent
+export default ToyContent
