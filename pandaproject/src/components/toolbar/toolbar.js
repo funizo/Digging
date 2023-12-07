@@ -2,6 +2,7 @@ import { SlMagnifier } from "react-icons/sl";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useState, useRef, useEffect } from "react";
 import { Link,useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import "./toolbar.css";
 
 function ToolBar(props) {
@@ -10,7 +11,18 @@ function ToolBar(props) {
   const [showAlarmDropdown, setShowAlarmDropdown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-
+  const [userInfo, setUserInfo] = useState(null);
+  
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    
+    if (token) {
+      // 토큰이 존재할 경우 디코드하여 사용자 정보 설정
+      const decoded = jwt_decode(token);
+      setUserInfo(decoded);
+    } 
+  }, []);
+  
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('tokenExpiration');
@@ -74,6 +86,10 @@ function ToolBar(props) {
               <Link to ="/login">로그인</Link>
               )}
           </div>
+
+          <a href="/manager" style={
+            { display: userInfo && ( userInfo.id === '65703c972d7eba2e853faa06') ? 'block' : 'none',fontSize:'12px' }
+          }>관리자페이지이동</a>
 
           <div className="mypage">
             <a href="/mypage">

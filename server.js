@@ -141,6 +141,35 @@ app.post("/signup", async (req, res) => {
   res.json({ message: "ok" });
 });
 
+app.post("/bookregister", upload.single("image"), async (req, res) => {
+  // console.log(req.body);
+  const writeData = req.body;
+
+  await db.collection("book").insertOne({
+    id: writeData.id,
+    username: writeData.username,
+    bookTitle: writeData.title,
+    bookContent: writeData.content,
+    price: writeData.price,
+    bookImg: req.file ? req.file.location : "",
+  });
+  res.json({ message: "ok" });
+});
+
+app.get("/category/book", async (req, res) => {
+  const result = await db.collection("book").find().toArray();
+  res.json({ result: result });
+});
+
+app.get("/search", async (req, res) => {
+  const result = await db
+    .collection("book")
+    .find({ bookTitle: { $regex: req.query.val } })
+    .toArray();
+  console.log(result);
+  res.json({ result: result });
+});
+
 app.post("/login", (req, res, next) => {
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err) return res.status(500).json({ error: err.message });
@@ -225,6 +254,53 @@ app.get("/board/:id", async (req, res) => {
     .limit(5)
     .toArray();
   res.render("board.ejs", { 게시판: result });
+});
+
+app.delete("/category/book/bookdetail", async (req, res) => {
+  console.log(req.body._id);
+  try {
+    const bookId = req.body._id;
+    await db.collection("book").deleteOne({ _id: new ObjectId(bookId) });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "서버 오류" });
+  }
+  res.send("삭제완료");
+});
+
+app.post("/edit", upload.single("image"), async (req, res) => {
+  let objId = new ObjectId(req.body._id);
+  await db.collection("book").updateOne(
+    { _id: objId },
+    {
+      $set: {
+        id: req.body.id,
+        username: req.body.username,
+        bookTitle: req.body.title,
+        bookContent: req.body.content,
+        price: req.body.price,
+        bookImg: req.file ? req.file.location : "",
+      },
+    }
+  );
+  res.json({ message: "ok" });
+});
+
+app.post("/addToWishlist", upload.single("image"), async (req, res) => {
+  let objId = new ObjectId(req.body.id);
+  console.log(req.body);
+  console.log(objId);
+  await db.collection("user").updateOne(
+    { _id: objId },
+    {
+      $set: {
+        bookTitle: req.body.title,
+        price: req.body.price,
+        bookImg: req.body.image,
+      },
+    }
+  );
+  res.json({ message: "ok" });
 });
 
 //이거 맨밑으로
