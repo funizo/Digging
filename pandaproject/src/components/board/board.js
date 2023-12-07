@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Toolbar from "../../components/toolbar/toolbar";
 import Footer from "../../components/footer/footer";
 import "./board.css";
 
 function Board() {
   const [boardData, setBoardData] = useState([]);
-  console.log(boardData);
+  const [page, setPage] = useState(1);
+  const pageSize = 2; // 한 페이지에 보여줄 게시글 수
+
   useEffect(() => {
-    // 서버에서 게시글 데이터를 가져오는 로직
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8080/board");
+        const response = await fetch(
+          `http://localhost:8080/board?page=${page}&pageSize=${pageSize}`
+        );
         if (response.ok) {
           const data = await response.json();
           setBoardData(data);
@@ -23,7 +27,17 @@ function Board() {
     };
 
     fetchData();
-  }, []);
+  }, [page, pageSize]);
+
+  const goToPrevPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    setPage(page + 1);
+  };
 
   return (
     <div>
@@ -33,7 +47,9 @@ function Board() {
           <h3>게시판</h3>
         </div>
         <div className="write-button">
-          <a href="/board/write">글쓰기</a>
+          <Link to="/board/write">
+            <button>글쓰기</button>
+          </Link>
         </div>
         <table className="table">
           <thead>
@@ -58,6 +74,15 @@ function Board() {
           </tbody>
         </table>
       </div>
+
+      <div className="pagination">
+        <button onClick={goToPrevPage} disabled={page === 1}>
+          이전
+        </button>
+        <span>{`${page}`}</span>
+        <button onClick={goToNextPage}>다음</button>
+      </div>
+
       <Footer />
     </div>
   );

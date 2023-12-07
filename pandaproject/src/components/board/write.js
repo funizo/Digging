@@ -7,18 +7,16 @@ import "./write.css";
 
 const Write = ({ onPostSubmit }) => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const decoded = token ? jwt_decode(token) : null;
   const [boardData, setBoardData] = useState({
     id: decoded?.id || "",
-    number:"",
     title: "",
     content: "",
     writer: decoded?.username || "",
     views: "",
     date: "",
   });
- 
 
   const handleTitleChange = (e) => {
     setBoardData((prevData) => ({
@@ -43,7 +41,6 @@ const Write = ({ onPostSubmit }) => {
     console.log("날짜:", boardData.date);
     console.log("id:", boardData.id);
 
-
     try {
       const res = await fetch("http://localhost:8080/board", {
         method: "POST",
@@ -55,12 +52,11 @@ const Write = ({ onPostSubmit }) => {
 
       if (res.ok) {
         console.log("글 전송 ok.");
-        
+
         if (onPostSubmit) {
           onPostSubmit();
         }
         navigate("/board");
-        
       } else {
         console.error("글 전송 실패:", res.status);
       }
@@ -70,8 +66,7 @@ const Write = ({ onPostSubmit }) => {
 
     // 폼 초기화
     setBoardData({
-      id:"",
-      number: "",
+      id: "",
       title: "",
       content: "",
       writer: "",
