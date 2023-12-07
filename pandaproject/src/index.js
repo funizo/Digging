@@ -25,13 +25,14 @@ import Goods from "./components/goodsContent/goodsContent"
 import GoodsDetail from "./components/goodsDetail/goodsDetail"
 import GoodsRegister from "./Page/goodsRegister/goodsRegister"
 import GoodsEdit from "./Page/goodsEdit/goodsEdit"
-
-
-
 import Category from "./components/category";
 import reportWebVitals from "./reportWebVitals";
 import MyPage from "./Page/myPage/myPage";
 import Board from "./components/board/board";
+import Edit from "./Page/edit/edit";
+import Write from "./components/board/write"
+import BoardEdit from "./components/board/board_edit"
+import BoardDetail from "./components/board/board_detail"
 import Manager from "./Page/manager/manger";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -65,6 +66,11 @@ root.render(
         <Route path="/category/goods/goodsdetail/:id" element={<GoodsDetail />} />
         <Route path="/goodsregister" element={<GoodsRegister />} />
         <Route path="/goodsedit/:id" element={<GoodsEdit />} />
+        <Route path="/board/write" element={<Write />} />
+        <Route path="/board_edit/:postId" element={<BoardEdit />} />
+        <Route path="/board_detail/:postId" element={<BoardDetail />} />
+        <Route path="/edit/:id" element={<Edit />} />
+
 
 
 
