@@ -401,6 +401,34 @@ app.put("/board_edit/:postId", async (req, res) => {
     }
   });
 });
+app.get("/manager/userInfo", async (req, res) => {
+  try {
+    const users = await db
+      .collection("user")
+      .find({}, { username: 1, alert: 1 }) // 필드 지정
+      .toArray();
+    res.json(users);
+  } catch (error) {
+    console.error("Error fetching user information:", error);
+    res.status(500).json({ error: "Failed to fetch user information" });
+  }
+});
+
+app.post("/manager/userInfo", async (req, res) => {
+  let objId = new ObjectId(req.body.id);
+  console.log(req.body);
+  console.log(objId);
+  await db.collection("user").updateOne(
+    { _id: objId },
+    {
+      $addToSet: {
+        alert: req.body.alert,
+      },
+    }
+  );
+  res.json({ message: "ok" });
+});
+
 //이거 맨밑으로
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "pandaproject/build/index.html"));

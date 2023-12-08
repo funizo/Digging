@@ -10,8 +10,7 @@ function BoardDetail() {
   const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  console.log("postDetail11111111111111111111", postDetail);
-  console.log("userInfo", userInfo);
+
   const isAuthor = userInfo?.id === postDetail?.id;
   const handleEdit = () => {
     navigate(`/board_edit/${postId}`);
@@ -37,7 +36,7 @@ function BoardDetail() {
         );
       }
     } catch (error) {
-      console.error("삭제 에러 post:", error.message);
+      console.error("Error deleting post:", error.message);
     }
   };
 
@@ -58,7 +57,7 @@ function BoardDetail() {
       } else {
         const errorMessage = await response.text();
         console.error(
-          `디테일 에러. Status: ${response.status}, Message: ${errorMessage}`
+          `Failed to fetch post detail. Status: ${response.status}, Message: ${errorMessage}`
         );
       }
     } catch (error) {
@@ -91,7 +90,7 @@ function BoardDetail() {
           <div className="">
             {isAuthor && <span onClick={handleEdit}>수정</span>}
           </div>
-          <div>{isAuthor && <span onClick={handleDelete}>삭제</span>}</div>
+          <div>{isAuthor && <button onClick={handleDelete}>삭제</button>}</div>
         </div>
       </div>
       <Footer />

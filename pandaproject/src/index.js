@@ -13,7 +13,7 @@ import reportWebVitals from "./reportWebVitals";
 import MyPage from "./Page/myPage/myPage";
 import Board from "./components/board/board";
 import Edit from "./Page/edit/edit";
-import Manager from "./Page/manager/manger";
+import Manager from "./Page/manager/manager";
 import Write from "./components/board/write";
 import BoardEdit from "./components/board/board_edit";
 import BoardDetail from "./components/board/board_detail";
@@ -30,14 +30,13 @@ root.render(
       <Route path="/category/book/bookdetail/:id" element={<BookDetail />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/board" element={<Board />} />
-      <Route path="/board/write" element={<Write />} />
       <Route path="/bookRegister" element={<BookRegister />} />{" "}
+      <Route path="/manager" element={<Manager />} />
       <Route path="/board/write" element={<Write />} />
       <Route path="/board_edit/:postId" element={<BoardEdit />} />
       <Route path="/board_detail/:postId" element={<BoardDetail />} />
-      <Route path="*" element={<div>없는페이지에요</div>} />
       <Route path="/edit/:id" element={<Edit />} />
-      <Route path="/manager" element={<Manager />} />
+      <Route path="*" element={<div>없는페이지에요</div>} />
     </Routes>
   </BrowserRouter>
 );
