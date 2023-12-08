@@ -38,7 +38,7 @@ function BoardDetail() {
         );
       }
     } catch (error) {
-      console.error("삭제 에러 post:", error.message);
+      console.error("Error deleting post:", error.message);
     }
   };
 
@@ -59,7 +59,7 @@ function BoardDetail() {
       } else {
         const errorMessage = await response.text();
         console.error(
-          `디테일 에러. Status: ${response.status}, Message: ${errorMessage}`
+          `Failed to fetch post detail. Status: ${response.status}, Message: ${errorMessage}`
         );
       }
     } catch (error) {
