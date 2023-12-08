@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
 import Toolbar from "../toolbar/toolbar";
-import "./bookContent.css";
+import "./fashionContent.css";
 import Footer from "../footer/footer";
 import jwt_decode from "jwt-decode";
 
-function NovelContent() {
+function FashionContent() {
 
     const navigate  = useNavigate();
     const [loading, setLoading] = useState(true);
-    const [bookData, setBookData] = useState([]);
+    const [fashionData, setFashionData] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
     const [searchData, setSearchData] = useState("");
 
@@ -34,12 +34,12 @@ function NovelContent() {
     useEffect(() => {
         const fetchData = async () => {
         try {
-            const res = await fetch('http://localhost:8080/category/book');
+            const res = await fetch('http://localhost:8080/category/fashion');
             if (!res.ok) {
             throw new Error('서버 응답 실패');
             }
             const data = await res.json();
-            setBookData(data.result);
+            setFashionData(data.result);
         } catch (error) {
             console.error('데이터를 불러오는 중 에러 발생:', error);
         }
@@ -56,49 +56,49 @@ function NovelContent() {
         alert("내용을 작성해 주세요");
         } else {
             try {
-                const res = await fetch(`http://localhost:8080/book/search?val=${searchData}`);
+                const res = await fetch(`http://localhost:8080/fashion/search?val=${searchData}`);
                 if (!res.ok) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
                 }
                 const data = await res.json();
-                setBookData(data.result);
+                setFashionData(data.result);
             } catch(e) {
                 console.log("서버 요청중 오류발생",e);
             }
         }
     }
 
-    const goToBookDetail = (id, bookData) => {
-        navigate(`/category/book/bookdetail/${id}`, { state: { bookData } });
+    const goToFashionDetail = (id, fashionData) => {
+        navigate(`/category/fashion/fashiondetail/${id}`, { state: { fashionData } });
     }
 
     return(
         
         <div className='novel'>
             <Toolbar/>
-            <a href="/category/book" style={{display: 'flex', justifyContent:"center",fontSize:"25px" }}>도서</a>
+            <a href="/category/fashion" style={{display: 'flex', justifyContent:"center",fontSize:"25px" }}>패션</a>
             <input className="search" onChange={(e) => setSearchData(e.target.value)}/>
             <button className="search-send" onClick={handleSearch}>검색</button>
 
             {loading ? (
-                bookData.map((_, i) => (
+                fashionData.map((_, i) => (
                     <div className="image-container" key={i}>
                         <TabContentSkeleton />
                     </div>
         ))
     ) : (
         <div className="novel-container">
-        {bookData.map((a, i) => (
-            <div className="image-container" key={i} onClick={() => goToBookDetail(a.id, a)}>
+        {fashionData.map((a, i) => (
+            <div className="image-container" key={i} onClick={() => goToFashionDetail(a.id, a)}>
             {/* <Link to={`././detail/${a.id}`} key={a.id}> */}
-                <TabContent key={i} bookData={bookData[i]} i={i} />
+                <TabContent key={i} fashionData={fashionData[i]} i={i} />
             {/* </Link> */}
         </div>
         
         ))}
             </div>
         )}
-        <a href={userInfo === null ? null : '/bookregister'} onClick={() => userInfo === null && alert("로그인해주세요")} className="write">글쓰기</a>
+        <a href={userInfo === null ? null : '/fashionregister'} onClick={() => userInfo === null && alert("로그인해주세요")} className="write">글쓰기</a>
         
         <Footer/>
     </div>
@@ -127,12 +127,12 @@ function TabContentSkeleton() {
         return (
             <div className='novel-item'>
                 <div className='novel-img-box'>
-                <img src={props.bookData.bookImg} alt="" />
+                <img src={props.fashionData.fashionImg} alt="" />
                 </div>
                 <div className='text-content'>
-                <p className='novel-card-title'>{props.bookData.bookTitle}</p>
-                <p className='novel-card-writer'>{props.bookData.username}</p>
-                <p className='novel-card-price'>{Number(props.bookData.price).toLocaleString()}원</p>
+                <p className='novel-card-title'>{props.fashionData.fashionTitle}</p>
+                <p className='novel-card-writer'>{props.fashionData.username}</p>
+                <p className='novel-card-price'>{Number(props.fashionData.price).toLocaleString()}원</p>
                 
                 </div>
             </div>
@@ -141,4 +141,4 @@ function TabContentSkeleton() {
     
 }
 
-export default NovelContent
+export default FashionContent

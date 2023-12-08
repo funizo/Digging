@@ -136,6 +136,9 @@ app.post("/signup", async (req, res) => {
   res.json({ message: "ok" });
 });
 
+
+///////////////////////////////////////////////////
+
 app.post("/bookregister", upload.single("image"), async (req, res) => {
   // console.log(req.body);
   const writeData = req.body;
@@ -151,19 +154,261 @@ app.post("/bookregister", upload.single("image"), async (req, res) => {
   res.json({ message: "ok" });
 });
 
-app.get("/category/book", async (req, res) => {
-  const result = await db.collection("book").find().toArray();
-  res.json({ result: result });
+app.get('/category/book' , async (req, res) => {
+  const result = await db.collection('book').find().toArray()
+  res.json({result:result})
+})
+app.get('/book/search', async (req, res)=>{
+  const result = await db.collection('book').find({bookTitle : {$regex : req.query.val} }).toArray()
+  console.log(result)
+  res.json({result : result})
+})
+
+app.delete('/category/book/bookdetail', async (req, res) => {
+  console.log(req.body._id)
+  try {
+    const bookId = req.body._id
+    await db.collection('book').deleteOne({ _id: new ObjectId(bookId) });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: '서버 오류' });
+  }
+  res.send("삭제완료")
 });
 
-app.get("/search", async (req, res) => {
-  const result = await db
-    .collection("book")
-    .find({ bookTitle: { $regex: req.query.val } })
-    .toArray();
-  console.log(result);
-  res.json({ result: result });
+app.post('/book/bookedit', upload.single('image') ,async (req, res) => {
+    let objId = new ObjectId(req.body._id);
+    await db.collection('book').updateOne({_id:objId}
+    ,{$set:{
+      id: req.body.id,
+      username: req.body.username,
+      bookTitle:req.body.title,
+      bookContent: req.body.content,
+      price:req.body.price,
+      bookImg:req.file ? req.file.location:''
+    }})
+    res.json({ message: 'ok' });
+})
+
+///////////////////////////////////////////////////
+
+app.get('/category/fashion' , async (req, res) => {
+  const result = await db.collection('fashion').find().toArray()
+  res.json({result:result})
+})
+
+app.post('/fashionregister' , upload.single('image'), async (req, res) => {
+  // console.log(req.body);
+  const writeData = req.body;
+
+  await db.collection('fashion').insertOne({
+    id: writeData.id,
+    username: writeData.username,
+    fashionTitle:writeData.title,
+    fashionContent:writeData.content,
+    price:writeData.price,
+    fashionImg:req.file ? req.file.location:'',
+  });
+  res.json({ message: 'ok' });
+})
+
+app.get('/fashion/search', async (req, res)=>{
+  const result = await db.collection('fashion').find({fashionTitle : {$regex : req.query.val} }).toArray()
+  console.log(result)
+  res.json({result : result})
+})
+
+app.delete('/category/fashion/fashiondetail', async (req, res) => {
+  console.log(req.body._id)
+  try {
+    const fashionId = req.body._id
+    await db.collection('fashion').deleteOne({ _id: new ObjectId(fashionId) });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: '서버 오류' });
+  }
+  res.send("삭제완료")
 });
+
+app.post('/fashion/fashionedit', upload.single('image') ,async (req, res) => {
+  let objId = new ObjectId(req.body._id);
+  await db.collection('fashion').updateOne({_id:objId}
+  ,{$set:{
+    id: req.body.id,
+    username: req.body.username,
+    fashionTitle:req.body.title,
+    fashionContent: req.body.content,
+    price:req.body.price,
+    fashionImg:req.file ? req.file.location:''
+  }})
+  res.json({ message: 'ok' });
+})
+
+///////////////////////////////////////////////////
+
+app.get('/category/electronic' , async (req, res) => {
+  const result = await db.collection('electronic').find().toArray()
+  res.json({result:result})
+})
+
+app.post('/electronicregister' , upload.single('image'), async (req, res) => {
+  // console.log(req.body);
+  const writeData = req.body;
+
+  await db.collection('electronic').insertOne({
+    id: writeData.id,
+    username: writeData.username,
+    electronicTitle:writeData.title,
+    electronicContent:writeData.content,
+    price:writeData.price,
+    electronicImg:req.file ? req.file.location:'',
+  });
+  res.json({ message: 'ok' });
+})
+
+app.get('/electronic/search', async (req, res)=>{
+  const result = await db.collection('electronic').find({electronicTitle : {$regex : req.query.val} }).toArray()
+  console.log(result)
+  res.json({result : result})
+})
+
+app.delete('/category/electronic/electronicdetail', async (req, res) => {
+  console.log(req.body._id)
+  try {
+    const electronicId = req.body._id
+    await db.collection('electronic').deleteOne({ _id: new ObjectId(electronicId) });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: '서버 오류' });
+  }
+  res.send("삭제완료")
+});
+
+app.post('/electronic/electronicedit', upload.single('image') ,async (req, res) => {
+  let objId = new ObjectId(req.body._id);
+  await db.collection('electronic').updateOne({_id:objId}
+  ,{$set:{
+    id: req.body.id,
+    username: req.body.username,
+    electronicTitle:req.body.title,
+    electronicContent: req.body.content,
+    price:req.body.price,
+    electronicImg:req.file ? req.file.location:''
+  }})
+  res.json({ message: 'ok' });
+})
+
+
+///////////////////////////////////////////////////
+
+app.get('/category/toy' , async (req, res) => {
+  const result = await db.collection('toy').find().toArray()
+  res.json({result:result})
+})
+
+app.post('/toyregister' , upload.single('image'), async (req, res) => {
+  // console.log(req.body);
+  const writeData = req.body;
+
+  await db.collection('toy').insertOne({
+    id: writeData.id,
+    username: writeData.username,
+    toyTitle:writeData.title,
+    toyContent:writeData.content,
+    price:writeData.price,
+    toyImg:req.file ? req.file.location:'',
+  });
+  res.json({ message: 'ok' });
+})
+
+app.get('/toy/search', async (req, res)=>{
+  const result = await db.collection('toy').find({toyTitle : {$regex : req.query.val} }).toArray()
+  console.log(result)
+  res.json({result : result})
+})
+
+app.delete('/category/toy/toydetail', async (req, res) => {
+  console.log(req.body._id)
+  try {
+    const toyId = req.body._id
+    await db.collection('toy').deleteOne({ _id: new ObjectId(toyId) });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: '서버 오류' });
+  }
+  res.send("삭제완료")
+});
+
+app.post('/toy/toyedit', upload.single('image') ,async (req, res) => {
+  let objId = new ObjectId(req.body._id);
+  await db.collection('toy').updateOne({_id:objId}
+  ,{$set:{
+    id: req.body.id,
+    username: req.body.username,
+    toyTitle:req.body.title,
+    toyContent: req.body.content,
+    price:req.body.price,
+    toyImg:req.file ? req.file.location:''
+  }})
+  res.json({ message: 'ok' });
+})
+
+///////////////////////////////////////////////////
+
+app.get('/category/goods' , async (req, res) => {
+  const result = await db.collection('goods').find().toArray()
+  res.json({result:result})
+})
+
+app.post('/goodsregister' , upload.single('image'), async (req, res) => {
+  // console.log(req.body);
+  const writeData = req.body;
+
+  await db.collection('goods').insertOne({
+    id: writeData.id,
+    username: writeData.username,
+    goodsTitle:writeData.title,
+    goodsContent:writeData.content,
+    price:writeData.price,
+    goodsImg:req.file ? req.file.location:'',
+  });
+  res.json({ message: 'ok' });
+})
+
+app.get('/goods/search', async (req, res)=>{
+  const result = await db.collection('goods').find({goodsTitle : {$regex : req.query.val} }).toArray()
+  console.log(result)
+  res.json({result : result})
+})
+
+app.delete('/category/goods/goodsdetail', async (req, res) => {
+  console.log(req.body._id)
+  try {
+    const goodsId = req.body._id
+    await db.collection('goods').deleteOne({ _id: new ObjectId(goodsId) });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: '서버 오류' });
+  }
+  res.send("삭제완료")
+});
+
+app.post('/goods/goodsedit', upload.single('image') ,async (req, res) => {
+  let objId = new ObjectId(req.body._id);
+  await db.collection('goods').updateOne({_id:objId}
+  ,{$set:{
+    id: req.body.id,
+    username: req.body.username,
+    goodsTitle:req.body.title,
+    goodsContent: req.body.content,
+    price:req.body.price,
+    goodsImg:req.file ? req.file.location:''
+  }})
+  res.json({ message: 'ok' });
+})
+
+
+///////////////////////////////////////////////////
 
 app.post("/login", (req, res, next) => {
   passport.authenticate("local", { session: false }, (err, user, info) => {
@@ -197,49 +442,44 @@ app.get(
   }
 );
 
-app.get(
-  "/mypage",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.json({
-      id: req.user._id,
-      username: req.user.username,
-      email: req.user.email,
-      address: req.user.address,
-      subaddress: req.user.subaddress,
-    });
-  }
-);
+app.get('/mypage', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.json({
+    id: req.user._id,
+    username: req.user.username,
+    email: req.user.email,
+    address: req.user.address,
+    subaddress: req.user.subaddress,
+  });
+});
 
-app.delete("/category/book/bookdetail", async (req, res) => {
-  console.log(req.body._id);
+
+
+app.delete('/category/book/bookdetail', async (req, res) => {
+  console.log(req.body._id)
   try {
-    const bookId = req.body._id;
-    await db.collection("book").deleteOne({ _id: new ObjectId(bookId) });
+    const bookId = req.body._id
+    await db.collection('book').deleteOne({ _id: new ObjectId(bookId) });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "서버 오류" });
+    res.status(500).json({ error: '서버 오류' });
   }
-  res.send("삭제완료");
+  res.send("삭제완료")
 });
 
-app.post("/edit", upload.single("image"), async (req, res) => {
-  let objId = new ObjectId(req.body._id);
-  await db.collection("book").updateOne(
-    { _id: objId },
-    {
-      $set: {
-        id: req.body.id,
-        username: req.body.username,
-        bookTitle: req.body.title,
-        bookContent: req.body.content,
-        price: req.body.price,
-        bookImg: req.file ? req.file.location : "",
-      },
-    }
-  );
-  res.json({ message: "ok" });
-});
+app.post('/edit', upload.single('image') ,async (req, res) => {
+    let objId = new ObjectId(req.body._id);
+    await db.collection('book').updateOne({_id:objId}
+    ,{$set:{
+      id: req.body.id,
+      username: req.body.username,
+      bookTitle:req.body.title,
+      bookContent: req.body.content,
+      price:req.body.price,
+      bookImg:req.file ? req.file.location:''
+    }})
+    res.json({ message: 'ok' });
+})
+
 
 app.post("/addToWishlist", upload.single("image"), async (req, res) => {
   let objId = new ObjectId(req.body.id);
