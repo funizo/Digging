@@ -261,25 +261,24 @@ console.log("updatedData",updatedData)
     console.error('수정 에러:', error.message);
     res.status(500).json({ error: '서버 에러' });
   }
-  
-  app.delete('/board_delete/:postId', async (req, res) => {
-    const { postId } = req.params;
-  
-    try {
-      const result = await db.collection('board').deleteOne({
-        _id: new ObjectId(postId),
-      });
-  
-      if (result.deletedCount === 1) {
-        res.json({ message: 'ok' });
-      } else {
-        res.status(404).json({ error: '게시물을 찾을 수 없습니다.' });
-      }
-    } catch (error) {
-      console.error('삭제 에러:', error.message);
-      res.status(500).json({ error: '서버 에러' });
+});
+app.delete('/board_delete/:postId', async (req, res) => {
+  const { postId } = req.params;
+
+  try {
+    const result = await db.collection('board').deleteOne({
+      _id: new ObjectId(postId),
+    });
+
+    if (result.deletedCount === 1) {
+      res.json({ message: 'ok' });
+    } else {
+      res.status(404).json({ error: '게시물을 찾을 수 없습니다.' });
     }
-  });
+  } catch (error) {
+    console.error('삭제 에러:', error.message);
+    res.status(500).json({ error: '서버 에러' });
+  }
 });
 //이거 맨밑으로
 app.get('*', function(req, res) {
