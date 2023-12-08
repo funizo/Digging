@@ -30,10 +30,23 @@ import reportWebVitals from "./reportWebVitals";
 import MyPage from "./Page/myPage/myPage";
 import Board from "./components/board/board";
 import Edit from "./Page/edit/edit";
-import Write from "./components/board/write"
-import BoardEdit from "./components/board/board_edit"
-import BoardDetail from "./components/board/board_detail"
+import Write from "./components/board/write";
+import BoardEdit from "./components/board/board_edit";
+import BoardDetail from "./components/board/board_detail";
 import Manager from "./Page/manager/manger";
+import Ticket from "./components/ticketContent/ticketContent";
+import TicketWrite from "./components/ticketContent/write";
+import TicketDetail from "./components/ticketContent/ticket_detail";
+import TicketEdit from "./components/ticketContent/ticket_edit";
+import Share from "./components/shareContent/share";
+import ShareWrite from "./components/shareContent/write";
+import ShareDetail from "./components/shareContent/share_detail";
+import ShareEdit from "./components/shareContent/share_edit";
+import Event from "./components/eventContent/event";
+import EventWrite from "./components/eventContent/write";
+import EventDetail from "./components/eventContent/event_detail";
+import EventEdit from "./components/eventContent/event_edit";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -56,6 +69,18 @@ root.render(
         <Route path="/electronicregister" element={<ElectronicRegister />} />
         <Route path="/category/electronic/electronicdetail/:id" element={<ElectronicDetail />} />
         <Route path="/electronicedit/:id" element={<ElectronicEdit />} />
+        <Route path="/category/ticket" element={<Ticket />} />
+        <Route path="/category/ticket/write" element={<TicketWrite />} />
+        <Route path="/category/ticket_detail/:postId" element={<TicketDetail />} />
+        <Route path="/category/ticket_edit/:postId" element={<TicketEdit />} />
+        <Route path="/share" element={<Share />} />
+        <Route path="/share/write" element={<ShareWrite />} />
+        <Route path="/share_detail/:postId" element={<ShareDetail />} />
+        <Route path="/share_edit/:postId" element={<ShareEdit />} />
+        <Route path="/event" element={<Event />} />
+        <Route path="/event/write" element={<EventWrite />} />
+        <Route path="/event_detail/:postId" element={<EventDetail />} />
+        <Route path="/event_edit/:postId" element={<EventEdit />} />
         
         <Route path="/category/toy" element={<Toy />} />
         <Route path="/category/toy/toydetail/:id" element={<ToyDetail />} />

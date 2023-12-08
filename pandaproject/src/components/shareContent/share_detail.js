@@ -4,7 +4,7 @@ import Footer from "../../components/footer/footer";
 import { useParams, useHistory, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
-function BoardDetail() {
+function ShareDetail() {
   const { postId } = useParams(); // URL 파라미터에서 postId 추출
   const [postDetail, setPostDetail] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
@@ -12,15 +12,15 @@ function BoardDetail() {
   const token = localStorage.getItem("token");
 
   const isAuthor = ((userInfo?.id === postDetail?.id) || userInfo?.id === '65703c972d7eba2e853faa06');
-  
+
   const handleEdit = () => {
-    navigate(`/board_edit/${postId}`);
+    navigate(`/share_edit/${postId}`);
   };
   const handleDelete = async () => {
     try {
       console.log("handle-postId",postId)
       const response = await fetch(
-        `http://localhost:8080/board_detail/${postId}`,
+        `http://localhost:8080/share_detail/${postId}`,
         {
           method: "DELETE",
           headers: {
@@ -30,7 +30,7 @@ function BoardDetail() {
       );
 
       if (response.ok) {
-        navigate("/board");
+        navigate("/share");
       } else {
         const errorMessage = await response.text();
         console.error(
@@ -51,7 +51,7 @@ function BoardDetail() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/board_detail/${postId}`
+        `http://localhost:8080/share_detail/${postId}`
       );
       if (response.ok) {
         const data = await response.json();
@@ -100,4 +100,4 @@ function BoardDetail() {
   );
 }
 
-export default BoardDetail;
+export default ShareDetail;
