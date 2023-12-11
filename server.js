@@ -400,6 +400,423 @@ app.put("/board_edit/:postId", async (req, res) => {
     }
   });
 
+  app.get('/category/ticket', async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1
+        const pageSize = 10
+        const skip = (page - 1) * pageSize
+
+        const result = await db
+            .collection('ticket')
+            .find()
+            .skip(skip)
+            .limit(pageSize)
+            .toArray()
+
+        res.json({ result })
+    } catch (error) {
+        console.error('게시판 데이터를 가져오는 중 에러 발생:', error)
+        res.status(500).json({
+            message: '게시판 데이터를 가져오는 중 에러가 발생했습니다.',
+        })
+    }
+})
+app.post('/category/ticket', async (req, res) => {
+    const ticketData = req.body
+    ticketData.date = getFormattedDate() //함수 받아오기;
+    console.log(ticketData)
+    console.log(
+        'Received views:',
+        ticketData.views,
+        'Type:',
+        typeof ticketData.views
+    )
+
+    await db.collection('ticket').insertOne({
+        id: ticketData.id,
+        title: ticketData.title,
+        content: ticketData.content,
+        writer: ticketData.writer,
+        views: ticketData.views,
+        date: ticketData.date,
+    })
+    res.json({ message: 'ok' })
+})
+
+app.get('/category/ticket', async (req, res) => {
+    try {
+        const ticketData = await db.collection('ticket').find({}).toArray()
+        res.json(ticketData)
+    } catch (error) {
+        console.error('패치 에러:', error.message)
+        res.status(500).json({ error: '서버에러' })
+    }
+})
+
+app.post('/category/ticket_detail/:postId', async (req, res) => {
+    const postId = req.params.postId
+    try {
+        // 클라이언트에서 전달한 postId를 사용하여 해당 게시물을 찾음
+        const post = await db
+            .collection('ticket')
+            .findOne({ _id: new ObjectId(postId) })
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' })
+        }
+        const result = await db.collection('ticket').updateOne(
+            { _id: new ObjectId(postId) },
+            { $inc: { views: 1 } } // views를 1 증가시킴
+        )
+        if (result.matchedCount === 1) {
+            res.json({ message: 'OK' })
+        } else {
+            res.status(404).json({ message: 'Post not found' })
+        }
+    } catch (error) {
+        console.error('Error updating views:', error)
+        res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
+app.get('/category/ticket_detail/:postId', async (req, res) => {
+    const postId = req.params.postId
+    try {
+        // 클라이언트에서 전달한 postId를 사용하여 해당 게시물을 찾음
+        const post = await db
+            .collection('ticket')
+            .findOne({ _id: new ObjectId(postId) })
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' })
+        }
+
+        res.json(post)
+    } catch (error) {
+        console.error('Error fetching post detail:', error)
+        res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
+app.put('/category/ticket_edit/:postId', async (req, res) => {
+    const { postId } = req.params
+    const updatedData = req.body
+    console.log('postId', postId)
+    console.log('updatedData', updatedData)
+    try {
+        await db.collection('ticket').updateOne(
+            { _id: new ObjectId(postId) },
+            {
+                $set: {
+                    title: updatedData.title,
+                    content: updatedData.content,
+                },
+            }
+        )
+
+        res.json({ message: 'ok' })
+    } catch (error) {
+        console.error('수정 에러:', error.message)
+        res.status(500).json({ error: '서버 에러' })
+    }
+})
+app.delete('/category/ticket_detail/:postId', async (req, res) => {
+    const { postId } = req.params
+    console.log(postId, postId)
+    try {
+        const result = await db.collection('ticket').deleteOne({
+            _id: new ObjectId(postId),
+        })
+
+        if (result.deletedCount === 1) {
+            res.json({ message: 'ok' })
+        } else {
+            res.status(404).json({ error: '게시물을 찾을 수 없습니다.' })
+        }
+    } catch (error) {
+        console.error('삭제 에러:', error.message)
+        res.status(500).json({ error: '서버 에러' })
+    }
+})
+///////////////////////////////////////////////////
+app.post('/share', async (req, res) => {
+    const shareData = req.body
+    shareData.date = getFormattedDate() //함수 받아오기;
+
+    console.log(
+        'Received views:',
+        shareData.views,
+        'Type:',
+        typeof shareData.views
+    )
+
+    await db.collection('share').insertOne({
+        id: shareData.id,
+        title: shareData.title,
+        content: shareData.content,
+        writer: shareData.writer,
+        views: shareData.views,
+        date: shareData.date,
+    })
+    res.json({ message: 'ok' })
+})
+
+app.get('/share', async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1
+        const pageSize = 10
+        const skip = (page - 1) * pageSize
+
+        const result = await db
+            .collection('share')
+            .find()
+            .skip(skip)
+            .limit(pageSize)
+            .toArray()
+
+        res.json({ result })
+    } catch (error) {
+        console.error('게시판 데이터를 가져오는 중 에러 발생:', error)
+        res.status(500).json({
+            message: '게시판 데이터를 가져오는 중 에러가 발생했습니다.',
+        })
+    }
+})
+
+app.get('/share', async (req, res) => {
+    try {
+        const shareData = await db.collection('share').find({}).toArray()
+        res.json(shareData)
+    } catch (error) {
+        console.error('패치 에러:', error.message)
+        res.status(500).json({ error: '서버에러' })
+    }
+})
+
+app.post('/share_detail/:postId', async (req, res) => {
+    const postId = req.params.postId
+    try {
+        // 클라이언트에서 전달한 postId를 사용하여 해당 게시물을 찾음
+        const post = await db
+            .collection('share')
+            .findOne({ _id: new ObjectId(postId) })
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' })
+        }
+        const result = await db.collection('share').updateOne(
+            { _id: new ObjectId(postId) },
+            { $inc: { views: 1 } } // views를 1 증가시킴
+        )
+        if (result.matchedCount === 1) {
+            res.json({ message: 'OK' })
+        } else {
+            res.status(404).json({ message: 'Post not found' })
+        }
+    } catch (error) {
+        console.error('Error updating views:', error)
+        res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
+app.get('/share_detail/:postId', async (req, res) => {
+    const postId = req.params.postId
+    try {
+        // 클라이언트에서 전달한 postId를 사용하여 해당 게시물을 찾음
+        const post = await db
+            .collection('share')
+            .findOne({ _id: new ObjectId(postId) })
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' })
+        }
+
+        res.json(post)
+    } catch (error) {
+        console.error('Error fetching post detail:', error)
+        res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
+app.put('/share_edit/:postId', async (req, res) => {
+    const { postId } = req.params
+    const updatedData = req.body
+    console.log('postId', postId)
+    console.log('updatedData', updatedData)
+    try {
+        await db.collection('share').updateOne(
+            { _id: new ObjectId(postId) },
+            {
+                $set: {
+                    title: updatedData.title,
+                    content: updatedData.content,
+                },
+            }
+        )
+
+        res.json({ message: 'ok' })
+    } catch (error) {
+        console.error('수정 에러:', error.message)
+        res.status(500).json({ error: '서버 에러' })
+    }
+})
+app.delete('/share_detail/:postId', async (req, res) => {
+    const { postId } = req.params
+    console.log(postId, postId)
+    try {
+        const result = await db.collection('share').deleteOne({
+            _id: new ObjectId(postId),
+        })
+
+        if (result.deletedCount === 1) {
+            res.json({ message: 'ok' })
+        } else {
+            res.status(404).json({ error: '게시물을 찾을 수 없습니다.' })
+        }
+    } catch (error) {
+        console.error('삭제 에러:', error.message)
+        res.status(500).json({ error: '서버 에러' })
+    }
+})
+////////////////////////////////////////////////////////////
+app.post('/event', async (req, res) => {
+    const eventData = req.body
+    eventData.date = getFormattedDate() //함수 받아오기;
+
+    console.log(
+        'Received views:',
+        eventData.views,
+        'Type:',
+        typeof eventData.views
+    )
+
+    await db.collection('event').insertOne({
+        id: eventData.id,
+        title: eventData.title,
+        content: eventData.content,
+        writer: eventData.writer,
+        views: eventData.views,
+        date: eventData.date,
+    })
+    res.json({ message: 'ok' })
+})
+
+app.get('/event', async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1
+        const pageSize = 10
+        const skip = (page - 1) * pageSize
+
+        const result = await db
+            .collection('event')
+            .find()
+            .skip(skip)
+            .limit(pageSize)
+            .toArray()
+
+        res.json({ result })
+    } catch (error) {
+        console.error('게시판 데이터를 가져오는 중 에러 발생:', error)
+        res.status(500).json({
+            message: '게시판 데이터를 가져오는 중 에러가 발생했습니다.',
+        })
+    }
+})
+
+app.get('/event', async (req, res) => {
+    try {
+        const eventData = await db.collection('event').find({}).toArray()
+        res.json(eventData)
+    } catch (error) {
+        console.error('패치 에러:', error.message)
+        res.status(500).json({ error: '서버에러' })
+    }
+})
+
+app.post('/event_detail/:postId', async (req, res) => {
+    const postId = req.params.postId
+    try {
+        // 클라이언트에서 전달한 postId를 사용하여 해당 게시물을 찾음
+        const post = await db
+            .collection('event')
+            .findOne({ _id: new ObjectId(postId) })
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' })
+        }
+        const result = await db.collection('event').updateOne(
+            { _id: new ObjectId(postId) },
+            { $inc: { views: 1 } } // views를 1 증가시킴
+        )
+        if (result.matchedCount === 1) {
+            res.json({ message: 'OK' })
+        } else {
+            res.status(404).json({ message: 'Post not found' })
+        }
+    } catch (error) {
+        console.error('Error updating views:', error)
+        res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
+app.get('/event_detail/:postId', async (req, res) => {
+    const postId = req.params.postId
+    try {
+        // 클라이언트에서 전달한 postId를 사용하여 해당 게시물을 찾음
+        const post = await db
+            .collection('event')
+            .findOne({ _id: new ObjectId(postId) })
+
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' })
+        }
+
+        res.json(post)
+    } catch (error) {
+        console.error('Error fetching post detail:', error)
+        res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
+app.put('/event_edit/:postId', async (req, res) => {
+    const { postId } = req.params
+    const updatedData = req.body
+    console.log('postId', postId)
+    console.log('updatedData', updatedData)
+    try {
+        await db.collection('event').updateOne(
+            { _id: new ObjectId(postId) },
+            {
+                $set: {
+                    title: updatedData.title,
+                    content: updatedData.content,
+                },
+            }
+        )
+
+        res.json({ message: 'ok' })
+    } catch (error) {
+        console.error('수정 에러:', error.message)
+        res.status(500).json({ error: '서버 에러' })
+    }
+})
+app.delete('/event_detail/:postId', async (req, res) => {
+    const { postId } = req.params
+    console.log(postId, postId)
+    try {
+        const result = await db.collection('event').deleteOne({
+            _id: new ObjectId(postId),
+        })
+
+        if (result.deletedCount === 1) {
+            res.json({ message: 'ok' })
+        } else {
+            res.status(404).json({ error: '게시물을 찾을 수 없습니다.' })
+        }
+    } catch (error) {
+        console.error('삭제 에러:', error.message)
+        res.status(500).json({ error: '서버 에러' })
+    }
+})
+
+
 //이거 맨밑으로
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "pandaproject/build/index.html"));
