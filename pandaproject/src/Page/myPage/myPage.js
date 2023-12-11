@@ -4,8 +4,6 @@ import "./myPage.css";
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 
-import axios from 'axios'
-
 function MyPage() {
   const [menu, setMenu] = useState(1);
   const [userInfo, setUserInfo] = useState(null);
@@ -68,12 +66,10 @@ function MenuContent(props) {
   if (props.menu === 1) {
     return (
       <div>
-        <p>아이디: {props.userInfo?.id}</p>
         <p>이름: {props.userInfo?.username}</p>
         <p>주소: {props.userInfo?.address}</p>
         <p>상세주소: {props.userInfo?.subaddress}</p>
         <p>이메일: {props.userInfo?.email}</p>
-        {console.log(props.userInfo)}
       </div>
     );
   }
