@@ -1,33 +1,32 @@
 import { SlMagnifier } from "react-icons/sl";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useState, useRef, useEffect } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import "./toolbar.css";
 
 function ToolBar(props) {
-
   const [selectedAlarmCategory, setSelectedAlarmCategory] = useState("null");
   const [showAlarmDropdown, setShowAlarmDropdown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
-  
+
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    
+    const token = localStorage.getItem("token");
+
     if (token) {
       // 토큰이 존재할 경우 디코드하여 사용자 정보 설정
       const decoded = jwt_decode(token);
       setUserInfo(decoded);
-    } 
+    }
   }, []);
-  
+
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('tokenExpiration');
+    localStorage.removeItem("token");
+    localStorage.removeItem("tokenExpiration");
     setIsLoggedIn(false);
-    navigate('/login');
+    navigate("/login");
   };
 
   const alaramRef = useRef(null);
@@ -46,7 +45,7 @@ function ToolBar(props) {
   }, []);
   useEffect(() => {
     // 만료 시간을 가져오기
-    const expirationDate = localStorage.getItem('tokenExpiration');
+    const expirationDate = localStorage.getItem("tokenExpiration");
     const nowDate = Date.now();
 
     // 토큰이 있고 만료 시간이 지나지 않았으면 로그인 상태로 설정
@@ -72,24 +71,33 @@ function ToolBar(props) {
       <header>
         <div className="user-actions">
           <div className="join">
-            {isLoggedIn ?(
-              <p style={{fontSize:'12px'}}>어서오세요</p>
+            {isLoggedIn ? (
+              <p style={{ fontSize: "12px" }}>어서오세요</p>
             ) : (
               <a href="/signup">회원가입</a>
             )}
           </div>
 
           <div className="login">
-            {isLoggedIn ?(
-            <a onClick={handleLogout}>로그아웃</a>
+            {isLoggedIn ? (
+              <a onClick={handleLogout}>로그아웃</a>
             ) : (
-              <Link to ="/login">로그인</Link>
-              )}
+              <Link to="/login">로그인</Link>
+            )}
           </div>
 
-          <a href="/manager" style={
-            { display: userInfo && ( userInfo.id === '65703c972d7eba2e853faa06') ? 'block' : 'none',fontSize:'12px' }
-          }>관리자페이지이동</a>
+          <a
+            href="/manager"
+            style={{
+              display:
+                userInfo && userInfo.id === "65703c972d7eba2e853faa06"
+                  ? "block"
+                  : "none",
+              fontSize: "12px",
+            }}
+          >
+            관리자페이지이동
+          </a>
 
           <div className="mypage">
             <a href="/mypage">
@@ -167,7 +175,9 @@ function ToolBar(props) {
           <div className="nav-logo">
             <img
               className="logo-img"
-              src={`${process.env.PUBLIC_URL}/img/logo-digging.png?${new Date().getTime()}`}
+              src={`${
+                process.env.PUBLIC_URL
+              }/img/logo-digging.png?${new Date().getTime()}`}
               alt="로고"
             ></img>
           </div>
@@ -180,7 +190,7 @@ function ToolBar(props) {
             <a href="#home">공유해요</a>
           </div>
           <button className="searchbutton">
-            <SlMagnifier/>
+            <SlMagnifier />
           </button>
         </div>
       </div>

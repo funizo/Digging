@@ -3,7 +3,7 @@ import "./manager.css";
 
 function Manager() {
   const [userInfo, setUserInfo] = useState([]);
-  const [alertValue, setAlertValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [selectedUserId, setSelectedUserId] = useState(null);
 
   useEffect(() => {
@@ -22,45 +22,45 @@ function Manager() {
       }
     }
 
+    // `fetchUserInfo()` 함수를 먼저 정의합니다.
     fetchUserInfo();
   }, []);
 
   const handleEditClick = (userId) => {
     setSelectedUserId(userId);
-    setAlertValue(""); // 폼 초기화
+    const selectedUser = userInfo.find((user) => user._id === userId);
+    setInputValue(selectedUser.alert || ""); // 선택된 사용자의 alert 값을 가져오기
   };
 
-  const handleSaveClick = (userId) => {
-    // 서버에 업데이트 요청 보내는 함수
-    async function updateUserAlert(userId, alertValue) {
-      try {
-        const response = await fetch(
-          `http://localhost:8080/manager/user/${userId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              alert: alertValue,
-            }),
-          }
-        );
-
-        if (response.ok) {
-          // 성공 시
-          console.log("User alert updated successfully");
-          setSelectedUserId(null); // 선택된 사용자 초기화
-          setAlertValue(""); // 폼 초기화
-        } else {
-          throw new Error("Failed to update user alert");
+  const handleSaveClick = async (userId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/manager/userInfo/${userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ alert: inputValue }),
         }
-      } catch (error) {
-        console.error("Error updating user alert:", error);
-      }
-    }
+      );
 
-    updateUserAlert(userId, alertValue);
+      if (response.ok) {
+        console.log("Alert field updated successfully");
+        const updatedUserInfo = userInfo.map((user) => {
+          if (user._id === userId) {
+            return { ...user, alert: inputValue };
+          }
+          return user;
+        });
+        setUserInfo(updatedUserInfo);
+        setSelectedUserId(null);
+      } else {
+        throw new Error("Failed to update alert field");
+      }
+    } catch (error) {
+      console.error("Error updating alert field:", error);
+    }
   };
 
   return (
@@ -84,8 +84,8 @@ function Manager() {
               <div>
                 <input
                   type="text"
-                  value={alertValue || ""}
-                  onChange={(e) => setAlertValue(e.target.value)}
+                  value={inputValue || ""}
+                  onChange={(e) => setInputValue(e.target.value)}
                 />
                 <button
                   className="send_button"

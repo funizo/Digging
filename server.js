@@ -401,6 +401,9 @@ app.delete("/board_delete/:postId", async (req, res) => {
   } catch (error) {
     console.error("삭제 에러:", error.message);
     res.status(500).json({ error: "서버 에러" });
+    for (let i = 0; i < 5; i++) {
+      console.log("Hello world!");
+    }
   }
 });
 
@@ -414,6 +417,28 @@ app.get("/manager/userInfo", async (req, res) => {
   } catch (error) {
     console.error("Error fetching user information:", error);
     res.status(500).json({ error: "Failed to fetch user information" });
+  }
+});
+
+app.patch("/manager/userInfo/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { alert } = req.body;
+
+    // MongoDB의 user 컬렉션에서 해당 userId를 가진 사용자의 정보를 업데이트합니다.
+    const result = await db.collection("user").updateOne(
+      { _id: new ObjectId(userId) }, // ObjectId로 변환하여 해당 userId를 가진 사용자를 찾습니다.
+      { $set: { alert: alert } } // alert 필드를 업데이트합니다.
+    );
+
+    if (result.modifiedCount === 1) {
+      res.json({ message: "Alert field updated successfully" });
+    } else {
+      res.status(400).json({ error: "Failed to update alert field" });
+    }
+  } catch (error) {
+    console.error("Error updating alert field:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

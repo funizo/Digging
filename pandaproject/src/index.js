@@ -18,7 +18,7 @@ import Board from "./components/board/board";
 import Write from "./components/board/write";
 import BoardEdit from "./components/board/board_edit";
 import BoardDetail from "./components/board/board_detail";
-import Manager from "./Page/manager/manger";
+import Manager from "./Page/manager/manager";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -100,15 +100,6 @@ root.render(
       <Route path="/board/write" element={<Write />} />
       <Route path="/board_edit/:postId" element={<BoardEdit />} />
       <Route path="/board_detail/:postId" element={<BoardDetail />} />
-
-      <Route path="/category/goods" element={<Goods />} />
-      <Route path="/category/goods/goodsdetail/:id" element={<GoodsDetail />} />
-      <Route path="/goodsregister" element={<GoodsRegister />} />
-      <Route path="/goodsedit/:id" element={<GoodsEdit />} />
-      <Route path="/board/write" element={<Write />} />
-      <Route path="/board_edit/:postId" element={<BoardEdit />} />
-      <Route path="/board_detail/:postId" element={<BoardDetail />} />
-      <Route path="/edit/:id" element={<Edit />} />
 
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/board" element={<Board />} />
