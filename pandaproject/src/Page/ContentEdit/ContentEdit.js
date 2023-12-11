@@ -3,18 +3,18 @@ import Footer from "../../components/footer/footer";
 import Toolbar from "../../components/toolbar/toolbar";
 import { useState,useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import "./toyEdit.css"
+import "./ContentEdit.css"
 
-function Edit() {
+function ContentEdit(props) {
     const location = useLocation();
     const navigate = useNavigate();
-    const toyData = location.state?.toyData || {};
+    const contentData = location.state?.contentData || {};
     const [userInfo, setUserInfo] = useState(null);
     const [writeData,setWriteData] = useState({
-        title:toyData.toyTitle,
-        content:toyData.toyContent,
-        price:toyData.price,
-        _id:toyData._id,
+        title:contentData.title,
+        content:contentData.content,
+        price:contentData.price,
+        _id:contentData._id,
         image:null
     })
     useEffect(() => {
@@ -45,15 +45,15 @@ function Edit() {
                 formData.append('price', writeData.price);
                 formData.append('id',userInfo.id);
                 formData.append('_id',writeData._id);
-                formData.append('username',userInfo.username);
-                const res = await fetch("http://localhost:8080/toy/toyedit", {
+                formData.append('username',userInfo.username);       
+                const res = await fetch(`http://localhost:8080/edit/${props.Category}`, {
                     method: "POST",
                     body: formData,
                 });
 
                 if (res.ok) {
                     console.log("서버 전송 완료");
-                    navigate('/category/toy');
+                    navigate(`/category/${props.Category}`);
                 } else {
                     console.log("서버 전송 실패");
                 }
@@ -112,4 +112,4 @@ function Edit() {
     )
 }
 
-export default Edit
+export default ContentEdit

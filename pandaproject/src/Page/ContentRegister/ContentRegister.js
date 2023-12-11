@@ -2,12 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/footer/footer'
 import { useState,useEffect } from 'react';
 import ToolBar from '../../components/toolbar/toolbar';
-import "./bookRegister.css";
+import "./ContentRegister.css";
 import jwt_decode from "jwt-decode";
 
-function BookRegister() {
+function ContentRegister(props) {
     
     const [userInfo, setUserInfo] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -25,7 +26,6 @@ function BookRegister() {
         price:"",
         image:null
     })
-    const navigate = useNavigate();
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setWriteData((prevWriteData) => ({ ...prevWriteData, image: file }));
@@ -44,14 +44,14 @@ function BookRegister() {
                 formData.append('price', writeData.price);
                 formData.append('id',userInfo.id);
                 formData.append('username',userInfo.username);
-                const res = await fetch("http://localhost:8080/bookregister", {
+                const res = await fetch(`http://localhost:8080/register/${props.Category}`, {
                     method: "POST",
                     body: formData,
                 });
 
                 if (res.ok) {
                     console.log("서버 전송 완료");
-                    navigate('/category/book');
+                    navigate(`/category/${props.Category}`);
                 } else {
                     console.log("서버 전송 실패");
                 }
@@ -61,7 +61,6 @@ function BookRegister() {
         }
     }
 
-    console.log(userInfo);
     return (
         <div>
             <ToolBar/>
@@ -113,4 +112,4 @@ function BookRegister() {
     )
 }
 
-export default BookRegister
+export default ContentRegister
