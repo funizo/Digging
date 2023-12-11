@@ -3,10 +3,11 @@ import "./manager.css";
 
 function Manager() {
   const [userInfo, setUserInfo] = useState([]);
+  const [alertValue, setAlertValue] = useState("");
   const [selectedUserId, setSelectedUserId] = useState(null);
-  const [alertValue, setAlertValue] = useState(null);
 
   useEffect(() => {
+    // 서버에서 사용자 정보를 가져오는 함수
     async function fetchUserInfo() {
       try {
         const response = await fetch("http://localhost:8080/manager/userInfo");
@@ -26,7 +27,40 @@ function Manager() {
 
   const handleEditClick = (userId) => {
     setSelectedUserId(userId);
-    setAlertValue(null); // 폼 초기화
+    setAlertValue(""); // 폼 초기화
+  };
+
+  const handleSaveClick = (userId) => {
+    // 서버에 업데이트 요청 보내는 함수
+    async function updateUserAlert(userId, alertValue) {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/manager/user/${userId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              alert: alertValue,
+            }),
+          }
+        );
+
+        if (response.ok) {
+          // 성공 시
+          console.log("User alert updated successfully");
+          setSelectedUserId(null); // 선택된 사용자 초기화
+          setAlertValue(""); // 폼 초기화
+        } else {
+          throw new Error("Failed to update user alert");
+        }
+      } catch (error) {
+        console.error("Error updating user alert:", error);
+      }
+    }
+
+    updateUserAlert(userId, alertValue);
   };
 
   return (
@@ -53,7 +87,12 @@ function Manager() {
                   value={alertValue || ""}
                   onChange={(e) => setAlertValue(e.target.value)}
                 />
-                <button className="send_button">Save</button>
+                <button
+                  className="send_button"
+                  onClick={() => handleSaveClick(user._id)}
+                >
+                  Save
+                </button>
               </div>
             )}
           </li>

@@ -33,7 +33,7 @@ import Edit from "./Page/edit/edit";
 import Write from "./components/board/write";
 import BoardEdit from "./components/board/board_edit";
 import BoardDetail from "./components/board/board_detail";
-import Manager from "./Page/manager/manger";
+import Manager from "./Page/manager/manager";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
