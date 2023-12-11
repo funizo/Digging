@@ -5,10 +5,10 @@ import Slide from "./components/slide/slide";
 import Footer from "./components/footer/footer";
 import Content from "./components/temp_content/temp_content";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+
 
 function App() {
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     console.log("실행");
@@ -18,8 +18,7 @@ function App() {
       const expirationDate = localStorage.getItem("tokenExpiration");
       const nowDate = Date.now();
 
-      console.log("nowDate", nowDate);
-      console.log("expirationDate123", expirationDate);
+ 
 
       // 만료 시간이 지났으면 로그아웃
       if (expirationDate && nowDate > expirationDate) {
@@ -34,7 +33,6 @@ function App() {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("tokenExpiration");
-    // navigate('/login');
   };
   console.log();
 
