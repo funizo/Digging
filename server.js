@@ -43,8 +43,7 @@ app.use(cors());
 app.use(passport.initialize());
 
 let db;
-const url =
-  "mongodb+srv://panda:1234@panda.1pgmndf.mongodb.net/?retryWrites=true&w=majority";
+const url = process.env.DB_URL;
 new MongoClient(url)
   .connect()
   .then((client) => {
