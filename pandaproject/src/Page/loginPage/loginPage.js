@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./loginPage.css";
-import { Link, useNavigate,  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/footer";
 
 const LoginPage = () => {
@@ -29,12 +29,12 @@ const LoginPage = () => {
         const { token, expiration } = data;
 
         const expirationDate = new Date(expiration);
-  
-        localStorage.setItem("token", token); 
-        localStorage.setItem("tokenExpiration", expirationDate.getTime()); 
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("tokenExpiration", expirationDate.getTime());
         console.log("로그인 성공");
-        navigate('/');
-        console.log("login-expiration",expirationDate);
+        navigate("/");
+        console.log("login-expiration", expirationDate);
       } else {
         const errorData = await result.json();
         console.log("서버에서 오류가 발생했습니다.", errorData.error);
@@ -48,7 +48,12 @@ const LoginPage = () => {
   return (
     <div>
       <Link to="/" className="logo">
-        <img src={`${process.env.PUBLIC_URL}/img/logo-digging.png?${new Date().getTime()}`} alt="로고" />
+        <img
+          src={`${
+            process.env.PUBLIC_URL
+          }/img/logo-digging.png?${new Date().getTime()}`}
+          alt="로고"
+        />
       </Link>
       <div className="container">
         <h2>Login</h2>
@@ -94,7 +99,7 @@ const LoginPage = () => {
           </Link>
         </form>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

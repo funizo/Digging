@@ -11,14 +11,16 @@ function BoardDetail() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  const isAuthor = ((userInfo?.id === postDetail?.id) || userInfo?.id === '65703c972d7eba2e853faa06');
-  
+  const isAuthor =
+    userInfo?.id === postDetail?.id ||
+    userInfo?.id === "65703c972d7eba2e853faa06";
+
   const handleEdit = () => {
     navigate(`/board_edit/${postId}`);
   };
   const handleDelete = async () => {
     try {
-      console.log("handle-postId",postId)
+      console.log("handle-postId", postId);
       const response = await fetch(
         `http://localhost:8080/board_detail/${postId}`,
         {
@@ -38,7 +40,7 @@ function BoardDetail() {
         );
       }
     } catch (error) {
-      console.error("삭제 에러 post:", error.message);
+      console.error("Error deleting post:", error.message);
     }
   };
 
@@ -59,7 +61,7 @@ function BoardDetail() {
       } else {
         const errorMessage = await response.text();
         console.error(
-          `디테일 에러. Status: ${response.status}, Message: ${errorMessage}`
+          `Failed to fetch post detail. Status: ${response.status}, Message: ${errorMessage}`
         );
       }
     } catch (error) {
@@ -92,7 +94,7 @@ function BoardDetail() {
           <div className="">
             {isAuthor && <span onClick={handleEdit}>수정</span>}
           </div>
-          <div>{isAuthor && <span onClick={handleDelete}>삭제</span>}</div>
+          <div>{isAuthor && <button onClick={handleDelete}>삭제</button>}</div>
         </div>
       </div>
       <Footer />

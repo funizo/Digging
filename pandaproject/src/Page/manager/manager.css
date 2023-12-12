@@ -1,0 +1,9 @@
+.edit_button,
+.send_button {
+  margin: 3px;
+  padding: 5px;
+  color: white;
+  background-color: black;
+  border-radius: 7px;
+  cursor: pointer;
+}
