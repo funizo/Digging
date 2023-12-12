@@ -6,18 +6,13 @@ import Footer from "./components/footer/footer";
 import Content from "./components/temp_content/temp_content";
 import React, { useEffect } from "react";
 
-
 function App() {
-
-
   useEffect(() => {
     // 만료 시간을 가져오기
     //인터벌을 테스트 후 삭제
     const intervalId = setInterval(() => {
       const expirationDate = localStorage.getItem("tokenExpiration");
       const nowDate = Date.now();
-
- 
 
       // 만료 시간이 지났으면 로그아웃
       if (expirationDate && nowDate > expirationDate) {
@@ -33,7 +28,6 @@ function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("tokenExpiration");
   };
-  
 
   return (
     <div className="App">

@@ -1,16 +1,16 @@
 import { SlMagnifier } from "react-icons/sl";
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 import "./toolbar.css";
+import jwt_decode from "jwt-decode";
 
 function ToolBar(props) {
   const [selectedAlarmCategory, setSelectedAlarmCategory] = useState("null");
   const [showAlarmDropdown, setShowAlarmDropdown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const [alertMsg, setAlertMsg] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
-  const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -21,6 +21,25 @@ function ToolBar(props) {
       setUserInfo(decoded);
     }
   }, []);
+
+  // const fetchAlerts = async () => {
+  //   try {
+  //     console.log("fetchAlerts호출");
+  //     console.log(userInfo);
+  //     const response = await fetch(
+  //       `http://localhost:8080/manager/alerts/${userInfo.id}`
+  //     );
+  //     console.log(response);
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setAlerts(data);
+  //     } else {
+  //       throw new Error("Failed to fetch alerts");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching alerts:", error);
+  //   }
+  // };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -54,24 +73,24 @@ function ToolBar(props) {
     }
   }, []);
 
-  const toggleAlarmDropdown = () => {
+  const toggleAlarmDropdown = async () => {
     setShowAlarmDropdown((prevShowAlarmDropdown) => !prevShowAlarmDropdown);
+
     if (!showAlarmDropdown) {
       //버튼을 닫았을때 기본값으로 리셋
       setSelectedAlarmCategory("alarm");
     }
-  };
-
-  const headerAlarmClick = (alarmcategory) => {
-    setSelectedAlarmCategory(alarmcategory); //헤더알람 / 혜택 버튼 선택
-  };
-
-  const fetchAlerts = async () => {
     try {
-      const response = await fetch("http://localhost:8080/manager/alerts");
+      console.log("fetchAlerts호출");
+      console.log(userInfo);
+      const response = await fetch(
+        `http://localhost:8080/manager/alerts/${userInfo.id}`
+      );
+      console.log(response);
       if (response.ok) {
         const data = await response.json();
-        setAlerts(data);
+        console.log(data);
+        setAlertMsg(data);
       } else {
         throw new Error("Failed to fetch alerts");
       }
@@ -80,9 +99,13 @@ function ToolBar(props) {
     }
   };
 
-  useEffect(() => {
-    fetchAlerts();
-  }, []);
+  const headerAlarmClick = (alarmcategory) => {
+    setSelectedAlarmCategory(alarmcategory); //헤더알람 / 혜택 버튼 선택
+  };
+
+  // useEffect(() => {
+  //   fetchAlerts();
+  // }, [userInfo]);
 
   return (
     <div className="header-container">
@@ -156,18 +179,7 @@ function ToolBar(props) {
               {selectedAlarmCategory === "alarm" && (
                 <>
                   <div className="alarm-content">
-                    {alerts.map((alert, index) => (
-                      <div className="alarm-item" key={index}>
-                        {/* 여기에 가져온 알림 데이터를 표시 */}
-                        <p className="item-title">{alert.alert}</p>
-                        {/* 기타 알림 데이터 필드를 추가로 표시할 수 있음 */}
-                      </div>
-                    ))}
-                    <div className="alarm-item">
-                      {" "}
-                      알림 1<p className="item-title">123</p>
-                      <p className="title-dscs">1234</p>
-                    </div>
+                    <div className="alarm-item"> {alertMsg.alert}</div>
                   </div>
                 </>
               )}
@@ -212,7 +224,7 @@ function ToolBar(props) {
             <a href="/">HOME</a>
             <a href="/board">구해줘</a>
             <a href="/share">소통해요</a>
-        </div>
+          </div>
           <button className="searchbutton">
             <SlMagnifier />
           </button>
