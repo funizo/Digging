@@ -441,76 +441,8 @@ app.delete("/board_delete/:postId", async (req, res) => {
   } catch (error) {
     console.error("삭제 에러:", error.message);
     res.status(500).json({ error: "서버 에러" });
-    for (let i = 0; i < 5; i++) {
-      console.log("Hello world!");
-    }
   }
 });
-
-app.get("/manager/userInfo", async (req, res) => {
-  try {
-    const users = await db
-      .collection("user")
-      .find({}, { username: 1, alert: 1 }) // 필드 지정
-      .toArray();
-    res.json(users);
-  } catch (error) {
-    console.error("Error fetching user information:", error);
-    res.status(500).json({ error: "Failed to fetch user information" });
-  }
-});
-
-app.patch("/manager/userInfo/:userId", async (req, res) => {
-  try {
-    const userId = req.params.userId;
-    const { alert } = req.body;
-
-    // MongoDB의 user 컬렉션에서 해당 userId를 가진 사용자의 정보를 업데이트합니다.
-    const result = await db.collection("user").updateOne(
-      { _id: new ObjectId(userId) }, // ObjectId로 변환하여 해당 userId를 가진 사용자를 찾습니다.
-      { $set: { alert: alert } } // alert 필드를 업데이트합니다.
-    );
-
-    if (result.modifiedCount === 1) {
-      res.json({ message: "Alert field updated successfully" });
-    } else {
-      res.status(400).json({ error: "Failed to update alert field" });
-    }
-  } catch (error) {
-    console.error("Error updating alert field:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-app.get("/manager/alerts", async (req, res) => {
-  try {
-    const alerts = await db
-      .collection("user")
-      .find({}, { projection: { _id: 0, alert: 1 } })
-      .toArray();
-    res.json(alerts);
-  } catch (error) {
-    console.error("Error fetching alerts:", error);
-    res.status(500).json({ error: "Failed to fetch alerts" });
-  }
-});
-// app.get("/manager/alerts/:userId", async (req, res) => {
-//   try {
-//     const userId = req.params.userId;
-//     const alerts = await db
-//       .collection("user")
-//       .findOne({ _id: new ObjectId(userId) }, { projection: { _id: 0, alert: 1 } });
-
-//     if (!alerts) {
-//       return res.status(404).json({ error: "Alerts not found" });
-//     }
-
-//     res.json(alerts);
-//   } catch (error) {
-//     console.error("Error fetching alerts:", error);
-//     res.status(500).json({ error: "Failed to fetch alerts" });
-//   }
-// });
 
 app.get("/category/ticket", async (req, res) => {
   try {
@@ -925,6 +857,55 @@ app.delete("/event_detail/:postId", async (req, res) => {
   } catch (error) {
     console.error("삭제 에러:", error.message);
     res.status(500).json({ error: "서버 에러" });
+  }
+});
+
+app.get("/manager/userInfo", async (req, res) => {
+  try {
+    const users = await db
+      .collection("user")
+      .find({}, { username: 1, alert: 1 }) // 필드 지정
+      .toArray();
+    res.json(users);
+  } catch (error) {
+    console.error("Error fetching user information:", error);
+    res.status(500).json({ error: "Failed to fetch user information" });
+  }
+});
+
+app.patch("/manager/userInfo/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { alert } = req.body;
+
+    // MongoDB의 user 컬렉션에서 해당 userId를 가진 사용자의 정보를 업데이트합니다.
+    const result = await db.collection("user").updateOne(
+      { _id: new ObjectId(userId) }, // ObjectId로 변환하여 해당 userId를 가진 사용자를 찾습니다.
+      { $set: { alert: alert } } // alert 필드를 업데이트합니다.
+    );
+
+    if (result.modifiedCount === 1) {
+      res.json({ message: "Alert field updated successfully" });
+    } else {
+      res.status(400).json({ error: "Failed to update alert field" });
+    }
+  } catch (error) {
+    console.error("Error updating alert field:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// 수정필요
+app.get("/manager/alerts", async (req, res) => {
+  try {
+    const alerts = await db
+      .collection("user")
+      .find({}, { projection: { _id: 0, alert: 1 } })
+      .toArray();
+    res.json(alerts);
+  } catch (error) {
+    console.error("Error fetching alerts:", error);
+    res.status(500).json({ error: "Failed to fetch alerts" });
   }
 });
 
