@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Toolbar from "../../components/toolbar/toolbar";
 import Footer from "../../components/footer/footer";
-import "./board.css";
+import "./share.css";
 
-function Board() {
-  const [boardData, setBoardData] = useState([]);
+function Share() {
+  const [shareData, setShareData] = useState([]);
   const [page, setPage] = useState(1);
   const pageSize = 10; // 페이지당 보여줄 항목 수
   const navigate = useNavigate();
@@ -14,13 +14,13 @@ function Board() {
   const fetchData = async (pageNumber) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/board?page=${pageNumber}`
+        `http://localhost:8080/share?page=${pageNumber}`
       );
       if (!response.ok) {
         throw new Error("서버 응답 에러");
       }
       const data = await response.json();
-      setBoardData(data.result);
+      setShareData(data.result);
     } catch (error) {
       console.error("데이터를 가져오는 중 에러 발생:", error);
     }
@@ -47,7 +47,7 @@ function Board() {
   const handlePostClick = async (postId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/board_detail/${postId}`,
+        `http://localhost:8080/share_detail/${postId}`,
         {
           method: "POST",
           headers: {
@@ -57,7 +57,7 @@ function Board() {
       );
       if (response.ok) {
         fetchData(page); // 페이지 데이터 새로고침
-        navigate(`/board_detail/${postId}`); // postId를 전달하여 이동
+        navigate(`/share_detail/${postId}`); // postId를 전달하여 이동
       } else {
         console.error("Failed to increment views");
       }
@@ -72,7 +72,7 @@ function Board() {
       navigate("/login"); // 로그인 페이지 경로로 변경
     } else {
       // 토큰이 있는 경우 글쓰기 페이지로 이동
-      navigate("/board/write");
+      navigate("/share/write");
     }
   };
 
@@ -82,7 +82,7 @@ function Board() {
       <div className="board-container">
         <div className="board-box">
           <div className="board-title">
-            <h3>게시판</h3>
+            <h3>공유해요</h3>
           </div>
           <div className="write-button">
             <span onClick={handleWriteClick}>글쓰기</span>
@@ -100,7 +100,7 @@ function Board() {
             </tr>
           </thead>
           <tbody>
-            {boardData.map((post, index) => (
+            {shareData.map((post, index) => (
               <tr key={index} onClick={() => handlePostClick(post._id)}>
                 <td>{(page - 1) * pageSize + index + 1}</td>
                 <td>{post.title}</td>
@@ -126,4 +126,4 @@ function Board() {
   );
 }
 
-export default Board;
+export default Share;

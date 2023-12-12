@@ -25,6 +25,7 @@ function ContentItem(props) {
             setUserInfo(decoded);
         } 
     }, []);
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
@@ -35,7 +36,6 @@ function ContentItem(props) {
     useEffect(() => {
         const fetchData = async () => {
             const url = `http://localhost:8080/category/${props.Category}`;
-            console.log('url:', url);
         try {
             const res = await fetch(url);
             if (!res.ok) {
@@ -52,11 +52,10 @@ function ContentItem(props) {
     }, []);
 
 
-    console.log(searchData);
     const handleSearch = async(e) => {
         e.preventDefault();
-     if (searchData === '') {
-        alert("내용을 작성해 주세요");
+        if (searchData === '') {
+            alert("내용을 작성해 주세요");
         } else {
             try {
                 const res = await fetch(`http://localhost:8080/${props.Category}/search?val=${searchData}`);
@@ -89,19 +88,16 @@ function ContentItem(props) {
                     <div className="image-container" key={i}>
                         <TabContentSkeleton />
                     </div>
-        ))
-    ) : (
-        <div className="novel-container">
-        {contentData.map((a, i) => (
-            <div className="image-container" key={i} onClick={() => goToDetail(a.id, a)}>
-            {/* <Link to={`././detail/${a.id}`} key={a.id}> */}
-                <TabContent key={i} contentData={contentData[i]} i={i} />
-            {/* </Link> */}
-        </div>
-        
-        ))}
-            </div>
-        )}
+                ))
+            ) : (
+                <div className="novel-container">
+                {contentData.map((a, i) => (
+                    <div className="image-container" key={i} onClick={() => goToDetail(a.id, a)}>
+                        <TabContent key={i} contentData={contentData[i]} i={i} />
+                    </div>
+                ))}
+                </div>
+            )}
         <a href={userInfo === null ? null : `/register/${props.Category}`} onClick={() => userInfo === null && alert("로그인해주세요")} className="write">글쓰기</a>
         
         <Footer/>

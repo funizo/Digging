@@ -1,15 +1,15 @@
 import Toolbar from "../../components/toolbar/toolbar";
 import Footer from "../../components/footer/footer";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import "./write.css";
 
-const Write = ({ onPostSubmit }) => {
+const TicketWrite = ({ onPostSubmit }) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const decoded = token ? jwt_decode(token) : null;
-  const [boardData, setBoardData] = useState({
+  const [ticketData, setTicketData] = useState({
     id: decoded?.id || "",
     number: "",
     title: "",
@@ -18,16 +18,17 @@ const Write = ({ onPostSubmit }) => {
     views: "0",
     date: "",
   });
+  console.log("ticketData",ticketData);
 
   const handleTitleChange = (e) => {
-    setBoardData((prevData) => ({
+    setTicketData((prevData) => ({
       ...prevData,
       title: e.target.value,
     }));
   };
 
   const handleContentChange = (e) => {
-    setBoardData((prevData) => ({
+    setTicketData((prevData) => ({
       ...prevData,
       content: e.target.value,
     }));
@@ -37,25 +38,25 @@ const Write = ({ onPostSubmit }) => {
     e.preventDefault();
     console.log(
       "Received views:",
-      boardData.views,
+      ticketData.views,
       "Type:",
-      typeof boardData.views
+      typeof ticketData.views
     );
     console.log("123123");
-    console.log("제목:", boardData.title);
-    console.log("내용:", boardData.content);
-    console.log("작성자:", boardData.writer);
-    console.log("날짜:", boardData.date);
-    console.log("id:", boardData.id);
+    console.log("제목:", ticketData.title);
+    console.log("내용:", ticketData.content);
+    console.log("작성자:", ticketData.writer);
+    console.log("날짜:", ticketData.date);
+    console.log("id:", ticketData.id);
 
-    const numericViews = parseInt(boardData.views);
+    const numericViews = parseInt(ticketData.views);
     try {
-      const res = await fetch("http://localhost:8080/board", {
+      const res = await fetch("http://localhost:8080/category/ticket", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...boardData, views: numericViews }),
+        body: JSON.stringify({ ...ticketData, views: numericViews }),
       });
 
       if (res.ok) {
@@ -64,7 +65,7 @@ const Write = ({ onPostSubmit }) => {
         if (onPostSubmit) {
           onPostSubmit();
         }
-        navigate("/board");
+        navigate("/category/ticket");
       } else {
         console.error("글 전송 실패:", res.status);
       }
@@ -73,7 +74,7 @@ const Write = ({ onPostSubmit }) => {
     }
 
     // 폼 초기화
-    setBoardData({
+    setTicketData({
       id: "",
       number: "",
       title: "",
@@ -94,14 +95,14 @@ const Write = ({ onPostSubmit }) => {
             <input
               type="text"
               placeholder="제목을 입력해주세요"
-              value={boardData.title}
+              value={ticketData.title}
               onChange={handleTitleChange}
             />
           </label>
           <br />
           <label>
             <textarea
-              value={boardData.content}
+              value={ticketData.content}
               onChange={handleContentChange}
             />
           </label>
@@ -114,4 +115,4 @@ const Write = ({ onPostSubmit }) => {
   );
 };
 
-export default Write;
+export default TicketWrite;

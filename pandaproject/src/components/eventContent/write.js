@@ -1,15 +1,15 @@
 import Toolbar from "../../components/toolbar/toolbar";
 import Footer from "../../components/footer/footer";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import "./write.css";
 
-const Write = ({ onPostSubmit }) => {
+const EventWrite = ({ onPostSubmit }) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const decoded = token ? jwt_decode(token) : null;
-  const [boardData, setBoardData] = useState({
+  const [eventData, setEventData] = useState({
     id: decoded?.id || "",
     number: "",
     title: "",
@@ -18,16 +18,17 @@ const Write = ({ onPostSubmit }) => {
     views: "0",
     date: "",
   });
+  console.log("eventData",eventData);
 
   const handleTitleChange = (e) => {
-    setBoardData((prevData) => ({
+    setEventData((prevData) => ({
       ...prevData,
       title: e.target.value,
     }));
   };
 
   const handleContentChange = (e) => {
-    setBoardData((prevData) => ({
+    setEventData((prevData) => ({
       ...prevData,
       content: e.target.value,
     }));
@@ -37,25 +38,25 @@ const Write = ({ onPostSubmit }) => {
     e.preventDefault();
     console.log(
       "Received views:",
-      boardData.views,
+      eventData.views,
       "Type:",
-      typeof boardData.views
+      typeof eventData.views
     );
     console.log("123123");
-    console.log("제목:", boardData.title);
-    console.log("내용:", boardData.content);
-    console.log("작성자:", boardData.writer);
-    console.log("날짜:", boardData.date);
-    console.log("id:", boardData.id);
+    console.log("제목:", eventData.title);
+    console.log("내용:", eventData.content);
+    console.log("작성자:", eventData.writer);
+    console.log("날짜:", eventData.date);
+    console.log("id:", eventData.id);
 
-    const numericViews = parseInt(boardData.views);
+    const numericViews = parseInt(eventData.views);
     try {
-      const res = await fetch("http://localhost:8080/board", {
+      const res = await fetch("http://localhost:8080/event", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...boardData, views: numericViews }),
+        body: JSON.stringify({ ...eventData, views: numericViews }),
       });
 
       if (res.ok) {
@@ -64,7 +65,7 @@ const Write = ({ onPostSubmit }) => {
         if (onPostSubmit) {
           onPostSubmit();
         }
-        navigate("/board");
+        navigate("/event");
       } else {
         console.error("글 전송 실패:", res.status);
       }
@@ -73,7 +74,7 @@ const Write = ({ onPostSubmit }) => {
     }
 
     // 폼 초기화
-    setBoardData({
+    setEventData({
       id: "",
       number: "",
       title: "",
@@ -94,14 +95,14 @@ const Write = ({ onPostSubmit }) => {
             <input
               type="text"
               placeholder="제목을 입력해주세요"
-              value={boardData.title}
+              value={eventData.title}
               onChange={handleTitleChange}
             />
           </label>
           <br />
           <label>
             <textarea
-              value={boardData.content}
+              value={eventData.content}
               onChange={handleContentChange}
             />
           </label>
@@ -114,4 +115,4 @@ const Write = ({ onPostSubmit }) => {
   );
 };
 
-export default Write;
+export default EventWrite;

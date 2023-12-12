@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Toolbar from "../../components/toolbar/toolbar";
 import Footer from "../../components/footer/footer";
-import "./board.css";
+import jwt_decode from "jwt-decode";
+import "./event.css";
 
-function Board() {
-  const [boardData, setBoardData] = useState([]);
+function Event() {
+  const [eventData, setEventData] = useState([]);
   const [page, setPage] = useState(1);
   const pageSize = 10; // 페이지당 보여줄 항목 수
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState(null);
   const token = localStorage.getItem("token");
-
+  
+  const isAuthor = userInfo?.id === '65703c972d7eba2e853faa06';
   const fetchData = async (pageNumber) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/board?page=${pageNumber}`
+        `http://localhost:8080/event?page=${pageNumber}`
       );
       if (!response.ok) {
         throw new Error("서버 응답 에러");
       }
       const data = await response.json();
-      setBoardData(data.result);
+      setEventData(data.result);
     } catch (error) {
       console.error("데이터를 가져오는 중 에러 발생:", error);
     }
@@ -31,6 +34,12 @@ function Board() {
   };
 
   useEffect(() => {
+    if (token) {
+      // 토큰이 존재할 경우 디코드하여 사용자 정보 설정
+      const decoded = jwt_decode(token);
+      setUserInfo(decoded);
+    }
+
     fetchData(page);
   }, [page]);
 
@@ -47,7 +56,7 @@ function Board() {
   const handlePostClick = async (postId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/board_detail/${postId}`,
+        `http://localhost:8080/event_detail/${postId}`,
         {
           method: "POST",
           headers: {
@@ -57,7 +66,7 @@ function Board() {
       );
       if (response.ok) {
         fetchData(page); // 페이지 데이터 새로고침
-        navigate(`/board_detail/${postId}`); // postId를 전달하여 이동
+        navigate(`/event_detail/${postId}`); // postId를 전달하여 이동
       } else {
         console.error("Failed to increment views");
       }
@@ -72,7 +81,7 @@ function Board() {
       navigate("/login"); // 로그인 페이지 경로로 변경
     } else {
       // 토큰이 있는 경우 글쓰기 페이지로 이동
-      navigate("/board/write");
+      navigate("/event/write");
     }
   };
 
@@ -82,10 +91,10 @@ function Board() {
       <div className="board-container">
         <div className="board-box">
           <div className="board-title">
-            <h3>게시판</h3>
+            <h3>이벤트</h3>
           </div>
           <div className="write-button">
-            <span onClick={handleWriteClick}>글쓰기</span>
+          {isAuthor && <span onClick={handleWriteClick}>글쓰기</span>}
           </div>
         </div>
 
@@ -100,7 +109,7 @@ function Board() {
             </tr>
           </thead>
           <tbody>
-            {boardData.map((post, index) => (
+            {eventData.map((post, index) => (
               <tr key={index} onClick={() => handlePostClick(post._id)}>
                 <td>{(page - 1) * pageSize + index + 1}</td>
                 <td>{post.title}</td>
@@ -126,4 +135,4 @@ function Board() {
   );
 }
 
-export default Board;
+export default Event;

@@ -1,28 +1,27 @@
 import React, { useState, useEffect } from "react";
 import Toolbar from "../../components/toolbar/toolbar";
 import Footer from "../../components/footer/footer";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useHistory, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
-function BoardDetail() {
+function TicketDetail() {
   const { postId } = useParams(); // URL 파라미터에서 postId 추출
   const [postDetail, setPostDetail] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-
+  console.log("postDetail11111111111111111111", postDetail);
+  console.log("userInfo", userInfo);
   const isAuthor =
     userInfo?.id === postDetail?.id ||
     userInfo?.id === "65703c972d7eba2e853faa06";
-
   const handleEdit = () => {
-    navigate(`/board_edit/${postId}`);
+    navigate(`/category/ticket_edit/${postId}`);
   };
   const handleDelete = async () => {
     try {
-      console.log("handle-postId", postId);
       const response = await fetch(
-        `http://localhost:8080/board_detail/${postId}`,
+        `http://localhost:8080/category/ticket_detail/${postId}`,
         {
           method: "DELETE",
           headers: {
@@ -32,7 +31,7 @@ function BoardDetail() {
       );
 
       if (response.ok) {
-        navigate("/board");
+        navigate("/category/ticket");
       } else {
         const errorMessage = await response.text();
         console.error(
@@ -40,7 +39,7 @@ function BoardDetail() {
         );
       }
     } catch (error) {
-      console.error("Error deleting post:", error.message);
+      console.error("삭제 에러 post:", error.message);
     }
   };
 
@@ -53,7 +52,7 @@ function BoardDetail() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/board_detail/${postId}`
+        `http://localhost:8080/category/ticket_detail/${postId}`
       );
       if (response.ok) {
         const data = await response.json();
@@ -61,7 +60,7 @@ function BoardDetail() {
       } else {
         const errorMessage = await response.text();
         console.error(
-          `Failed to fetch post detail. Status: ${response.status}, Message: ${errorMessage}`
+          `디테일 에러. Status: ${response.status}, Message: ${errorMessage}`
         );
       }
     } catch (error) {
@@ -94,7 +93,7 @@ function BoardDetail() {
           <div className="">
             {isAuthor && <span onClick={handleEdit}>수정</span>}
           </div>
-          <div>{isAuthor && <button onClick={handleDelete}>삭제</button>}</div>
+          <div>{isAuthor && <span onClick={handleDelete}>삭제</span>}</div>
         </div>
       </div>
       <Footer />
@@ -102,4 +101,4 @@ function BoardDetail() {
   );
 }
 
-export default BoardDetail;
+export default TicketDetail;

@@ -3,7 +3,7 @@ import { Carousel } from "react-bootstrap";
 import "../../App.css";
 import "./slide.css";
 
-function UncontrolledExample() {
+function Slide() {
 
   
 
@@ -43,4 +43,4 @@ function UncontrolledExample() {
   );
 }
 
-export default UncontrolledExample;
+export default Slide;

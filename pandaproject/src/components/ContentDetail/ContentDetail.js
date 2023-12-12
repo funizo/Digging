@@ -8,12 +8,14 @@ import jwt_decode from "jwt-decode";
 
 function ContentDetail(props) {
   const location = useLocation();
-  const [wishlistCount, setWishlistCount] = useState(0);
+  // const [wishlistCount, setWishlistCount] = useState(0);
   const contentData = location.state?.contentData || {};
   const navigate = useNavigate();
-  const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
+  // const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
-  
+  const [comment, setComment] = useState("");
+  const [commentList,setCommentList] = useState([])
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     
@@ -23,9 +25,28 @@ function ContentDetail(props) {
       setUserInfo(decoded);
     } 
   }, []);
-  
 
   
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = `http://localhost:8080/categoryComment?category=${props.Category}&id=${contentData._id}`;
+    try {
+        const res = await fetch(url);
+        if (!res.ok) {
+        throw new Error('서버 응답 실패');
+        }
+        const data = await res.json();
+        setCommentList(data.result);
+        console.log(data.result);
+    } catch (error) {
+        console.error('데이터를 불러오는 중 에러 발생:', error);
+    }
+    };
+
+    fetchData();
+  }, []);
+
+
   // const handleAddToWishlist = async () => {
   //   setIsAddedToWishlist(!isAddedToWishlist);
      
@@ -52,8 +73,7 @@ function ContentDetail(props) {
   //   }
   // };
 
- 
-  //삭제,수정만남음 
+
   const handleDelete = async() => {
       try {
         const response = await fetch(`http://localhost:8080/category/${props.Category}/detail`, {
@@ -71,20 +91,76 @@ function ContentDetail(props) {
         console.log(error);
       }
   }
-  const handleBuy = () => {
-      navigate("/login");
-  };
+  // const handleBuy = () => {
+  //     navigate("/login");
+  // };
 
-  const handleAuction = () => {
-    if (userInfo === null) {
-      navigate("/login");
-    }
-  };
+  // const handleAuction = () => {
+  //   if (userInfo === null) {
+  //     navigate("/login");
+  //   }
+  // };
 
   const handleEdit = () => {
       navigate(`/edit/${props.Category}/${contentData.id}`, {state:{contentData}});
   }
 
+
+  const handleComment = async(e) => {
+    e.preventDefault();
+
+    try {
+      const formData = {
+        'contentId': contentData._id,
+        'contentWriterId': contentData.id,
+        'contentWriterName': contentData.username,
+        'loginName': userInfo.username,
+        'loginId': userInfo.id,
+        'comment': comment
+      }
+        const response = await fetch('http://localhost:8080/comment?', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        
+        if(response.ok) {
+          console.log("서버 전송 완료");
+          window.location.reload();
+          // const data = await response.json();
+          // setCommentList(data);
+
+      } else {
+        console.log("서버 전송 실패");
+      }
+    } catch (e) {
+        console.log("서버에 요청 중 오류가 발생", e);
+    }
+  }
+
+
+  const handleDeleteComment = async(e) => {
+    
+    try {
+      const id = e.target.value
+      const response = await fetch(`http://localhost:8080/commentdelete?id=${id}`, {
+        method: 'DELETE',
+          })
+      if (response.ok) {
+        console.log("서버 전송 완료");
+        window.location.reload();
+          }
+          else {
+            console.log("서버 전송 실패");
+          }
+        } catch (e) {
+          console.log("서버에 요청 중 오류가 발생", e);
+      }
+    }
+
+  console.log(commentList)
   return (
     <div>
 
@@ -98,18 +174,15 @@ function ContentDetail(props) {
         </div>
       </div>
       <div className="button_container">
-        <button className="button_buy" onClick={handleBuy}>
+        {/* <button className="button_buy" onClick={handleBuy}>
           즉시구매
         </button>
         <button className="button_auction" onClick={handleAuction}>
           경매입찰
         </button>
-      </div>
-      <div className="wishlist">
-        {/* 관심 상품으로 찜하기 버튼 */}
         <button className="button_wishlist">
-            {isAddedToWishlist ? "찜" : "관심 상품으로 찜하기"}
-        </button>
+          {isAddedToWishlist ? "찜" : "관심 상품으로 찜하기"}
+        </button> */}
         <button className="button_wishlist" onClick={handleDelete} style={
             { display: userInfo && (userInfo.id === contentData.id || userInfo.id === '65703c972d7eba2e853faa06') ? 'block' : 'none' }
           }>
@@ -121,12 +194,37 @@ function ContentDetail(props) {
             수정하기
         </button>
       </div>
-
-      <div>하단 추천제품 링크및 이미지 삽입공간</div>
+      
+      <input name="content" onChange={(e) => setComment(e.target.value)} />
+      <button type="submit" onClick={handleComment}>댓글작성</button>
+      
+      {
+        commentList.map((a,i)=> (
+          <div>
+          <Comment commentList={a} i={i} key={i} handleDeleteComment={handleDeleteComment} userInfo={userInfo}/>
+          <button onClick={handleDeleteComment} value={a._id} style={
+            {backgroundColor:"gray",
+              display: userInfo && (userInfo.id === commentList[i].loginId || userInfo.id === '65703c972d7eba2e853faa06') ? 'block' : 'none'
+            }
+          }>x</button>
+          </div>
+        ))
+      }
       <Footer/>
 
     </div>
   );
+}
+
+
+function Comment(props) {
+
+  return (
+    <div>
+      <p>{props.commentList.loginName}</p>
+      <p>{props.commentList.comment}</p>
+    </div>
+      )
 }
 
 

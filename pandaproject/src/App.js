@@ -11,7 +11,6 @@ function App() {
 
 
   useEffect(() => {
-    console.log("실행");
     // 만료 시간을 가져오기
     //인터벌을 테스트 후 삭제
     const intervalId = setInterval(() => {
@@ -34,12 +33,11 @@ function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("tokenExpiration");
   };
-  console.log();
+  
 
   return (
     <div className="App">
       <Toolbar />
-      {/* <Tabs/> */}
       <Slide />
       <Content />
       <Footer />

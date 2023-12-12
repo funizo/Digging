@@ -1,5 +1,4 @@
 import { SlMagnifier } from "react-icons/sl";
-import { RxHamburgerMenu } from "react-icons/rx";
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
@@ -211,9 +210,9 @@ function ToolBar(props) {
         <div className="d-flex">
           <div className="nav_list">
             <a href="/">HOME</a>
-            <a href="/board">찾아요</a>
-            <a href="#home">공유해요</a>
-          </div>
+            <a href="/board">구해줘</a>
+            <a href="/share">소통해요</a>
+        </div>
           <button className="searchbutton">
             <SlMagnifier />
           </button>
