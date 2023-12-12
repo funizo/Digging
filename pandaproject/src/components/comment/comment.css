@@ -1,0 +1,11 @@
+.comment-text {
+    height: 80px;
+    width: 100%;
+}
+.comment-label {
+    display: flex;
+}
+.commnet-button {
+    display: flex;
+    justify-content: flex-end;
+}
