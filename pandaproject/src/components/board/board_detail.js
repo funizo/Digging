@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Toolbar from "../../components/toolbar/toolbar";
 import Footer from "../../components/footer/footer";
-import { useParams, useHistory, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 function BoardDetail() {

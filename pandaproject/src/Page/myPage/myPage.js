@@ -35,18 +35,18 @@ function MyPage() {
             >
               내정보
             </p>
-            <p
+            {/* <p
               className={menu === 2 ? "selected" : ""}
               onClick={() => {
                 setMenu(2);
               }}
             >
               찜 목록
-            </p>
+            </p> */}
             <p
-              className={menu === 3 ? "selected" : ""}
+              className={menu === 2 ? "selected" : ""}
               onClick={() => {
-                setMenu(3);
+                setMenu(2);
               }}
             >
               설정
@@ -73,10 +73,10 @@ function MenuContent(props) {
       </div>
     );
   }
+  // if (props.menu === 2) {
+  //   return <div>찜목록</div>;
+  // }
   if (props.menu === 2) {
-    return <div>찜목록</div>;
-  }
-  if (props.menu === 3) {
     return (
       <div>
         <p>색상변경</p>

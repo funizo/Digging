@@ -3,8 +3,6 @@ const bodyParser = require("body-parser");
 const app = express();
 const path = require("path");
 const cors = require("cors");
-const bcrypt = require("bcrypt");
-const session = require("express-session");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const LocalStrategy = require("passport-local").Strategy;
@@ -13,11 +11,10 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 require("dotenv").config();
 const { MongoClient } = require("mongodb");
 const { ObjectId } = require("mongodb");
-const MongoStore = require("connect-mongo");
-
 const { S3Client } = require("@aws-sdk/client-s3");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
+
 const s3 = new S3Client({
   region: "ap-northeast-2",
   credentials: {
@@ -26,6 +23,7 @@ const s3 = new S3Client({
   },
 });
 
+//aws s3로 이미지 저장
 const upload = multer({
   storage: multerS3({
     s3: s3,
@@ -91,10 +89,19 @@ function generateToken(user) {
   );
 }
 
+function getFormattedDate() {
+  const today = new Date();
+  const year = today.getFullYear().toString().slice(-2);
+  const month = ('0' + (today.getMonth() + 1)).slice(-2);
+  const day = ('0' + today.getDate()).slice(-2);
+  return `${year}. ${month}. ${day}`;
+}
+
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("Bearer"), // 수정된 부분
   secretOrKey: "your-secret-key", // 사용할 시크릿 키
 };
+
 passport.use(
   new JwtStrategy(jwtOptions, (jwtPayload, cb) => {
     db.collection("user").findOne(
@@ -188,6 +195,39 @@ app.post('/edit/:id', upload.single('image') ,async (req, res) => {
     res.json({ message: 'ok' });
 })
 
+app.post('/comment', async (req, res)=>{
+  
+    await db.collection('comment').insertOne({
+      contentId: req.body.contentId,
+      contentWriterId:req.body.contentWriterId,
+      contentWriterName: req.body.contentWriterName,
+      loginName:req.body.loginName,
+      loginId:req.body.loginId,
+      comment : req.body.comment
+  })
+  res.json({ message: 'ok' });
+})
+
+
+
+app.get('/categoryComment' , async (req, res) => {
+  console.log('categoryComment',new Date());
+  const result = await db.collection('comment').find({contentId : (req.query.id)}).toArray();
+  console.log("result",result.length);
+  res.json({result:result});
+})
+
+app.delete('/commentdelete' , async (req, res) => {
+  console.log(req.query.id);
+  try {
+    const objId = req.query.id
+    await db.collection("comment").deleteOne({ _id: new ObjectId(objId) });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: '서버 오류' });
+  }
+  res.json({ message: 'ok' });
+})
 
 //이게찐
 ///////////////////////////////////////////////////
@@ -237,31 +277,28 @@ app.get('/mypage', passport.authenticate('jwt', { session: false }), (req, res) 
 });
 
 
-
-
-app.post("/addToWishlist", upload.single("image"), async (req, res) => {
-  let objId = new ObjectId(req.body.id);
-  console.log(req.body);
-  console.log(objId);
-  await db.collection("user").updateOne(
-    { _id: objId },
-    {
-      $set: {
-        bookTitle: req.body.title,
-        price: req.body.price,
-        bookImg: req.body.image,
-      },
-    }
-  );
-  res.json({ message: "ok" });
-});
+// app.post("/addToWishlist", upload.single("image"), async (req, res) => {
+//   let objId = new ObjectId(req.body.id);
+//   console.log(req.body);
+//   console.log(objId);
+//   await db.collection("user").updateOne(
+//     { _id: objId },
+//     {
+//       $set: {
+//         bookTitle: req.body.title,
+//         price: req.body.price,
+//         bookImg: req.body.image,
+//       },
+//     }
+//   );
+//   res.json({ message: "ok" });
+// });
 
 app.get("/board", async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const pageSize = 10;
     const skip = (page - 1) * pageSize;
-
     const result = await db
       .collection("board")
       .find()
@@ -277,6 +314,7 @@ app.get("/board", async (req, res) => {
       .json({ message: "게시판 데이터를 가져오는 중 에러가 발생했습니다." });
   }
 });
+
 app.post("/board", async (req, res) => {
   const boardData = req.body;
   const today = new Date();
@@ -420,7 +458,7 @@ app.put("/board_edit/:postId", async (req, res) => {
         })
     }
 })
-app.post('/category/ticket', async (req, res) => {
+  app.post('/category/ticket', async (req, res) => {
     const ticketData = req.body
     ticketData.date = getFormattedDate() //함수 받아오기;
     console.log(ticketData)

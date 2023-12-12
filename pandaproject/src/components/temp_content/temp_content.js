@@ -29,8 +29,6 @@ function PopularContent(props) {
   
 
   return (
-
-
     <div className="card-box">
       <a href={props.categoryUrl} className="card-link">
         <img
@@ -43,7 +41,6 @@ function PopularContent(props) {
         <p>{props.popularData.title}</p>
       </div>
     </div>
- 
   );
 }
 
