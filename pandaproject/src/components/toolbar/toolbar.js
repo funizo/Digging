@@ -11,6 +11,7 @@ function ToolBar(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
+  const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -65,6 +66,24 @@ function ToolBar(props) {
   const headerAlarmClick = (alarmcategory) => {
     setSelectedAlarmCategory(alarmcategory); //헤더알람 / 혜택 버튼 선택
   };
+
+  const fetchAlerts = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/manager/alerts");
+      if (response.ok) {
+        const data = await response.json();
+        setAlerts(data);
+      } else {
+        throw new Error("Failed to fetch alerts");
+      }
+    } catch (error) {
+      console.error("Error fetching alerts:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAlerts();
+  }, []);
 
   return (
     <div className="header-container">
@@ -138,7 +157,13 @@ function ToolBar(props) {
               {selectedAlarmCategory === "alarm" && (
                 <>
                   <div className="alarm-content">
-                    {/* 알림 내용을 표시하는 부분 */}
+                    {alerts.map((alert, index) => (
+                      <div className="alarm-item" key={index}>
+                        {/* 여기에 가져온 알림 데이터를 표시 */}
+                        <p className="item-title">{alert.alert}</p>
+                        {/* 기타 알림 데이터 필드를 추가로 표시할 수 있음 */}
+                      </div>
+                    ))}
                     <div className="alarm-item">
                       {" "}
                       알림 1<p className="item-title">123</p>

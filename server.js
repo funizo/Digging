@@ -442,6 +442,36 @@ app.patch("/manager/userInfo/:userId", async (req, res) => {
   }
 });
 
+app.get("/manager/alerts", async (req, res) => {
+  try {
+    const alerts = await db
+      .collection("user")
+      .find({}, { projection: { _id: 0, alert: 1 } })
+      .toArray();
+    res.json(alerts);
+  } catch (error) {
+    console.error("Error fetching alerts:", error);
+    res.status(500).json({ error: "Failed to fetch alerts" });
+  }
+});
+// app.get("/manager/alerts/:userId", async (req, res) => {
+//   try {
+//     const userId = req.params.userId;
+//     const alerts = await db
+//       .collection("user")
+//       .findOne({ _id: new ObjectId(userId) }, { projection: { _id: 0, alert: 1 } });
+
+//     if (!alerts) {
+//       return res.status(404).json({ error: "Alerts not found" });
+//     }
+
+//     res.json(alerts);
+//   } catch (error) {
+//     console.error("Error fetching alerts:", error);
+//     res.status(500).json({ error: "Failed to fetch alerts" });
+//   }
+// });
+
 //이거 맨밑으로
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "pandaproject/build/index.html"));
