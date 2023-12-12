@@ -14,6 +14,7 @@ const { ObjectId } = require("mongodb");
 const { S3Client } = require("@aws-sdk/client-s3");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
+const { userInfo } = require("os");
 
 const s3 = new S3Client({
   region: "ap-northeast-2",
@@ -896,12 +897,15 @@ app.patch("/manager/userInfo/:userId", async (req, res) => {
 });
 
 // 수정필요
-app.get("/manager/alerts", async (req, res) => {
+app.get("/manager/alerts/:id", async (req, res) => {
+  console.log("manager/alerts" + new Date());
   try {
+    const Id = req.params.id;
+    console.log(Id);
     const alerts = await db
       .collection("user")
-      .find({}, { projection: { _id: 0, alert: 1 } })
-      .toArray();
+      .findOne({ _id: new ObjectId(Id) });
+    console.log(alerts);
     res.json(alerts);
   } catch (error) {
     console.error("Error fetching alerts:", error);
