@@ -8,7 +8,7 @@ function Content() {
   const [categoryUrl,setCategoryUrl] = useState([
     "/category/fashion","/category/electronic","/category/toy",
     "/category/goods","/category/ticket","/category/book",
-    "/category/personal","/event"
+    "/category/rank","/event"
   ]);
   
   return (

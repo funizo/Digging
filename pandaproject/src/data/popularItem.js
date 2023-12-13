@@ -32,8 +32,8 @@ const popularItem = [
     },
     {
         id : 6,
-        title: '개인 제작물',
-        img: "/img/category/creation.jpg"
+        title: '실시간 검색 순위',
+        img: "/img/category/rank.jpg"
     },
     {
         id : 7,
