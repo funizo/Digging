@@ -6,7 +6,7 @@
   padding: 0px 20px;
 }
 
-.novel{
+.novel {
   text-align: center;
   margin: 0 auto;
   max-width: 1280px;
@@ -19,7 +19,6 @@
   border-radius: 10px;
 }
 
-
 .novel-item img {
   width: 200px;
   height: 270px;
@@ -30,32 +29,37 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
- padding: 8px 4px 0px;
+  padding: 8px 4px 0px;
 }
-.novel-card-category{
+.novel-card-category {
   font-size: 15px;
 }
 
-.novel h2{
+.novel h2 {
   margin: 0px 27px 40px;
   padding: 36px 0px 0px;
 }
-.novel-card-title{
-text-align: left;
-font-size: 16px;
-font-weight: bold;
-white-space: normal;
-line-height: 1.2;
+.novel-card-title {
+  text-align: left;
+  font-size: 16px;
+  font-weight: bold;
+  white-space: normal;
+  line-height: 1.2;
 }
-.novel-card-writer{
+.novel-card-writer {
   color: #999;
 }
-.novel-card-price{
+.novel-card-price {
   font-size: 16px;
   font-weight: bold;
 }
-.image-container{
+.image-container {
   cursor: pointer;
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+  padding: 10px;
+  box-shadow: 5px 5px 5px;
 }
 
 .write {
@@ -67,20 +71,17 @@ line-height: 1.2;
 }
 
 @media (max-width: 960px) {
-  .novel h2{
+  .novel h2 {
     margin: 0px 0px 20px;
     padding: 0px 0px 0px;
   }
-  .novel-item{
-    margin:0;
+  .novel-item {
+    margin: 0;
     margin-bottom: 20px;
   }
-  .novel-container{
+  .novel-container {
     justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
-    
   }
 }
-
-
