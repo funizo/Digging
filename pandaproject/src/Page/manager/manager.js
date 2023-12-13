@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./manager.css";
+import Toolbar from "../../components/toolbar/toolbar";
 
 function Manager() {
   const [userInfo, setUserInfo] = useState([]);
@@ -65,6 +66,7 @@ function Manager() {
 
   return (
     <div>
+      <Toolbar />
       <h2>User Information</h2>
       <ol>
         {userInfo.map((user, index) => (
