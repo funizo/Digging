@@ -978,6 +978,18 @@ app.get("/manager/alerts/:id", async (req, res) => {
   }
 });
 
+// //파이썬 플라스크
+// app.get('/getDataFromFlask', async (req, res) => {
+//   try {
+//     const response = await fetch('http://localhost:5000/keywords_json/10');
+//     res.json(response.data);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
+
+
 //이거 맨밑으로
 app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'pandaproject/build/index.html'));
