@@ -217,7 +217,12 @@ function ContentDetail(props) {
             name="content"
             onChange={(e) => setComment(e.target.value)}
           />
-          <button comment_submitButton type="submit" onClick={handleComment}>
+          <button
+            className="comment_submitButton"
+            comment_submitButton
+            type="submit"
+            onClick={handleComment}
+          >
             댓글작성
           </button>
         </div>
