@@ -385,7 +385,6 @@ app.post("/board_detail/:postId", async (req, res) => {
       res.status(500).json({ message: "Internal server error" });
     }
   }
-  // Check if it's a comment or a post view
   if (action === "commentsubmit") {
     console.log("commentsubmit,", action);
     const commentdata = req.body;
@@ -463,6 +462,24 @@ app.get("/board_detail/:postId", async (req, res) => {
   }
 });
 
+// app.get('/board_detail/:postId', async (req, res) => {
+//   const postId = req.params.postId;
+//   try {
+//       // 클라이언트에서 전달한 postId를 사용하여 해당 게시물을 찾음
+//       const post = await db
+//           .collection('board')
+//           .findOne({ _id: new ObjectId(postId) });
+
+//       if (!post) {
+//           return res.status(404).json({ message: 'Post not found' });
+//       }
+
+//       res.json(post);
+//   } catch (error) {
+//       console.error('Error fetching post detail:', error);
+//       res.status(500).json({ message: 'Internal server error' });
+//   }
+// });
 app.put("/board_edit/:postId", async (req, res) => {
   const { postId } = req.params;
   const updatedData = req.body;
@@ -990,4 +1007,9 @@ app.get("/manager/alerts/:id", async (req, res) => {
     console.error("Error fetching alerts:", error);
     res.status(500).json({ error: "Failed to fetch alerts" });
   }
+});
+
+//이거 맨밑으로
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "pandaproject/build/index.html"));
 });
