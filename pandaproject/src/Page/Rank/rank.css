@@ -1,23 +1,22 @@
 /* rank.css */
 
-.flex-container {
+.flex-container2 {
     display: flex;
     justify-content: center;
     align-content: center;
   }
   
-  .card-container {
+  .card-container2 {
     width: 15rem;
     margin: 30px 20px;
   }
   
-  .card-header {
+  .card-header2 {
     text-align: center;
     margin-top: 15px;
     margin-bottom: 15px;
-    width: 162px;
     border-bottom: 2px solid #ccc;  
-
+    border-radius: 20px;
   }
   
   .card-content2 {
