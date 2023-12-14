@@ -26,7 +26,7 @@ function Rank() {
     return (
         <div style={{ margin: '0 250px' }}>
             <Toolbar />
-                <h1>인기 검색어</h1>
+                <h1 style={{textAlign:"center"}}>인기 검색어</h1>
                 <RankCard bookData={bookData} electronicData={electronicData} fashionData={fashionData} goodsData={goodsData} ticketData={ticketData} toyData={toyData}/>
                 <p>※하루 10시 기준으로 선정된 검색어들입니다</p>
                 
@@ -51,34 +51,62 @@ function RankCard(props) {
         { title: '장난감', data: props.toyData },
     ]
 
+    // return (
+    //     <div>
+    //         <div style={{ display: 'flex', justifyContent:'center', alignContent:'center' }}>
+    //         {categories.map((category, i) => (
+    //             <Card key={i} style={{ width: '15rem',margin:'30px 20px' }}>
+    //                 <h5 style={{textAlign:'center',marginTop:'15px',marginBottom:'15px', borderBottom:"2px solid:#ccc",borderRadius:'10%'}}>{category.title}</h5>
+    //                 {category.data.map((data, i) => (
+    //                     <div key={i} style={{margin:'0 15px 7px'}}>
+    //                         {data.id}위 {data.name}
+    //                     </div>
+    //                 ))}
+    //             </Card>
+    //         ))}
+    //         </div>
+    //         <div style={{ display: 'flex', justifyContent:'center', alignContent:'center' }}>
+    //         {categoriesSecond.map((category, i) => (
+    //             <Card key={i} style={{ width: '15rem',margin:'30px 20px' }}>
+    //                 <h5 style={{textAlign:'center'}}>{category.title}</h5>
+    //                 {category.data.map((data, i) => (
+    //                     <div key={i} style={{margin:'0 15px 3px'}}>
+    //                         {data.id}위 {data.name}
+    //                     </div>
+    //                 ))}
+    //             </Card>
+    //         ))}
+    //         </div>
+    //     </div>
+    // );
     return (
-        <div >
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-            {categories.map((category, i) => (
-                <Card key={i} style={{ width: '15rem',margin:'30px 20px' }}>
-                    <h5>{category.title}</h5>
+        <div>
+            <div className="flex-container">
+                {categories.map((category, i) => (
+                <Card key={i} className="card-container">
+                    <h5 className="card-header">{category.title}</h5>
                     {category.data.map((data, i) => (
-                        <div key={i} style={{margin:'0 5px'}}>
-                            {data.id}위 {data.name}
-                        </div>
+                    <div key={i} className="card-content">
+                        {data.id}위 {data.name}
+                    </div>
                     ))}
                 </Card>
-            ))}
+                ))}
             </div>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-            {categoriesSecond.map((category, i) => (
-                <Card key={i} style={{ width: '15rem',margin:'30px 20px' }}>
-                    <h5>{category.title}</h5>
+            <div className="flex-container">
+                {categoriesSecond.map((category, i) => (
+                <Card key={i} className="card-container">
+                    <h5 className="card-header">{category.title}</h5>
                     {category.data.map((data, i) => (
-                        <div key={i} style={{margin:'0 5px'}}>
-                            {data.id}위 {data.name}
-                        </div>
+                    <div key={i} className="card-content2">
+                        {data.id}위 {data.name}
+                    </div>
                     ))}
                 </Card>
-            ))}
+                ))}
             </div>
-        </div>
-    );
+            </div>
+        );
 }
 
 
