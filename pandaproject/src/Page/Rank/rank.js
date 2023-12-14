@@ -51,51 +51,23 @@ function RankCard(props) {
         { title: '장난감', data: props.toyData },
     ]
 
-    // return (
-    //     <div>
-    //         <div style={{ display: 'flex', justifyContent:'center', alignContent:'center' }}>
-    //         {categories.map((category, i) => (
-    //             <Card key={i} style={{ width: '15rem',margin:'30px 20px' }}>
-    //                 <h5 style={{textAlign:'center',marginTop:'15px',marginBottom:'15px', borderBottom:"2px solid:#ccc",borderRadius:'10%'}}>{category.title}</h5>
-    //                 {category.data.map((data, i) => (
-    //                     <div key={i} style={{margin:'0 15px 7px'}}>
-    //                         {data.id}위 {data.name}
-    //                     </div>
-    //                 ))}
-    //             </Card>
-    //         ))}
-    //         </div>
-    //         <div style={{ display: 'flex', justifyContent:'center', alignContent:'center' }}>
-    //         {categoriesSecond.map((category, i) => (
-    //             <Card key={i} style={{ width: '15rem',margin:'30px 20px' }}>
-    //                 <h5 style={{textAlign:'center'}}>{category.title}</h5>
-    //                 {category.data.map((data, i) => (
-    //                     <div key={i} style={{margin:'0 15px 3px'}}>
-    //                         {data.id}위 {data.name}
-    //                     </div>
-    //                 ))}
-    //             </Card>
-    //         ))}
-    //         </div>
-    //     </div>
-    // );
     return (
         <div>
-            <div className="flex-container">
+            <div className="flex-container2">
                 {categories.map((category, i) => (
-                <Card key={i} className="card-container">
-                    <h5 className="card-header">{category.title}</h5>
+                <Card key={i} className="card-container2">
+                    <h5 className="card-header2">{category.title}</h5>
                     {category.data.map((data, i) => (
-                    <div key={i} className="card-content">
+                    <div key={i} className="card-content2">
                         {data.id}위 {data.name}
                     </div>
                     ))}
                 </Card>
                 ))}
             </div>
-            <div className="flex-container">
+            <div className="flex-container2">
                 {categoriesSecond.map((category, i) => (
-                <Card key={i} className="card-container">
+                <Card key={i} className="card-container2">
                     <h5 className="card-header">{category.title}</h5>
                     {category.data.map((data, i) => (
                     <div key={i} className="card-content2">
