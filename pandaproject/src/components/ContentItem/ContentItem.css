@@ -1,4 +1,4 @@
-.novel-container {
+.categoryContents-container {
   display: grid;
   margin-top: 40px;
   margin-bottom: 40px;
@@ -7,13 +7,13 @@
   padding: 10px 20px;
 }
 
-.novel {
+.categoryContents {
   text-align: center;
   margin: 0 auto;
   max-width: 1280px;
 }
 
-.novel-item {
+.categoryContents-item {
   height: 370px;
   border-radius: 10px;
   overflow: hidden; /* 내용이 넘칠 때 처리 */
@@ -21,11 +21,11 @@
   transition: transform 0.3s ease-in-out; /* 호버 시 애니메이션 효과 */
 }
 
-.novel-item:hover {
+.categoryContents-item:hover {
   transform: translateY(-5px);
 }
 
-.novel-item img {
+.categoryContents-item img {
   width: 100%;
   height: 270px;
   border-top-left-radius: 10px;
@@ -37,12 +37,12 @@
   padding: 8px 4px 0px;
 }
 
-.novel h2 {
+.categoryContents h2 {
   margin: 0px 0px 40px;
   padding: 20px 0px 0px;
 }
 
-.novel-card-title {
+.categoryContents-card-title {
   text-align: center;
   font-size: 18px;
   font-weight: bold;
@@ -50,7 +50,7 @@
   line-height: 1.4;
 }
 
-.novel-card-writer {
+.categoryContents-card-writer {
   color: #777;
 }
 
@@ -69,15 +69,15 @@
 }
 
 @media (max-width: 960px) {
-  .novel h2 {
+  .categoryContents h2 {
     margin: 0px 0px 20px;
     padding: 0px 0px 0px;
   }
-  .novel-item {
+  .categoryContents-item {
     margin: 0;
     margin-bottom: 20px;
   }
-  .novel-container {
+  .categoryContents-container {
     justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
