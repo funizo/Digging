@@ -8,7 +8,7 @@
   cursor: pointer;
 }
 
-h2 {
+.user_info {
   background-color: black;
   color: white;
   text-align: left;

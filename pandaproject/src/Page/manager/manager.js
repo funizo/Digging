@@ -67,7 +67,7 @@ function Manager() {
   return (
     <div>
       <Toolbar />
-      <h2>User Information</h2>
+      <h2 className="user_info">User Information</h2>
       <ol>
         {userInfo.map((user, index) => (
           <li key={index}>
