@@ -10,7 +10,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .comment_submitButton {
-  padding: 5px 20px;
   margin-left: 10px;
 }
 .book_container img {
@@ -45,7 +44,7 @@
 .button_buy,
 .button_auction,
 .button_wishlist {
-  background-color: #f36421;
+  background-color: #000000;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -61,7 +60,7 @@
 .button_buy:hover,
 .button_auction:hover,
 .button_wishlist:hover {
-  background-color: #d9534f; /* 호버 시 색상 변경 */
+  background-color: #313131; /* 호버 시 색상 변경 */
 }
 .button_auction {
   background-color: #2196f3;
@@ -81,7 +80,7 @@
   justify-content: center;
 }
 .button_wishlist {
-  background-color: #f36421;
+  background-color: #000000;
   color: white;
   border: none;
   padding: 10px 20px;
