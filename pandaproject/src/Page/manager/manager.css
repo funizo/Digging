@@ -7,3 +7,11 @@
   border-radius: 7px;
   cursor: pointer;
 }
+
+.user_info {
+  background-color: black;
+  color: white;
+  text-align: left;
+  padding: 30px;
+  margin-bottom: 40px;
+}
