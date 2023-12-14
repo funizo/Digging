@@ -323,7 +323,9 @@ app.get("/board", async (req, res) => {
 });
 app.post("/board", async (req, res) => {
   const boardData = req.body;
-  boardData.date = getFormattedDate(); //함수 받아오기;
+  const currentDate = new Date();
+  boardData.date = currentDate.toISOString();
+  // boardData.date = getFormattedDate(); //함수 받아오기;
 
   await db.collection("board").insertOne({
     id: boardData.id,
@@ -348,24 +350,33 @@ app.get("/board", async (req, res) => {
 });
 
 app.post("/board_detail/:postId", async (req, res) => {
-  const postId = req.params.content;
-  console.log("req.params.postId:", req.params.postId);
-  console.log("req.body:", req.body);
-  console.log("postId:", postId);
+  const postId = req.params.postId;
+  const { action } = req.body;
+  const currentDate = new Date();
 
-  // Check if it's a comment or a post view
-  if (req.body) {
-    // If it has content in the body, it's a comment
+  console.log("action", action);
+  if (action === "addReply") {
+    console.log("addReply", action);
+    const commentListData = req.body;
+    console.log("commentListData1111111111", commentListData);
+    const parentId = commentListData.parentId;
+    console.log("22222222222222222222", parentId);
+    commentListData.date = currentDate.toISOString();
 
-    const commentdata = req.body;
-    console.log("commentdata", commentdata);
-
+    //자식 데이터
     try {
+      const parentComment = await db.collection("comment123").findOne({
+        _id: new ObjectId(parentId),
+      });
+      console.log("parentComment", parentComment);
       await db.collection("comment123").insertOne({
-        postId: commentdata.postId,
-        content: commentdata.content,
-        writerId: commentdata.writerId,
-        writer: commentdata.writer,
+        parentId: commentListData.parentId,
+        postId: commentListData.postId,
+        writerId: commentListData.writerId,
+        writer: commentListData.writer,
+        content: commentListData.content,
+        date: commentListData.date,
+        depth: parentComment.depth + 1,
       });
 
       res.json({ message: "ok" });
@@ -373,8 +384,31 @@ app.post("/board_detail/:postId", async (req, res) => {
       console.error("Error adding comment:", error.message);
       res.status(500).json({ message: "Internal server error" });
     }
-  } else {
-    // If it doesn't have content in the body, it's a post view
+  }
+  if (action === "commentsubmit") {
+    console.log("commentsubmit,", action);
+    const commentdata = req.body;
+    console.log("commentdata", commentdata);
+    commentdata.date = currentDate.toISOString();
+    //부모 데이터
+    try {
+      await db.collection("comment123").insertOne({
+        postId: commentdata.postId,
+        writerId: commentdata.writerId,
+        writer: commentdata.writer,
+        content: commentdata.content,
+        date: commentdata.date,
+        depth: commentdata.depth,
+      });
+
+      res.json({ message: "ok" });
+    } catch (error) {
+      console.error("Error adding comment:", error.message);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+  if (action === "handlePostClick") {
+    console.log("handlePostClick", action);
     try {
       // 클라이언트에서 전달한 postId를 사용하여 해당 게시물을 찾음
       const post = await db
@@ -398,25 +432,6 @@ app.post("/board_detail/:postId", async (req, res) => {
     }
   }
 });
-
-// app.get('/board_detail/:postId', async (req, res) => {
-//     const postId = req.params.postId;
-//     try {
-//         // 클라이언트에서 전달한 postId를 사용하여 해당 게시물을 찾음
-//         const post = await db
-//             .collection('board')
-//             .findOne({ _id: new ObjectId(postId) });
-
-//         if (!post) {
-//             return res.status(404).json({ message: 'Post not found' });
-//         }
-
-//         res.json(post);
-//     } catch (error) {
-//         console.error('Error fetching post detail:', error);
-//         res.status(500).json({ message: 'Internal server error' });
-//     }
-// });
 app.get("/board_detail/:postId", async (req, res) => {
   const postId = req.params.postId;
   try {
@@ -447,6 +462,24 @@ app.get("/board_detail/:postId", async (req, res) => {
   }
 });
 
+// app.get('/board_detail/:postId', async (req, res) => {
+//   const postId = req.params.postId;
+//   try {
+//       // 클라이언트에서 전달한 postId를 사용하여 해당 게시물을 찾음
+//       const post = await db
+//           .collection('board')
+//           .findOne({ _id: new ObjectId(postId) });
+
+//       if (!post) {
+//           return res.status(404).json({ message: 'Post not found' });
+//       }
+
+//       res.json(post);
+//   } catch (error) {
+//       console.error('Error fetching post detail:', error);
+//       res.status(500).json({ message: 'Internal server error' });
+//   }
+// });
 app.put("/board_edit/:postId", async (req, res) => {
   const { postId } = req.params;
   const updatedData = req.body;
@@ -975,6 +1008,18 @@ app.get("/manager/alerts/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch alerts" });
   }
 });
+
+// //파이썬 플라스크
+// app.get('/getDataFromFlask', async (req, res) => {
+//   try {
+//     const response = await fetch('http://localhost:5000/keywords_json/10');
+//     res.json(response.data);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
+
 
 //이거 맨밑으로
 app.get("*", function (req, res) {
