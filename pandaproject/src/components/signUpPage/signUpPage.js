@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Post from "../post";
 import "./signUpPage.css";
 import Footer from "../footer/footer";
 
 const SignUpPage = () => {
-  
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [showAddress, setShowAddress] = useState(false);
@@ -17,12 +16,12 @@ const SignUpPage = () => {
   const handlePostComplete = (data) => {
     setUserData((prevUserData) => ({
       ...prevUserData,
-      address:data.address,
+      address: data.address,
     }));
     setShowAddress(false);
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (userData.password !== confirmPassword) {
@@ -38,12 +37,12 @@ const SignUpPage = () => {
         });
         if (res.ok) {
           console.log("서버전송완료");
-          navigate('/');
+          navigate("/");
         } else {
-          console.log("서버전송실패")
-        } 
-      } catch(e) {
-        console.log("서버에 요청중 오류가 발생",e)
+          console.log("서버전송실패");
+        }
+      } catch (e) {
+        console.log("서버에 요청중 오류가 발생", e);
       }
     }
   };
@@ -56,24 +55,30 @@ const SignUpPage = () => {
     subaddress: "",
   });
 
-  
-
-
-
   return (
     <div>
       <Link to="/" className="logo">
-        <img src={`${process.env.PUBLIC_URL}/img/logo-digging.png?${new Date().getTime()}`} alt="로고" />
+        <img
+          src={`${
+            process.env.PUBLIC_URL
+          }/img/logo-digging.png?${new Date().getTime()}`}
+          alt="로고"
+        />
       </Link>
       <div className="container">
-        <h2>회원가입</h2>
+        <h2 className="singup-title">회원가입</h2>
         <form onSubmit={handleSubmit}>
           <div>
             <input
               placeholder="  아이디"
               type="text"
               value={userData.username}
-              onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, username: e.target.value }))}
+              onChange={(e) =>
+                setUserData((prevUserData) => ({
+                  ...prevUserData,
+                  username: e.target.value,
+                }))
+              }
             />
           </div>
           <div>
@@ -81,7 +86,12 @@ const SignUpPage = () => {
               placeholder="  이메일"
               type="email"
               value={userData.email}
-              onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, email: e.target.value }))}
+              onChange={(e) =>
+                setUserData((prevUserData) => ({
+                  ...prevUserData,
+                  email: e.target.value,
+                }))
+              }
             />
           </div>
           <div>
@@ -90,7 +100,12 @@ const SignUpPage = () => {
               className="address"
               type="text"
               value={userData.address}
-              onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, address: e.target.value }))}
+              onChange={(e) =>
+                setUserData((prevUserData) => ({
+                  ...prevUserData,
+                  address: e.target.value,
+                }))
+              }
               onClick={handleAddressButtonClick}
             />
             <div>
@@ -99,7 +114,12 @@ const SignUpPage = () => {
                 className="input-subaddress"
                 type="text"
                 value={userData.subaddress}
-                onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, subaddress: e.target.value }))}
+                onChange={(e) =>
+                  setUserData((prevUserData) => ({
+                    ...prevUserData,
+                    subaddress: e.target.value,
+                  }))
+                }
               />
             </div>
 
@@ -116,7 +136,12 @@ const SignUpPage = () => {
               placeholder="  비밀번호"
               type="password"
               value={userData.password}
-              onChange={(e) => setUserData((prevUserData) => ({ ...prevUserData, password: e.target.value }))}
+              onChange={(e) =>
+                setUserData((prevUserData) => ({
+                  ...prevUserData,
+                  password: e.target.value,
+                }))
+              }
             />
           </div>
           <div>
@@ -132,7 +157,7 @@ const SignUpPage = () => {
           {error && <p style={{ color: "red" }}>{error}</p>}
         </form>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

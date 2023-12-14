@@ -385,7 +385,6 @@ app.post("/board_detail/:postId", async (req, res) => {
       res.status(500).json({ message: "Internal server error" });
     }
   }
-
   if (action === "commentsubmit") {
     console.log("commentsubmit,", action);
     const commentdata = req.body;
