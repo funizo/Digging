@@ -68,7 +68,7 @@ function RankCard(props) {
             <div className="flex-container2">
                 {categoriesSecond.map((category, i) => (
                 <Card key={i} className="card-container2">
-                    <h5 className="card-header">{category.title}</h5>
+                    <h5 className="card-header2">{category.title}</h5>
                     {category.data.map((data, i) => (
                     <div key={i} className="card-content2">
                         {data.id}위 {data.name}
