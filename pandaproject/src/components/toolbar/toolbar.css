@@ -174,7 +174,9 @@ button {
   font-size: 12px;
   cursor: pointer;
 }
-
+.nav_home {
+  font-weight: bold;
+}
 @media (max-width: 960px) {
   .user-actions {
     display: none;

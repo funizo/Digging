@@ -91,7 +91,7 @@ function BoardDetail() {
       <div className="post-detail-box">
         <div className="boardDetail-box">
           <div className="boarDetail-findBox">
-            <h4 className="boarDetail-find">커뮤니티</h4>
+            <h5 className="boarDetail-find">커뮤니티</h5>
           </div>
           {postDetail && (
             <div>

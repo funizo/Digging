@@ -132,7 +132,7 @@ root.render(
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/board" element={<Board />} />
       <Route path="/manager" element={<Manager />} />
-      <Route path="/category/rank" element={<Rank />}/>
+      <Route path="/category/rank" element={<Rank />} />
 
       <Route path="*" element={<div>없는페이지에요</div>} />
     </Routes>
