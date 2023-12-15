@@ -11,10 +11,9 @@ const Footer = () => {
 
       <Navbar>
         <Nav id="footer2">
-          <Nav.Link href="/">이용약관</Nav.Link>
-          <Nav.Link href="/">개인정보처리방침</Nav.Link>
-          <Nav.Link href="/">청소년보호정책</Nav.Link>
-          <Nav.Link href="/">문의사항</Nav.Link>
+          <Nav.Link href="/privacy">이용약관</Nav.Link>
+          <Nav.Link href="/privacy">개인정보처리방침</Nav.Link>
+          <Nav.Link href="/privacy">청소년보호정책</Nav.Link>
         </Nav>
       </Navbar>
     </footer>

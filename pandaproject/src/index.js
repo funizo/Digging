@@ -31,6 +31,7 @@ import BoardEdit from "./components/board/board_edit";
 import BoardDetail from "./components/board/board_detail";
 import Manager from "./Page/manager/manager";
 import Rank from "./Page/Rank/rank";
+import Privacy from "./Page/Privacy/privacy";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -133,7 +134,7 @@ root.render(
       <Route path="/board" element={<Board />} />
       <Route path="/manager" element={<Manager />} />
       <Route path="/category/rank" element={<Rank />}/>
-
+      <Route path="/privacy" element={<Privacy />} />
       <Route path="*" element={<div>없는페이지에요</div>} />
     </Routes>
   </BrowserRouter>

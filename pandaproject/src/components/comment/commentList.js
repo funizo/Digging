@@ -1,5 +1,5 @@
 import "./commentList.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import formatTimeAgo from "../formatTime/formatTimeAgo";
 import "./commentList.css";
 
