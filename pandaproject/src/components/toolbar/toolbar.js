@@ -221,7 +221,9 @@ function ToolBar(props) {
 
         <div className="d-flex">
           <div className="nav_list">
-            <a href="/">HOME</a>
+            <a className="nav_home" href="/">
+              HOME
+            </a>
             <a href="/board">구해줘</a>
             <a href="/share">소통해요</a>
           </div>

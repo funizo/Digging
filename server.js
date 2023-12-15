@@ -305,10 +305,23 @@ app.get("/board", async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const pageSize = 10;
     const skip = (page - 1) * pageSize;
+    const { searchTerm, tag } = req.query;
+    console.log(tag);
+    console.log(searchTerm);
+    // Build the query based on whether a search term is provided
+    let query = {};
+    if (searchTerm) {
+      query.title = { $regex: new RegExp(searchTerm, "i") };
+    }
+
+    console.log(tag);
+    if (tag) {
+      query.tag = tag;
+    }
 
     const result = await db
       .collection("board")
-      .find()
+      .find(query)
       .skip(skip)
       .limit(pageSize)
       .toArray();
@@ -325,6 +338,7 @@ app.post("/board", async (req, res) => {
   const boardData = req.body;
   const currentDate = new Date();
   boardData.date = currentDate.toISOString();
+  console.log("boardData", boardData);
   // boardData.date = getFormattedDate(); //함수 받아오기;
 
   await db.collection("board").insertOne({
@@ -334,20 +348,22 @@ app.post("/board", async (req, res) => {
     writer: boardData.writer,
     views: boardData.views,
     date: boardData.date,
+    tag: boardData.tag,
     comments: [],
   });
   res.json({ message: "ok" });
 });
 
-app.get("/board", async (req, res) => {
-  try {
-    const boardData = await db.collection("board").find({}).toArray();
-    res.json(boardData);
-  } catch (error) {
-    console.error("패치 에러:", error.message);
-    res.status(500).json({ error: "서버에러" });
-  }
-});
+// app.get("/board", async (req, res) => {
+//   console.log("123");
+//   try {
+//     const boardData = await db.collection("board").find({}).toArray();
+//     res.json(boardData);
+//   } catch (error) {
+//     console.error("패치 에러:", error.message);
+//     res.status(500).json({ error: "서버에러" });
+//   }
+// });
 
 app.post("/board_detail/:postId", async (req, res) => {
   const postId = req.params.postId;
