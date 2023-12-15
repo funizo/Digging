@@ -12,15 +12,22 @@ h4 {
   height: 100px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 스타일을 설정하세요. */
+  border-radius: 26px;
+  background-image: url(./christmas.png);
 }
-.boarDetail-find {
-  color: black;
+.boarDetail-boardtitle {
+  font-weight: bold;
+  padding-left: 30px;
 }
 .boarDetail-infoBox {
-  padding: 15px 0px;
+  padding: 60px 0px 15px 0px;
 }
 .boardDetail-writer {
+  border-top: 1px solid hsla(220, 9%, 46%, 0.3);
   font-size: 15px;
+  padding-top: 20px;
 }
 /* 보더 라인 색깔 hsla(220, 9%, 46%, 0.3)  */
 .boardDetail-date-view-box {
@@ -35,6 +42,7 @@ h4 {
   font-size: 13px;
   padding-left: 5px;
 }
+
 .boardDetail-title {
   font-size: 18px;
   font-weight: bolder;
