@@ -5,6 +5,8 @@ import Footer from "../../components/footer/footer";
 import formatTimeAgo from "../formatTime/formatTimeAgo";
 import { LiaCommentDotsSolid } from "react-icons/lia";
 import { IoEyeOutline } from "react-icons/io5";
+import { ReactComponent as Back } from "./back.svg";
+import { IoIosSearch } from "react-icons/io";
 import "./board.css";
 
 function Board() {
@@ -13,11 +15,13 @@ function Board() {
   const pageSize = 10; // 페이지당 보여줄 항목 수
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태 추가
+  const [tag, setTag] = useState(""); // 검색어 상태 추가
 
-  const fetchData = async (pageNumber) => {
+  const fetchData = async (pageNumber, selectedTag) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/board?page=${pageNumber}`
+        `http://localhost:8080/board?&page=${pageNumber}&tag=${selectedTag}`
       );
       if (!response.ok) {
         throw new Error("서버 응답 에러");
@@ -29,15 +33,16 @@ function Board() {
     }
   };
 
-  console.log("boardData", boardData);
-
+  const handleTagClick = (selectedTag) => {
+    setTag(selectedTag === "전체보기" ? "" : selectedTag);
+    fetchData(page, selectedTag);
+  };
   const handlePaging = async (pageNumber) => {
     setPage(pageNumber);
   };
-
   useEffect(() => {
-    fetchData(page);
-  }, [page]);
+    fetchData(page, tag);
+  }, [page, searchTerm, tag]);
 
   const goToPrevPage = () => {
     if (page > 1) {
@@ -49,6 +54,20 @@ function Board() {
     handlePaging(page + 1);
   };
 
+  const handleSearchButtonClick = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/board?searchTerm=${searchTerm}`
+      );
+      if (!response.ok) {
+        throw new Error("서버 응답 에러");
+      }
+      const data = await response.json();
+      setBoardData(data.result);
+    } catch (error) {
+      console.error("데이터를 가져오는 중 에러 발생:", error);
+    }
+  };
   const handlePostClick = async (postId) => {
     try {
       const response = await fetch(
@@ -73,7 +92,9 @@ function Board() {
       console.error("Error incrementing views:", error.message);
     }
   };
-
+  const handleSearchInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
   const handleWriteClick = () => {
     // 버튼 클릭 시 토큰 확인 후 로그인 페이지로 이동
     if (!token) {
@@ -92,51 +113,98 @@ function Board() {
         };
       })
     : [];
+
   return (
     <div>
       <Toolbar />
       <div className="board-container">
         <div className="board-box">
           <div className="board-title">
-            <h3>게시판</h3>
+            <h5>커뮤니티</h5>
+            <h6>다양한 사용자와 경험을 나누어보세요</h6>
           </div>
-          <div className="write-button">
-            <span onClick={handleWriteClick}>글쓰기</span>
+          <div className="board-backSvg">
+            <Back />
           </div>
         </div>
+        <div className="board-writeButton">
+          <div className="board-tagbox">
+            <p
+              className="board-lifestory "
+              onClick={() => handleTagClick("사는얘기")}
+            >
+              사는얘기
+            </p>
+            <p
+              className="board-communication"
+              onClick={() => handleTagClick("소통해요")}
+            >
+              소통해요
+            </p>
+            <p
+              className="board-find"
+              onClick={() => handleTagClick("찾아줘요")}
+            >
+              찾아줘요
+            </p>
+            <p
+              className="board-allfind"
+              onClick={() => handleTagClick("전체보기")}
+            >
+              전체보기
+            </p>
+          </div>
+          <button onClick={handleWriteClick}>글쓰기</button>
+        </div>
+        <div className="board-serchInput-box">
+          <input
+            className="board-serchInput"
+            type="text"
+            placeholder="검색어를 입력해주세요 "
+            value={searchTerm}
+            onChange={handleSearchInputChange}
+          />
+          <div className="board-serchBtn-box" onClick={handleSearchButtonClick}>
+            <IoIosSearch className="board-searchButton" />
+          </div>
+        </div>
+        {formattedComments.map((post, index) => (
+          <div
+            className="board-infoContainer"
+            key={index}
+            onClick={() => handlePostClick(post._id)}
+          >
+            <div className="board-infoBox">
+              <p className="board-postWriter">{post.writer}</p>
+              <p className="board-formattedData">{post.formattedTime}</p>
+            </div>
+            <p className="board-postTitle">{post.title}</p>
+            <div className="board-postView-container">
+              <div className="board-tag-box">
+                <p className="board-tag">{post.tag}</p>
+              </div>
+              <div className="board-postView-box">
+                <p className="board-postViews">
+                  <IoEyeOutline />
+                  {post.views}
+                </p>
+                <p className="board-commentview">
+                  <LiaCommentDotsSolid />
+                  {post.views}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>번호</th>
-              <th>제목</th>
-              <th>작성자</th>
-              <th>조회수</th>
-              <th>등록일</th>
-            </tr>
-          </thead>
-          <tbody>
-            {formattedComments.map((post, index) => (
-              <tr key={index} onClick={() => handlePostClick(post._id)}>
-                <td>{(page - 1) * pageSize + index + 1}</td>
-                <td>{post.title}</td>
-                <td>{post.writer}</td>
-                <td>{post.views}</td>
-                <td>{post.formattedTime}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="pagination">
+          <button onClick={goToPrevPage} disabled={page === 1}>
+            이전
+          </button>
+          <span>{`${page}`}</span>
+          <button onClick={goToNextPage}>다음</button>
+        </div>
       </div>
-
-      <div className="pagination">
-        <button onClick={goToPrevPage} disabled={page === 1}>
-          이전
-        </button>
-        <span>{`${page}`}</span>
-        <button onClick={goToNextPage}>다음</button>
-      </div>
-
       <Footer />
     </div>
   );
