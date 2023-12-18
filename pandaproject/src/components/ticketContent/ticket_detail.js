@@ -3,6 +3,7 @@ import Toolbar from "../../components/toolbar/toolbar";
 import Footer from "../../components/footer/footer";
 import { useParams, useHistory, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import "./ticket_detail.css";
 
 function TicketDetail() {
   const { postId } = useParams(); // URL 파라미터에서 postId 추출
@@ -75,25 +76,37 @@ function TicketDetail() {
   return (
     <div>
       <Toolbar />
+
       <div className="post-detail-container">
         {postDetail ? (
-          <div>
-            <h2>{postDetail.title}</h2>
-            <p>작성자: {postDetail.writer}</p>
-            <p>조회수: {postDetail.views}</p>
-            <p>날짜: {postDetail.date}</p>
-            <p>{postDetail.content}</p>
+          <div className="detail_innerContent">
+            <h2 className="ticket">{postDetail.title}</h2>
+            <p>{postDetail.writer}</p>
+            <div className="divide_box">
+              <p>{postDetail.date}</p>
+              <p>조회수: {postDetail.views}</p>
+            </div>
+            <div className="main_text">{postDetail.content}</div>
           </div>
         ) : (
           <p>Loading...</p>
         )}
       </div>
-      <div>
+
+      <div className="button_container">
         <div>
-          <div className="">
-            {isAuthor && <span onClick={handleEdit}>수정</span>}
-          </div>
-          <div>{isAuthor && <span onClick={handleDelete}>삭제</span>}</div>
+          {isAuthor && (
+            <button className="button_delete" onClick={handleDelete}>
+              삭제하기
+            </button>
+          )}
+        </div>
+        <div>
+          {isAuthor && (
+            <button className="button_edit" onClick={handleEdit}>
+              수정하기
+            </button>
+          )}
         </div>
       </div>
       <Footer />
