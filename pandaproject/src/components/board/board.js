@@ -113,7 +113,7 @@ function Board() {
         };
       })
     : [];
-
+  // formattedComments.sort((a, b) => a.parentId - b.parentId);
   return (
     <div>
       <Toolbar />
@@ -156,16 +156,23 @@ function Board() {
           </div>
           <button onClick={handleWriteClick}>글쓰기</button>
         </div>
-        <div className="board-serchInput-box">
-          <input
-            className="board-serchInput"
-            type="text"
-            placeholder="검색어를 입력해주세요 "
-            value={searchTerm}
-            onChange={handleSearchInputChange}
-          />
-          <div className="board-serchBtn-box" onClick={handleSearchButtonClick}>
-            <IoIosSearch className="board-searchButton" />
+        <div className="board-serchInput-containerBox">
+          <div className="board-serchInput-box">
+            <label>
+              <input
+                className="board-serchInput"
+                type="text"
+                placeholder="검색어를 입력해주세요 "
+                value={searchTerm}
+                onChange={handleSearchInputChange}
+              />
+              <span
+                className="board-serchBtn-box"
+                onClick={handleSearchButtonClick}
+              >
+                <IoIosSearch className="board-searchButton" />
+              </span>
+            </label>
           </div>
         </div>
         {formattedComments.map((post, index) => (

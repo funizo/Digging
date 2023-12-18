@@ -4,6 +4,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
 import Toolbar from "../toolbar/toolbar";
 import "./ContentItem.css";
+import { IoIosSearch } from "react-icons/io";
 import Footer from "../footer/footer";
 import jwt_decode from "jwt-decode";
 
@@ -13,7 +14,8 @@ function ContentItem(props) {
   const [contentData, setContentData] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
   const [searchData, setSearchData] = useState("");
-
+  const [sortOption, setSortOption] = useState("sort");
+  console.log("contentData", contentData);
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -40,14 +42,33 @@ function ContentItem(props) {
           throw new Error("서버 응답 실패");
         }
         const data = await res.json();
-        setContentData(data.result);
+        let sortedData;
+
+        // switch 문에서 sortedData를 정의하기 전에 사용하지 않도록 수정
+        switch (sortOption) {
+          case "sort":
+            sortedData = data.result.sort(
+              (a, b) => new Date(b.date) - new Date(a.date)
+            );
+            break;
+          case "lowPrice":
+            sortedData = data.result.sort((a, b) => a.price - b.price);
+            break;
+          case "highPrice":
+            sortedData = data.result.sort((a, b) => b.price - a.price);
+            break;
+          default:
+            sortedData = data.result;
+        }
+
+        setContentData(sortedData);
       } catch (error) {
         console.error("데이터를 불러오는 중 에러 발생:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [sortOption, props.Category]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -82,15 +103,54 @@ function ContentItem(props) {
         href={`/category/${props.Category}`}
         style={{ display: "flex", justifyContent: "center", fontSize: "25px" }}
       >
-        {props.Category}
+        패션
       </a>
-      <input
-        className="search"
-        onChange={(e) => setSearchData(e.target.value)}
-      />
-      <button className="search-send" onClick={handleSearch}>
-        검색
-      </button>
+      <div className="contentItem-searchBox-container">
+        <div className="contentItem-searchBox">
+          <label>
+            <input
+              className="search"
+              placeholder="어떤 상품을 찾으시나요?"
+              onChange={(e) => setSearchData(e.target.value)}
+            />
+
+            <span className="contentItem-searchButton-box">
+              <IoIosSearch
+                className="contentItem-searchButton"
+                onClick={handleSearch}
+              />
+            </span>
+          </label>
+        </div>
+      </div>
+      <div className="contentItem-sort-options">
+        <span
+          className={`contentItem-sort-newData ${
+            sortOption === "sort" ? "clicked" : ""
+          }`}
+          onClick={() => setSortOption("sort")}
+        >
+          최신순
+        </span>
+        <span className="separator">|</span>
+        <span
+          className={`contentItem-sort-lowPrice ${
+            sortOption === "lowPrice" ? "clicked" : ""
+          }`}
+          onClick={() => setSortOption("lowPrice")}
+        >
+          낮은가격순
+        </span>
+        <span className="separator">|</span>
+        <span
+          className={`contentItem-sort-highPrice ${
+            sortOption === "highPrice" ? "clicked" : ""
+          }`}
+          onClick={() => setSortOption("highPrice")}
+        >
+          높은가격순
+        </span>
+      </div>
 
       {loading ? (
         contentData.map((_, i) => (
@@ -144,6 +204,9 @@ function TabContentSkeleton() {
 }
 
 function TabContent(props, i) {
+  const addressParts = (props.contentData.address || "").split(" ");
+  const processedAddress = addressParts.slice(0, 3).join(" ");
+
   return (
     <div className="categoryContents-item">
       <div className="categoryContents-img-box">
@@ -151,12 +214,10 @@ function TabContent(props, i) {
       </div>
       <div className="text-content">
         <p className="categoryContents-card-title">{props.contentData.title}</p>
-        <p className="categoryContents-card-writer">
-          {props.contentData.username}
-        </p>
         <p className="categoryContents-card-price">
           {Number(props.contentData.price).toLocaleString()}원
         </p>
+        <p className="categoryContents-card-address">{processedAddress}</p>
       </div>
     </div>
   );

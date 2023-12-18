@@ -1,26 +1,91 @@
+.book_container-box {
+  margin: 0 auto;
+  padding-top: 8px;
+  max-width: 677px;
+}
 .book_container {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background-color: #f9f9f9;
-  padding: 40px;
-  margin-top: 50px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
 }
-.comment_submitButton {
-  margin-left: 10px;
+.fashion-writeBox {
 }
-.book_container img {
+.fashion-userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* padding-left: 10px; */
+  margin-top: 25px;
+  padding-bottom: 23px;
   width: 100%;
-  max-width: 300px;
+  border-bottom: 1px solid hsla(220, 9%, 46%, 0.3);
+}
+#fashion-username {
+  font-size: 15px;
+  margin-bottom: 0px;
+  font-weight: bold;
+}
+#fashion-userAddress {
+  font-size: 13px;
+  margin-bottom: 0px;
+}
+.title_deco {
+  display: flex;
+  width: 100%;
+  /* padding-left: 10px; */
+  flex-direction: column;
+  text-align: start;
+}
+#fashion-title {
+  font-size: 18px;
+  margin-bottom: 4px;
+  font-weight: bold;
+  padding-top: 20px;
+}
+#fashion-price {
+  font-size: 16px;
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+#fashion-content {
+  font-size: 15px;
+  min-height: 100px;
+  padding-top: 10px;
+  /* border-bottom: 1px solid hsla(220, 9%, 46%, 0.3); */
+}
+#comment_submitButton {
+  width: 100px;
+  height: 40px;
+}
+.comment_submitButton-box {
+  display: flex;
+  justify-content: end;
+  padding: 20px 0px;
+
+  width: 100%;
+}
+.book-img-box {
+  height: 500px;
+  width: 677px;
+}
+.book-img-box img {
+  height: 500px;
+  width: 677px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 스타일을 설정하세요. */
+}
+
+/* .book_container img {
+  width: 100%;
+  height: 500px;
   height: auto;
   max-height: 400px;
   margin-bottom: 20px;
   margin-top: 20px;
   border-radius: 8px;
-}
+} */
 
 .book_container h2 {
   font-family: "Arial", sans-serif;
@@ -29,29 +94,22 @@
   margin-bottom: 10px;
 }
 
-.book_container p {
-  color: #666;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
 .button_container {
   display: flex;
-  justify-content: center;
+  justify-content: end;
   margin-top: 20px;
 }
 
 .button_buy,
 .button_auction,
 .button_wishlist {
-  background-color: #000000;
-  color: white;
+  color: black;
   border: none;
-  padding: 12px 24px;
-  text-align: center;
+  padding: 0px;
+  text-align: end;
   text-decoration: none;
-  font-size: 16px;
-  margin: 0 20px;
+  font-size: 14px;
+  margin: 0 4px;
   cursor: pointer;
   border-radius: 6px;
   transition: background-color 0.3s ease-in-out;
@@ -60,7 +118,7 @@
 .button_buy:hover,
 .button_auction:hover,
 .button_wishlist:hover {
-  background-color: #313131; /* 호버 시 색상 변경 */
+  color: rgb(0, 144, 249); /* 호버 시 색상 변경 */
 }
 .button_auction {
   background-color: #2196f3;
@@ -79,32 +137,35 @@
   display: flex;
   justify-content: center;
 }
-.button_wishlist {
-  background-color: #000000;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 20px;
-  cursor: pointer;
-  border-radius: 4px;
-}
 
 .comment_wrap {
   margin: auto;
   margin-top: 40px;
   text-align: center;
-  max-width: 500px;
 }
 .comment_wrap p {
   display: inline;
   margin-right: 10px;
 }
-
+.totalComment {
+  display: flex;
+  text-align: start;
+}
+.totalComment p {
+  font-size: 14px;
+}
+.comment_input {
+  width: 100%;
+  height: 50px;
+  padding-left: 10px;
+  border-radius: 4px;
+  border: 1px solid hsla(220, 9%, 46%, 0.3);
+  autocomplete: off;
+}
 .button_wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
   margin-bottom: 50px;
 }
 .comment_wrap button {
@@ -112,7 +173,6 @@
   color: white;
   border: none;
   border-radius: 4px;
-  cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
 

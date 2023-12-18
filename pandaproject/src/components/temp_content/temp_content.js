@@ -1,33 +1,38 @@
 import React from "react";
-import { useState} from 'react';
-import popularItem from '../../data/popularItem'
+import { useState } from "react";
+import popularItem from "../../data/popularItem";
 import "./temp_content.css";
 
 function Content() {
   const [popularData, setPopularData] = useState(popularItem);
-  const [categoryUrl,setCategoryUrl] = useState([
-    "/category/fashion","/category/electronic","/category/toy",
-    "/category/goods","/category/ticket","/category/book",
-    "/category/rank","/event"
+  const [categoryUrl, setCategoryUrl] = useState([
+    "/event",
+    "/category/rank",
+    "/category/fashion",
+    "/category/electronic",
+    "/category/toy",
+    "/category/goods",
+    "/category/ticket",
+    "/category/book",
   ]);
-  
+  console.log("popularData", popularData);
   return (
     <div className="poular-content">
-    <div className="content-container">
- {popularData.map((item) => (
-  <div className="card-container" key={item.id}>
-    <PopularContent key={item.id} popularData={item} categoryUrl={categoryUrl[item.id]}/>
-  </div>
-    ))}
-        </div>
-  </div>
-    )}
-
-
-
+      <div className="content-container">
+        {popularData.map((item) => (
+          <div className="card-container" key={item.id}>
+            <PopularContent
+              key={item.id}
+              popularData={item}
+              categoryUrl={categoryUrl[item.id]}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 function PopularContent(props) {
-  
-
   return (
     <div className="card-box">
       <a href={props.categoryUrl} className="card-link">

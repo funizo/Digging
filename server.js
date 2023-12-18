@@ -151,12 +151,17 @@ app.get("/category/:id", async (req, res) => {
 });
 
 app.post("/register/:id", upload.single("image"), async (req, res) => {
+  const currentDate = new Date();
+  req.body.date = currentDate.toISOString();
+
   await db.collection(req.params.id).insertOne({
     id: req.body.id,
     username: req.body.username,
+    address: req.body.address,
     title: req.body.title,
     content: req.body.content,
     price: req.body.price,
+    date: req.body.date,
     image: req.file ? req.file.location : "",
   });
   res.json({ message: "ok" });
@@ -1035,7 +1040,6 @@ app.get("/manager/alerts/:id", async (req, res) => {
 //     res.status(500).json({ error: 'Internal Server Error' });
 //   }
 // });
-
 
 //이거 맨밑으로
 app.get("*", function (req, res) {
