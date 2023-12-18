@@ -88,17 +88,21 @@ function Event() {
   return (
     <div>
       <Toolbar />
-      <div className="board-container">
-        <div className="board-box">
-          <div className="board-title">
-            <h3>이벤트</h3>
+      <div>
+        <img src="img/panda-slide-001.png" alt="배너넣는곳"/>
+        {/* 여기다가 배너넣으면되요 */}
+      </div>
+      <div className="event-container">
+        <div style={{textAlign:"center"}}>
+          <div className="event-title">
+            <h3 style={{fontWeight:"bold"}}>이벤트</h3>
           </div>
-          <div className="write-button">
+          {/* <div className="write-button">
           {isAuthor && <span onClick={handleWriteClick}>글쓰기</span>}
-          </div>
+          </div> */}
         </div>
 
-        <table className="table">
+        {/* <table className="table">
           <thead>
             <tr>
               <th>번호</th>
@@ -119,16 +123,30 @@ function Event() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table> */}
+
+
+
       </div>
 
-      <div className="pagination">
+      <div className="img-container">
+        <img src="img/panda-slide-001.png" alt=""/>
+        <p>이벤트 내용이 길다아아아아아아아아아</p>
+        <img src="img/panda-slide-002.png" alt=""/>
+        <p>이벤트 내용</p>
+        <img src="img/panda-slide-003.png" alt=""/>
+        <p>이벤트 내용</p>
+        <img src="img/panda-slide-001.png" alt=""/>
+        <p>이벤트 내용</p>
+      </div>
+
+      {/* <div className="pagination">
         <button onClick={goToPrevPage} disabled={page === 1}>
           이전
         </button>
         <span>{`${page}`}</span>
         <button onClick={goToNextPage}>다음</button>
-      </div>
+      </div> */}
 
       <Footer />
     </div>

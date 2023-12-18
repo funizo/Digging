@@ -224,8 +224,7 @@ function ToolBar(props) {
             <a className="nav_home" href="/">
               HOME
             </a>
-            <a href="/board">구해줘</a>
-            <a href="/share">소통해요</a>
+            <a href="/board">커뮤니티</a>
           </div>
           <button className="searchbutton">
             <SlMagnifier />

@@ -1,0 +1,15 @@
+.img-container img {
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+.img-container p {
+    margin-bottom: 20px;
+}
+
+.img-container {
+    text-align: center;
+}
+.event-title {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}

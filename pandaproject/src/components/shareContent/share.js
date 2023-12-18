@@ -82,7 +82,7 @@ function Share() {
       <div className="board-container">
         <div className="board-box">
           <div className="board-title">
-            <h3>공유해요</h3>
+            <h3>소통해요</h3>
           </div>
           <div className="write-button">
             <span onClick={handleWriteClick}>글쓰기</span>
