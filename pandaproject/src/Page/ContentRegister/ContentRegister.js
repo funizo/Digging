@@ -43,6 +43,8 @@ function ContentRegister(props) {
         formData.append("price", writeData.price);
         formData.append("id", userInfo.id);
         formData.append("username", userInfo.username);
+        formData.append("address", userInfo.address);
+        formData.append("date", "");
         const res = await fetch(
           `http://localhost:8080/register/${props.Category}`,
           {
@@ -66,67 +68,71 @@ function ContentRegister(props) {
   return (
     <div>
       <ToolBar />
-
-      <div>
-        <form onSubmit={handleSubmit} enctype="multipart/form-data">
-          <div className="input_container">
-            <input
-              placeholder="  제목"
-              style={{ width: "80%" }}
-              type="text"
-              value={writeData.title}
-              onChange={(e) =>
-                setWriteData((prevWriteData) => ({
-                  ...prevWriteData,
-                  title: e.target.value,
-                }))
-              }
-            />
-          </div>
-          <div className="input_container">
-            <input
-              placeholder="  내용"
-              type="text"
-              style={{ width: "80%", height: "500px" }}
-              value={writeData.content}
-              onChange={(e) =>
-                setWriteData((prevWriteData) => ({
-                  ...prevWriteData,
-                  content: e.target.value,
-                }))
-              }
-            />
-          </div>
-          <div className="input_container">
-            <input
-              placeholder="  가격"
-              style={{ width: "80%" }}
-              type="text"
-              value={writeData.price}
-              onChange={(e) =>
-                setWriteData((prevWriteData) => ({
-                  ...prevWriteData,
-                  price: e.target.value,
-                }))
-              }
-            />
-          </div>
-          <div className="input_container">
-            <input
-              placeholder="  이미지"
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleFileChange}
-            />
-          </div>
-          <button
-            type="submit"
-            style={{ margin: "auto", width: "100px", display: "block" }}
-          >
-            작성하기
-          </button>
-        </form>
+      <div id="contentRegister-container-box">
+        <div id="contentRegister-container">
+          <form onSubmit={handleSubmit} enctype="multipart/form-data">
+            <div id="contentRegister-titleInput">
+              <label>
+                제목
+                <input
+                  placeholder="제목을 입력해주세요"
+                  type="text"
+                  value={writeData.title}
+                  onChange={(e) =>
+                    setWriteData((prevWriteData) => ({
+                      ...prevWriteData,
+                      title: e.target.value,
+                    }))
+                  }
+                />
+              </label>
+            </div>
+            <div id="contentRegister-contentInput">
+              <label>
+                내용
+                <textarea
+                  placeholder="내용을 입력해주세요"
+                  type="text"
+                  value={writeData.content}
+                  onChange={(e) =>
+                    setWriteData((prevWriteData) => ({
+                      ...prevWriteData,
+                      content: e.target.value,
+                    }))
+                  }
+                />
+              </label>
+            </div>
+            <div id="contentRegister-priceInput">
+              <label>
+                가격
+                <input
+                  placeholder="₩ 가격을 입력해주세요"
+                  type="text"
+                  value={writeData.price}
+                  onChange={(e) =>
+                    setWriteData((prevWriteData) => ({
+                      ...prevWriteData,
+                      price: e.target.value,
+                    }))
+                  }
+                />
+              </label>
+            </div>
+            <div id="contentRegister-imgBox">
+              <input
+                placeholder="  이미지"
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+            </div>
+            <div id="contentRegister-button">
+              <button type="submit">작성하기</button>
+            </div>
+          </form>
+        </div>
       </div>
       <Footer />
     </div>

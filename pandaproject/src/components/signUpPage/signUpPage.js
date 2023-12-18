@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Post from "../post";
 import "./signUpPage.css";
+import Toolbar from "../toolbar/toolbar";
 import Footer from "../footer/footer";
 
 const SignUpPage = () => {
@@ -57,6 +58,7 @@ const SignUpPage = () => {
 
   return (
     <div>
+      <Toolbar />
       <Link to="/" className="logo">
         <img
           src={`${
@@ -66,7 +68,7 @@ const SignUpPage = () => {
         />
       </Link>
       <div className="container">
-        <h2 className="singup-title">회원가입</h2>
+        <h5 className="singup-title">회원가입</h5>
         <form onSubmit={handleSubmit}>
           <div>
             <input
@@ -152,7 +154,9 @@ const SignUpPage = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
-          <button type="submit">가입하기</button>
+          <div className="signUpPage-signUpButton">
+            <button type="submit">가입하기</button>
+          </div>
           <Link to="/login">이미 계정이 있으신가요? 로그인</Link>
           {error && <p style={{ color: "red" }}>{error}</p>}
         </form>

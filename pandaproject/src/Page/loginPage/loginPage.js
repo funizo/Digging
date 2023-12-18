@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./loginPage.css";
 import { Link, useNavigate } from "react-router-dom";
+import Toolbar from "../../components/toolbar/toolbar";
 import Footer from "../../components/footer/footer";
 
 const LoginPage = () => {
@@ -38,7 +39,7 @@ const LoginPage = () => {
       } else {
         const errorData = await result.json();
         console.log("서버에서 오류가 발생했습니다.", errorData.error);
-        setError("로그인 실패");
+        setError("아이디와 비밀번호를 확인해주세요");
       }
     } catch (error) {
       console.error("서버에 요청 중 오류가 발생", error);
@@ -47,6 +48,7 @@ const LoginPage = () => {
 
   return (
     <div>
+      <Toolbar />
       <Link to="/" className="logo">
         <img
           src={`${
@@ -56,14 +58,14 @@ const LoginPage = () => {
         />
       </Link>
       <div className="container">
-        <h2>Login</h2>
+        <h5>로그인</h5>
         <form onSubmit={handleSubmit}>
           <div className="id">
-            <label>아이디 :</label>
             <input
               className="id_input"
               type="text"
               value={userData.username}
+              placeholder="아이디"
               onChange={(e) =>
                 setUserData((prevUserData) => ({
                   ...prevUserData,
@@ -73,11 +75,11 @@ const LoginPage = () => {
             />
           </div>
           <div className="password">
-            <label>패스워드 :</label>
             <input
               className="pw_input"
               type="password"
               value={userData.password}
+              placeholder="비밀번호"
               onChange={(e) =>
                 setUserData((prevUserData) => ({
                   ...prevUserData,
@@ -90,14 +92,15 @@ const LoginPage = () => {
             <button type="submit">로그인</button>
             {error && <p style={{ color: "red" }}>{error}</p>}
           </div>
-
-          <Link to="/signup" className="sign_up">
-            Sign Up
-          </Link>
-          <Link to="/" className="home">
-            Home
-          </Link>
         </form>
+      </div>
+      <div className="loginPage-signUpWithHome">
+        <Link to="/signup" className="sign_up">
+          회원가입
+        </Link>
+        <Link to="/" className="home">
+          Home
+        </Link>
       </div>
       <Footer />
     </div>
