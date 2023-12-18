@@ -1,6 +1,30 @@
+.event-title {
+  display: flex;
+  margin-top: 40px;
+  justify-content: center;
+  width: 30% !important;
+  max-height: 480px;
+}
+.event-background {
+    display: flex;
+    margin-top: 40px;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+  position: relative; /* 상대적인 위치 설정 */
+  background-color: rgb(229, 230, 239);
+}
+.event-container{
+    margin-bottom: 40px;
+    margin-top: 50px;
+    border-bottom: 1px solid #ccc;
+    width: 40%;
+    display: block;
+    margin-left: 30%;
+}
 .img-container img {
     border-radius: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 .img-container p {
     margin-bottom: 20px;

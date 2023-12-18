@@ -88,13 +88,14 @@ function Event() {
   return (
     <div>
       <Toolbar />
-      <div>
-        <img src="img/panda-slide-001.png" alt="배너넣는곳"/>
-        {/* 여기다가 배너넣으면되요 */}
+      <div className="event-background">
+        <div className="event-title">
+          <img src="img/event-slide-001.png" alt="배너넣는곳"/>
+        </div>
       </div>
       <div className="event-container">
         <div style={{textAlign:"center"}}>
-          <div className="event-title">
+          <div>
             <h3 style={{fontWeight:"bold"}}>이벤트</h3>
           </div>
           {/* <div className="write-button">
@@ -130,14 +131,15 @@ function Event() {
       </div>
 
       <div className="img-container">
-        <img src="img/panda-slide-001.png" alt=""/>
-        <p>이벤트 내용이 길다아아아아아아아아아</p>
-        <img src="img/panda-slide-002.png" alt=""/>
-        <p>이벤트 내용</p>
-        <img src="img/panda-slide-003.png" alt=""/>
-        <p>이벤트 내용</p>
-        <img src="img/panda-slide-001.png" alt=""/>
-        <p>이벤트 내용</p>
+        <img onClick="" src="img/event-slide-002.png" alt=""/>
+        <div></div>
+        <img src="img/event-slide-003.png" alt=""/>
+        <div></div>
+        <img src="img/event-slide-004.png" alt=""/>
+        <div></div>
+        <img src="img/event-slide-005.png" alt=""/>
+        <div></div>
+        <img src="img/event-slide-006.png" alt=""/>
       </div>
 
       {/* <div className="pagination">
