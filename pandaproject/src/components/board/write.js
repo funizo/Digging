@@ -144,7 +144,7 @@ const Write = ({ onPostSubmit }) => {
           </div>
 
           <label>
-            본문
+            내용
             <textarea
               className="write-titleContent"
               placeholder="내용을 입력해주세요"
