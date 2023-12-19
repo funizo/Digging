@@ -6,7 +6,12 @@ const Footer = () => {
   return (
     <footer>
       <div id="logo">
-        <img src={`${process.env.PUBLIC_URL}/img/logo-digging.png?${new Date().getTime()}`}alt="로고" />
+        <img
+          src={`${
+            process.env.PUBLIC_URL
+          }/img/logo-digging.png?${new Date().getTime()}`}
+          alt="로고"
+        />
       </div>
 
       <Navbar>
@@ -14,6 +19,7 @@ const Footer = () => {
           <Nav.Link href="/privacy">이용약관</Nav.Link>
           <Nav.Link href="/privacy">개인정보처리방침</Nav.Link>
           <Nav.Link href="/privacy">청소년보호정책</Nav.Link>
+          <Nav.Link href="/inquiry">문의사항</Nav.Link>
         </Nav>
       </Navbar>
     </footer>
@@ -21,4 +27,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
