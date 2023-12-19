@@ -8,10 +8,6 @@ import App from "./App";
 import Login from "./Page/loginPage/loginPage";
 import Signup from "./components/signUpPage/signUpPage";
 import MyPage from "./Page/myPage/myPage";
-import Ticket from "./components/ticketContent/ticketContent";
-import TicketWrite from "./components/ticketContent/write";
-import TicketDetail from "./components/ticketContent/ticket_detail";
-import TicketEdit from "./components/ticketContent/ticket_edit";
 import Share from "./components/shareContent/share";
 import ShareWrite from "./components/shareContent/write";
 import ShareDetail from "./components/shareContent/share_detail";
@@ -52,6 +48,7 @@ root.render(
       />
       <Route path="/category/toy" element={<Content Category="toy" />} />
       <Route path="/category/goods" element={<Content Category="goods" />} />
+      <Route path="/category/ticket" element={<Content Category="ticket" />} />
 
       <Route
         path="/register/book"
@@ -94,6 +91,10 @@ root.render(
         path="/category/goods/detail/:id"
         element={<ContentDetail Category="goods" />}
       />
+      <Route
+        path="/category/ticket/detail/:id"
+        element={<ContentDetail Category="ticket" />}
+      />
 
       <Route path="/edit/book/:id" element={<ContentEdit Category="book" />} />
       <Route
@@ -109,18 +110,15 @@ root.render(
         path="/edit/goods/:id"
         element={<ContentEdit Category="goods" />}
       />
+      <Route
+        path="/edit/ticket/:id"
+        element={<ContentEdit Category="ticket" />}
+      />
 
       <Route path="/board/write" element={<Write />} />
       <Route path="/board_edit/:postId" element={<BoardEdit />} />
       <Route path="/board_detail/:postId" element={<BoardDetail />} />
 
-      <Route path="/category/ticket" element={<Ticket />} />
-      <Route path="/category/ticket/write" element={<TicketWrite />} />
-      <Route
-        path="/category/ticket_detail/:postId"
-        element={<TicketDetail />}
-      />
-      <Route path="/category/ticket_edit/:postId" element={<TicketEdit />} />
       <Route path="/share" element={<Share />} />
       <Route path="/share/write" element={<ShareWrite />} />
       <Route path="/share_detail/:postId" element={<ShareDetail />} />
