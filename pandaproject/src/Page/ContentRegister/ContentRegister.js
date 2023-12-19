@@ -17,6 +17,7 @@ function ContentRegister(props) {
     { value: "toy", label: "장난감" },
     { value: "goods", label: "굿즈" },
     { value: "book", label: "도서" },
+    { value: "ticket", label: "티켓/기프티콘" },
   ];
   useEffect(() => {
     const token = localStorage.getItem("token");

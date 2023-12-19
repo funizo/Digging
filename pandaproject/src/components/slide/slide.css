@@ -1,66 +1,33 @@
+.carousel {
+  width: 800px;
+  height: 480px;
+}
 .box {
   display: flex;
   margin-top: 40px;
   justify-content: center;
-  width: 100% !important;
   background-color: rgb(255, 255, 255);
-  max-height: 480px;
 }
 .carousel-item img {
+  height: 480px;
   width: 100%;
-  height: 480px;
-}
-.carousel-item::before {
-  left: 0;
 }
 
-.carousel-item::after {
-  right: 0;
-}
-.carousel-item::before,
-.carousel-item::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-
-  pointer-events: none; /* 이벤트 방지 */
-}
-.w-100 {
-  height: 480px;
-}
 .carousel-indicators button {
   margin-right: 25px !important;
 }
-.carousel-control-prev {
-  width: 5%;
-  padding-right: 2px;
-}
 
-.carousel-control-next {
-  width: 5%;
-}
 .carousel-control-prev-icon {
-  /* width: 50px;
-  height: 50px; */
   display: none;
 }
 .carousel-control-next-icon {
-  /* width: 50px;
-  height: 50px; */
   display: none;
-}
-.d-block w-100 {
-  display: flex;
-  height: 480px;
-  width: 960px !important;
 }
 .carousel-container {
   display: flex;
   text-align: center;
   justify-content: center;
   width: 100%;
-  position: relative; /* 상대적인 위치 설정 */
 }
 
 .carousel-indicators {
@@ -86,5 +53,35 @@
 .background-3 {
   background-color: #f3f1e6;
 }
-
-/* 1번 background-color: rgb(243, 234, 222); */
+/* .carousel-container {
+  display: flex;
+  justify-content: center;
+}
+.carousel {
+  width: 800px;
+}
+.slide-carousel {
+}
+.background-0 {
+  background-color: rgb(243, 234, 222); 
+}
+.background-1 {
+  background-color: rgb(182, 101, 195);
+}
+.background-2 {
+  background-color: rgb(168, 52, 58);
+}
+.background-3 {
+  background-color: #f3f1e6;
+}
+.carousel-indicators [data-bs-target] {
+  background-color: white;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+}
+.carousel-indicators button {
+  margin-right: 25px !important;
+} */
+/* /////////////////////////////////// */
