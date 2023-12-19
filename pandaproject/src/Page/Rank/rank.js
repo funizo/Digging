@@ -22,7 +22,9 @@ function Rank() {
   return (
     <div style={{ margin: "0 250px" }}>
       <Toolbar />
-      <p style={{ textAlign: "center", fontSize:"30px" ,margin:"30px 0 30px"}}>인기 검색어 차트</p>
+      <div className="rank-title">
+      <h3 style={{fontWeight:"bold"}}>인기 검색어 차트</h3>
+        </div>
       <RankCard
         bookData={bookData}
         electronicData={electronicData} 
@@ -31,7 +33,7 @@ function Rank() {
         ticketData={ticketData}
         toyData={toyData}
       />
-      <p style={{textAlign:"center"}}>※하루 10시 기준으로 선정된 검색어들입니다</p>
+      <p style={{textAlign:"center"}}>※ 매일 오전 10시 기준으로 선정된 검색어들입니다</p>
 
       <Footer />
     </div>
@@ -63,7 +65,7 @@ function RankCard(props) {
                     <Card key={i} className='card-container2'>
                     {category.data.map((data, i) => (
                     <div key={i} className="card-content2">
-                        {data.id}위 {data.name}
+                        {data.id}위 -  {data.name}
                     </div>
                     ))}
                 </Card>
@@ -77,7 +79,7 @@ function RankCard(props) {
                   <Card key={i} className="card-container2">
                     {category.data.map((data, i) => (
                     <div key={i} className="card-content2">
-                        {data.id}위 {data.name}
+                        {data.id}위 -  {data.name}
                     </div>
                     ))}
                 </Card>

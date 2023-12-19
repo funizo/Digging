@@ -90,7 +90,7 @@ function Event() {
       <Toolbar />
       <div className="event-background">
         <div className="event-title">
-          <img src="img/event-slide-001.png" alt="배너넣는곳"/>
+          <img src="img/event/event-slide-001.png" alt="배너넣는곳"/>
         </div>
       </div>
       <div className="event-container">
@@ -131,25 +131,16 @@ function Event() {
       </div>
 
       <div className="img-container">
-        <img onClick="" src="img/event-slide-002.png" alt=""/>
+        <img onClick="" src="img/event/event-slide-002.png" alt=""/>
         <div></div>
-        <img src="img/event-slide-003.png" alt=""/>
+        <img src="img/event/event-slide-003.png" alt=""/>
         <div></div>
-        <img src="img/event-slide-004.png" alt=""/>
+        <img src="img/event/event-slide-004.png" alt=""/>
         <div></div>
-        <img src="img/event-slide-005.png" alt=""/>
+        <img src="img/event/event-slide-005.png" alt=""/>
         <div></div>
-        <img src="img/event-slide-006.png" alt=""/>
+        <img src="img/event/event-slide-006.png" alt=""/>
       </div>
-
-      {/* <div className="pagination">
-        <button onClick={goToPrevPage} disabled={page === 1}>
-          이전
-        </button>
-        <span>{`${page}`}</span>
-        <button onClick={goToNextPage}>다음</button>
-      </div> */}
-
       <Footer />
     </div>
   );

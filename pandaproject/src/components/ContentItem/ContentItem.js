@@ -103,7 +103,22 @@ function ContentItem(props) {
         href={`/category/${props.Category}`}
         style={{ display: "flex", justifyContent: "center", fontSize: "25px" }}
       >
-        패션
+        {(() => {
+          switch (props.Category) {
+            case "fashion":
+              return "패션";
+            case "electronic":
+              return "전자제품";
+            case "book":
+              return "도서";
+            case "toy":
+              return "장난감";
+            case "goods":
+              return "굿즈";
+            default:
+              return "";
+          }
+       })()}
       </a>
       <div className="contentItem-searchBox-container">
         <div className="contentItem-searchBox">
