@@ -1,8 +1,7 @@
 import Toolbar from '../../components/toolbar/toolbar';
 import Footer from '../../components/footer/footer';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
 import './board_edit.css';
 
 const BoardEdit = () => {

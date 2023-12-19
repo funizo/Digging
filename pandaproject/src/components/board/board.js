@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Toolbar from "../../components/toolbar/toolbar";
 import Footer from "../../components/footer/footer";
 import formatTimeAgo from "../formatTime/formatTimeAgo";
@@ -12,7 +12,6 @@ import "./board.css";
 function Board() {
   const [boardData, setBoardData] = useState([]);
   const [page, setPage] = useState(1);
-  const pageSize = 10; // 페이지당 보여줄 항목 수
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태 추가

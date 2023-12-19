@@ -11,6 +11,7 @@
 .carousel-item img {
   height: 480px;
   width: 100%;
+  width: 100%;
 }
 
 .carousel-indicators button {
@@ -53,35 +54,3 @@
 .background-3 {
   background-color: #f3f1e6;
 }
-/* .carousel-container {
-  display: flex;
-  justify-content: center;
-}
-.carousel {
-  width: 800px;
-}
-.slide-carousel {
-}
-.background-0 {
-  background-color: rgb(243, 234, 222); 
-}
-.background-1 {
-  background-color: rgb(182, 101, 195);
-}
-.background-2 {
-  background-color: rgb(168, 52, 58);
-}
-.background-3 {
-  background-color: #f3f1e6;
-}
-.carousel-indicators [data-bs-target] {
-  background-color: white;
-  border-radius: 50%;
-  width: 10px;
-  height: 10px;
-  margin-right: 5px;
-}
-.carousel-indicators button {
-  margin-right: 25px !important;
-} */
-/* /////////////////////////////////// */

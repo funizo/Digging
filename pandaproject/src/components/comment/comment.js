@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import useJwtDecode from '../../customHook/jwtDecode';
 import CommentList from "./commentList";
 import jwt_decode from "jwt-decode";
 import "./comment.css";
@@ -23,7 +22,7 @@ function Comment(props) {
       setUserInfo(decoded);
     }
   }, []);
-  // console.log("comments-comment.js", comments);
+
   const handleCommentSubmit = async () => {
     try {
       const response = await fetch(
