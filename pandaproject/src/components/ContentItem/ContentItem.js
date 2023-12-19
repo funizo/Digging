@@ -16,7 +16,6 @@ function ContentItem(props) {
   const [searchData, setSearchData] = useState("");
   const [sortOption, setSortOption] = useState("sort");
 
-  console.log("contentData", contentData);
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -100,6 +99,7 @@ function ContentItem(props) {
   return (
     <div className="categoryContents">
       <Toolbar />
+
       <a
         href={`/category/${props.Category}`}
         style={{ display: "flex", justifyContent: "center", fontSize: "25px" }}
@@ -116,10 +116,12 @@ function ContentItem(props) {
               return "장난감";
             case "goods":
               return "굿즈";
+            case "ticket":
+              return "티켓/기프티콘";
             default:
               return "";
           }
-       })()}
+        })()}
       </a>
       <div className="contentItem-searchBox-container">
         <div className="contentItem-searchBox">
