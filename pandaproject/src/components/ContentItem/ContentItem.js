@@ -15,6 +15,7 @@ function ContentItem(props) {
   const [userInfo, setUserInfo] = useState(null);
   const [searchData, setSearchData] = useState("");
   const [sortOption, setSortOption] = useState("sort");
+
   console.log("contentData", contentData);
   useEffect(() => {
     const token = localStorage.getItem("token");

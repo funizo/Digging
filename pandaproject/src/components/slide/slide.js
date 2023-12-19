@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Carousel } from "react-bootstrap";
-import "../../App.css";
 import "./slide.css";
 
 function Slide({ interval }) {
   const [backgroundIndex, setBackgroundIndex] = useState(0);
 
   const handleSlideChange = (selectedIndex) => {
-    // Change the background when the slide changes
+    // 슬라이드 변경 시 배경을 변경합니다.
     setBackgroundIndex(selectedIndex);
   };
 
@@ -21,10 +20,10 @@ function Slide({ interval }) {
         >
           <Carousel.Item>
             <img
-              className="d-block w-100 "
+              className="d-block w-100"
               style={{ objectFit: "cover" }}
               img
-              src="img/slide/panda-slide-001.png"
+              src="img/panda-slide-001.png"
               alt="First slide"
             />
           </Carousel.Item>
@@ -33,7 +32,7 @@ function Slide({ interval }) {
               className="d-block w-100"
               style={{ objectFit: "cover" }}
               img
-              src="img/slide/panda-slide-002.png"
+              src="img/panda-slide-002.png"
               alt="Second slide"
             />
           </Carousel.Item>
@@ -41,7 +40,7 @@ function Slide({ interval }) {
             <img
               className="d-block w-100"
               style={{ objectFit: "cover" }}
-              src="img/slide/panda-slide-003.png"
+              src="img/panda-slide-003.png"
               alt="Third slide"
             />
           </Carousel.Item>
@@ -49,7 +48,7 @@ function Slide({ interval }) {
             <img
               className="d-block w-100"
               style={{ objectFit: "cover" }}
-              src="img/slide/panda-slide-004.png"
+              src="img/panda-slide-004.png"
               alt="Fourth slide"
             />
           </Carousel.Item>

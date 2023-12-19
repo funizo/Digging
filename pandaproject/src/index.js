@@ -32,7 +32,7 @@ import BoardDetail from "./components/board/board_detail";
 import Manager from "./Page/manager/manager";
 import Rank from "./Page/Rank/rank";
 import Privacy from "./Page/Privacy/privacy";
-
+import Inquiry from "./Page/inquiry/inquiry";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
@@ -135,6 +135,7 @@ root.render(
       <Route path="/manager" element={<Manager />} />
       <Route path="/category/rank" element={<Rank />} />
       <Route path="/privacy" element={<Privacy />} />
+      <Route path="/inquiry" element={<Inquiry />} />
       <Route path="*" element={<div>없는페이지에요</div>} />
     </Routes>
   </BrowserRouter>

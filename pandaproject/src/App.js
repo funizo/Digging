@@ -30,7 +30,7 @@ function App(porps) {
     localStorage.removeItem("tokenExpiration");
     // navigate('/login');
   };
-  const slideInterval = 300000; // Set the interval value as needed
+  const slideInterval = 3000; // Set the interval value as needed
   return (
     <div className="App">
       <Toolbar />
