@@ -100,8 +100,7 @@ function ContentItem(props) {
     <div className="categoryContents">
       <Toolbar />
 
-      <a
-        href={`/category/${props.Category}`}
+      <p
         style={{ display: "flex", justifyContent: "center", fontSize: "25px" }}
       >
         {(() => {
@@ -122,7 +121,7 @@ function ContentItem(props) {
               return "";
           }
         })()}
-      </a>
+      </p>
       <div className="contentItem-searchBox-container">
         <div className="contentItem-searchBox">
           <label>
@@ -189,14 +188,6 @@ function ContentItem(props) {
           ))}
         </div>
       )}
-      <a
-        href={userInfo === null ? null : `/register/${props.Category}`}
-        onClick={() => userInfo === null && alert("로그인해주세요")}
-        className="write"
-      >
-        글쓰기
-      </a>
-
       <Footer />
     </div>
   );

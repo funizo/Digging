@@ -227,7 +227,7 @@ function ToolBar(props) {
               HOME
             </a>
             <a href="/board">커뮤니티</a>
-            <a href="/register/fashion">판매하기</a>
+            <a href="/register">판매하기</a>
             <a href="">사기조회</a>
           </div>
           <button className="searchbutton">

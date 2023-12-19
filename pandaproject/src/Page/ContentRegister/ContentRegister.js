@@ -16,8 +16,8 @@ function ContentRegister(props) {
     { value: "electronic", label: "전자제품" },
     { value: "toy", label: "장난감" },
     { value: "goods", label: "굿즈" },
-    { value: "book", label: "도서" },
     { value: "ticket", label: "티켓/기프티콘" },
+    { value: "book", label: "도서" },
   ];
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -67,7 +67,7 @@ function ContentRegister(props) {
 
         if (res.ok) {
           console.log("서버 전송 완료");
-          navigate(`/category/${props.Category}`);
+          window.history.back();
         } else {
           console.log("서버 전송 실패");
         }
