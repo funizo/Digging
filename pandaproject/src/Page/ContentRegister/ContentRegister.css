@@ -1,5 +1,59 @@
-.input_container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.contentRegister-container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0px 10px;
+}
+.contentRegister-custom-select {
+  width: 100%;
+}
+.contentRegister-container form {
+  display: flex;
+}
+
+#contentRegister-titleInput input,
+#contentRegister-contentInput textarea,
+#contentRegister-priceInput input {
+  margin-top: 10px;
+  width: 100%;
+  padding: 0px 10px;
+  border-radius: 3px;
+  border: 1px solid hsla(220, 9%, 46%, 0.3);
+}
+#contentRegister-titleInput label,
+#contentRegister-contentInput label,
+#contentRegister-priceInput label {
+  width: 100%;
+}
+#contentRegister-titleInput {
+  padding: 30px 0px;
+}
+#contentRegister-titleInput input {
+  height: 36px;
+}
+#contentRegister-contentInput textarea {
+  padding: 5px 10px;
+  margin-top: 10px;
+  height: 470px;
+  resize: none;
+}
+#contentRegister-priceInput {
+  padding-bottom: 30px;
+}
+#contentRegister-priceInput input {
+  height: 36px;
+}
+#contentRegister-imgBox {
+  padding-bottom: 30px;
+}
+#contentRegister-button {
+  display: flex;
+  justify-content: center;
+}
+#contentRegister-button button {
+  width: 96px;
+  height: 36px;
+  font-size: 15px;
+  background-color: black;
+  color: white;
+  border-radius: 7px;
 }
