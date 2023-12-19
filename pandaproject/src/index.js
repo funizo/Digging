@@ -13,9 +13,7 @@ import ShareWrite from "./components/shareContent/write";
 import ShareDetail from "./components/shareContent/share_detail";
 import ShareEdit from "./components/shareContent/share_edit";
 import Event from "./components/eventContent/event";
-import EventWrite from "./components/eventContent/write";
-import EventDetail from "./components/eventContent/event_detail";
-import EventEdit from "./components/eventContent/event_edit";
+
 import Content from "./components/ContentItem/ContentItem";
 import ContentDetail from "./components/ContentDetail/ContentDetail";
 import ContentRegister from "./Page/ContentRegister/ContentRegister";
@@ -124,9 +122,7 @@ root.render(
       <Route path="/share_detail/:postId" element={<ShareDetail />} />
       <Route path="/share_edit/:postId" element={<ShareEdit />} />
       <Route path="/event" element={<Event />} />
-      <Route path="/event/write" element={<EventWrite />} />
-      <Route path="/event_detail/:postId" element={<EventDetail />} />
-      <Route path="/event_edit/:postId" element={<EventEdit />} />
+
 
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/board" element={<Board />} />
