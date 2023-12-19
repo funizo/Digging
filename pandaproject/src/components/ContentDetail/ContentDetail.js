@@ -45,6 +45,32 @@ function ContentDetail(props) {
     fetchData();
   }, []);
 
+  // const handleAddToWishlist = async () => {
+  //   setIsAddedToWishlist(!isAddedToWishlist);
+
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('title', bookData.title);
+  //     formData.append('content', bookData.content);
+  //     formData.append('image', bookData.image);
+  //     formData.append('price', bookData.price);
+  //     formData.append('id',userInfo.id);
+  //     formData.append('username',userInfo.username);
+  //     const response = await fetch('http://localhost:8080/addToWishlist', {
+  //       method: 'POST',
+  //       body: formData,
+  //     });
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setWishlistCount(data.wishlistCount);
+  //     } else {
+  //       console.error('찜하기 요청 실패');
+  //     }
+  //   } catch (error) {
+  //     console.error('네트워크 오류', error);
+  //   }
+  // };
+
   const handleDelete = async () => {
     try {
       const response = await fetch(
@@ -65,6 +91,16 @@ function ContentDetail(props) {
       console.log(error);
     }
   };
+  // const handleBuy = () => {
+  //     navigate("/login");
+  // };
+
+  // const handleAuction = () => {
+  //   if (userInfo === null) {
+  //     navigate("/login");
+  //   }
+  // };
+
   const handleEdit = () => {
     navigate(`/edit/${props.Category}/${contentData.id}`, {
       state: { contentData },
