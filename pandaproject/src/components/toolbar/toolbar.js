@@ -191,15 +191,11 @@ function ToolBar(props) {
                     {/* 알림 내용을 표시하는 부분 */}
                     <div className="alarm-item">
                       {" "}
-                      알림 1<p className="item-title">123</p>
-                      <p className="title-dscs">1234</p>
+                      <p className="item-title">12월 디깅 친구초대 이벤트 진행중!</p>
                     </div>
-                    <div className="alarm-item">새로운 알림 2</div>
-                    <div className="alarm-item">새로운 알림 2</div>
-                    <div className="alarm-item">새로운 알림 2</div>
-                    <div className="alarm-item">새로운 알림 2</div>
-                    <div className="alarm-item">새로운 알림 2</div>
-                    <div className="alarm-item">새로운 알림 2</div>
+                    <div className="alarm-item">방탄&디깅 콜라보</div>
+                    <div className="alarm-item">디깅을 이용해주시는 모든분들께
+                                                특별한 연말 혜택을 드립니다!</div>
                   </div>
                 </>
               )}
