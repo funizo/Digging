@@ -1,0 +1,15 @@
+.slide2-background{
+  display: flex;
+  margin-top: 40px;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  background-color: rgb(48, 48, 48);
+}
+.slide2-main{
+  display: flex;
+  justify-content: center;
+  width: 100% !important;
+  max-height: 480px;
+}

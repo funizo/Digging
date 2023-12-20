@@ -7,7 +7,7 @@ footer {
 }
 
 #logo {
-  margin-top: 30px;
+  margin-top: 70px;
   margin-bottom: 25px;
   border-bottom: 2px solid #ccc; /* 구분선 추가 */
   border-radius: 10%;
@@ -15,8 +15,8 @@ footer {
   
 }
 #logo img{
-  width: 150px;
-  height: 50px;
+  width: 170px;
+  height: 85px;
 }
 
 #footer2 {

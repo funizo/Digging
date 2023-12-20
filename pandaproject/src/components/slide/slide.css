@@ -4,7 +4,7 @@
 }
 .box {
   display: flex;
-  margin-top: 40px;
+  margin-top: 15px;
   justify-content: center;
   background-color: rgb(255, 255, 255);
 }
@@ -51,8 +51,10 @@
   background-color: rgb(182, 101, 195);
 }
 .background-2 {
-  background-color: rgb(168, 52, 58);
+  background-color: rgb(177, 56, 62);
 }
 .background-3 {
-  background-color: #f3f1e6;
+  background-color: rgb(224, 222, 213);
 }
+
+/* 1번 background-color: rgb(243, 234, 222); */

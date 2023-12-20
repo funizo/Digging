@@ -23,32 +23,34 @@ function Slide({ interval }) {
             <img
               className="d-block w-100"
               style={{ objectFit: "cover" }}
-              src="img/panda-slide-001.png"
-              alt="첫 번째 슬라이드"
+              img
+              src="img/slide/panda-slide-001.png"
+              alt="First slide"
             />
           </Carousel.Item>
           <Carousel.Item>
             <img
               className="d-block w-100"
               style={{ objectFit: "cover" }}
-              src="img/panda-slide-002.png"
-              alt="두 번째 슬라이드"
+              img
+              src="img/slide/panda-slide-002.png"
+              alt="Second slide"
             />
           </Carousel.Item>
           <Carousel.Item>
             <img
               className="d-block w-100"
               style={{ objectFit: "cover" }}
-              src="img/panda-slide-003.png"
-              alt="세 번째 슬라이드"
+              src="img/slide/panda-slide-003.png"
+              alt="Third slide"
             />
           </Carousel.Item>
           <Carousel.Item>
             <img
               className="d-block w-100"
               style={{ objectFit: "cover" }}
-              src="img/panda-slide-004.png"
-              alt="네 번째 슬라이드"
+              src="img/slide/panda-slide-004.png"
+              alt="Fourth slide"
             />
           </Carousel.Item>
         </Carousel>

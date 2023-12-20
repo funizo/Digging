@@ -2,6 +2,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Toolbar from "./components/toolbar/toolbar";
 import Slide from "./components/slide/slide";
+import Slide2 from "./components/slide2/slide2";
 import Footer from "./components/footer/footer";
 import Content from "./components/temp_content/temp_content";
 import React, { useEffect } from "react";
@@ -35,6 +36,7 @@ function App(porps) {
       <Toolbar />
       <Slide interval={slideInterval} />
       <Content />
+      <Slide2 />
       <Footer />
     </div>
   );
