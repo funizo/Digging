@@ -11,13 +11,15 @@
 .carousel-item img {
   height: 480px;
   width: 100%;
-  width: 100%;
 }
 
 .carousel-indicators button {
   margin-right: 25px !important;
 }
-
+.carousel-control-prev,
+.carousel-control-next {
+  display: none;
+}
 .carousel-control-prev-icon {
   display: none;
 }
