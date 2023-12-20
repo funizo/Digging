@@ -8,10 +8,6 @@ import App from "./App";
 import Login from "./Page/loginPage/loginPage";
 import Signup from "./components/signUpPage/signUpPage";
 import MyPage from "./Page/myPage/myPage";
-import Share from "./components/shareContent/share";
-import ShareWrite from "./components/shareContent/write";
-import ShareDetail from "./components/shareContent/share_detail";
-import ShareEdit from "./components/shareContent/share_edit";
 import Event from "./components/eventContent/event";
 
 import Content from "./components/ContentItem/ContentItem";
@@ -49,22 +45,6 @@ root.render(
       <Route path="/category/ticket" element={<Content Category="ticket" />} />
 
       <Route path="/register" element={<ContentRegister />} />
-      {/* <Route
-        path="/register/fashion"
-        element={<ContentRegister Category="fashion" />}
-      />
-      <Route
-        path="/register/electronic"
-        element={<ContentRegister Category="electronic" />}
-      />
-      <Route
-        path="/register/toy"
-        element={<ContentRegister Category="toy" />}
-      />
-      <Route
-        path="/register/goods"
-        element={<ContentRegister Category="goods" />}
-      /> */}
 
       <Route
         path="/category/book/detail/:id"
@@ -114,10 +94,6 @@ root.render(
       <Route path="/board_edit/:postId" element={<BoardEdit />} />
       <Route path="/board_detail/:postId" element={<BoardDetail />} />
 
-      <Route path="/share" element={<Share />} />
-      <Route path="/share/write" element={<ShareWrite />} />
-      <Route path="/share_detail/:postId" element={<ShareDetail />} />
-      <Route path="/share_edit/:postId" element={<ShareEdit />} />
       <Route path="/event" element={<Event />} />
 
       <Route path="/mypage" element={<MyPage />} />
@@ -131,7 +107,4 @@ root.render(
   </BrowserRouter>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

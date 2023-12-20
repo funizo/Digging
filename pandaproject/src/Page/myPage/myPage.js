@@ -9,7 +9,7 @@ function MyPage() {
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     if (token) {
       // 토큰이 존재할 경우 디코드하여 사용자 정보 설정
@@ -17,8 +17,6 @@ function MyPage() {
       setUserInfo(decoded);
     }
   }, []);
-
-  
 
   return (
     <div>
@@ -35,14 +33,6 @@ function MyPage() {
             >
               내정보
             </p>
-            {/* <p
-              className={menu === 2 ? "selected" : ""}
-              onClick={() => {
-                setMenu(2);
-              }}
-            >
-              찜 목록
-            </p> */}
             <p
               className={menu === 2 ? "selected" : ""}
               onClick={() => {
@@ -73,9 +63,6 @@ function MenuContent(props) {
       </div>
     );
   }
-  // if (props.menu === 2) {
-  //   return <div>찜목록</div>;
-  // }
   if (props.menu === 2) {
     return (
       <div>

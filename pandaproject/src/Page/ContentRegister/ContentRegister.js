@@ -67,7 +67,7 @@ function ContentRegister(props) {
 
         if (res.ok) {
           console.log("서버 전송 완료");
-          window.history.back();
+          navigate("/");
         } else {
           console.log("서버 전송 실패");
         }

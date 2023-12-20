@@ -18,7 +18,6 @@ const Write = ({ onPostSubmit }) => {
     content: "",
     writer: decoded?.username || "",
     tag: null,
-    // tag: "",
     views: "0",
     date: "",
   });
@@ -35,7 +34,6 @@ const Write = ({ onPostSubmit }) => {
     { value: "사는얘기", label: "사는얘기" },
     { value: "소통해요", label: "소통해요" },
     { value: "찾아줘요", label: "찾아줘요" },
-    // 필요한 만큼 더 많은 태그를 추가하세요
   ];
 
   const handleTitleChange = (e) => {
@@ -153,7 +151,11 @@ const Write = ({ onPostSubmit }) => {
             />
           </label>
           <br />
-          <button type="submit">글쓰기</button>
+          <div className="write-submitButton-box">
+            <button className="write-submitButton" type="submit">
+              글쓰기
+            </button>
+          </div>
         </form>
       </div>
       <Footer />

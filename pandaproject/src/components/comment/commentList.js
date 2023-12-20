@@ -108,10 +108,8 @@ function CommentList(props) {
 
       let replies = findReplies(originalComment._id);
       replies.forEach((reply) => {
-        // depth = +1;
         console.log("reply", reply);
         sortedComments.push(reply);
-        // sortCommentsByPostAndParentId(comments, depth + 1);
       });
     });
 
@@ -119,28 +117,6 @@ function CommentList(props) {
   }
   let sortedComments = sortCommentsByPostAndParentId(formattedComments);
   console.log("sortedComments", sortedComments);
-  // function findReplies(parentId) {
-  //   return comments.filter((comment) => comment.parentId === parentId);
-  // }
-
-  // function sortCommentsByPostAndParentId(comments) {
-  //   let sortedComments = [];
-
-  //   let originalComments = comments.filter((comment) => !comment.parentId);
-  //   originalComments.forEach((originalComment) => {
-  //     sortedComments.push(originalComment);
-
-  //     let replies = findReplies(originalComment.postId);
-  //     replies.forEach((reply) => {
-  //       sortedComments.push(reply);
-  //     });
-  //   });
-
-  //   return sortedComments;
-  // }
-
-  // let sortedComments = sortCommentsByPostAndParentId(formattedComments);
-  // console.log("sortedComments", sortedComments);
 
   return (
     <div>
