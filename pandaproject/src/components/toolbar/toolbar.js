@@ -191,11 +191,15 @@ function ToolBar(props) {
                     {/* 알림 내용을 표시하는 부분 */}
                     <div className="alarm-item">
                       {" "}
-                      <p className="item-title">12월 디깅 친구초대 이벤트 진행중!</p>
+                      <p className="item-title">
+                        12월 디깅 친구초대 이벤트 진행중!
+                      </p>
                     </div>
                     <div className="alarm-item">방탄&디깅 콜라보</div>
-                    <div className="alarm-item">디깅을 이용해주시는 모든분들께
-                                                특별한 연말 혜택을 드립니다!</div>
+                    <div className="alarm-item">
+                      디깅을 이용해주시는 모든분들께 특별한 연말 혜택을
+                      드립니다!
+                    </div>
                   </div>
                 </>
               )}
@@ -223,7 +227,7 @@ function ToolBar(props) {
               HOME
             </a>
             <a href="/board">커뮤니티</a>
-            <a href="/register/fashion">판매하기</a>
+            <a href="/register">판매하기</a>
             <a href="">사기조회</a>
           </div>
           <button className="searchbutton">

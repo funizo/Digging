@@ -25,8 +25,14 @@ function Board() {
       if (!response.ok) {
         throw new Error("서버 응답 에러");
       }
+
       const data = await response.json();
-      setBoardData(data.result);
+      console.log("data", data);
+      let sortedData = data.result.sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+
+      setBoardData(sortedData);
     } catch (error) {
       console.error("데이터를 가져오는 중 에러 발생:", error);
     }
@@ -61,6 +67,7 @@ function Board() {
       if (!response.ok) {
         throw new Error("서버 응답 에러");
       }
+
       const data = await response.json();
       setBoardData(data.result);
     } catch (error) {
@@ -91,6 +98,7 @@ function Board() {
       console.error("Error incrementing views:", error.message);
     }
   };
+
   const handleSearchInputChange = (event) => {
     setSearchTerm(event.target.value);
   };

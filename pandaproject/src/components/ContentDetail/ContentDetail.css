@@ -34,7 +34,7 @@
 .title_deco {
   display: flex;
   width: 100%;
-  /* padding-left: 10px; */
+  word-wrap: break-word;
   flex-direction: column;
   text-align: start;
 }

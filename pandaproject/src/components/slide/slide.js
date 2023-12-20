@@ -17,6 +17,7 @@ function Slide({ interval }) {
           className="carousel"
           interval={interval}
           onSelect={handleSlideChange}
+          slide={false}
         >
           <Carousel.Item>
             <img

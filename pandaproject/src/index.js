@@ -48,11 +48,8 @@ root.render(
       <Route path="/category/goods" element={<Content Category="goods" />} />
       <Route path="/category/ticket" element={<Content Category="ticket" />} />
 
-      <Route
-        path="/register/book"
-        element={<ContentRegister Category="book" />}
-      />
-      <Route
+      <Route path="/register" element={<ContentRegister />} />
+      {/* <Route
         path="/register/fashion"
         element={<ContentRegister Category="fashion" />}
       />
@@ -67,7 +64,7 @@ root.render(
       <Route
         path="/register/goods"
         element={<ContentRegister Category="goods" />}
-      />
+      /> */}
 
       <Route
         path="/category/book/detail/:id"
@@ -122,7 +119,6 @@ root.render(
       <Route path="/share_detail/:postId" element={<ShareDetail />} />
       <Route path="/share_edit/:postId" element={<ShareEdit />} />
       <Route path="/event" element={<Event />} />
-
 
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/board" element={<Board />} />
