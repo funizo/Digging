@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./loginPage.css";
 import { Link, useNavigate } from "react-router-dom";
 import Toolbar from "../../components/toolbar/toolbar";

@@ -22,25 +22,6 @@ function ToolBar(props) {
     }
   }, []);
 
-  // const fetchAlerts = async () => {
-  //   try {
-  //     console.log("fetchAlerts호출");
-  //     console.log(userInfo);
-  //     const response = await fetch(
-  //       `http://localhost:8080/manager/alerts/${userInfo.id}`
-  //     );
-  //     console.log(response);
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       setAlerts(data);
-  //     } else {
-  //       throw new Error("Failed to fetch alerts");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching alerts:", error);
-  //   }
-  // };
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("tokenExpiration");
@@ -102,11 +83,6 @@ function ToolBar(props) {
   const headerAlarmClick = (alarmcategory) => {
     setSelectedAlarmCategory(alarmcategory); //헤더알람 / 혜택 버튼 선택
   };
-
-  // useEffect(() => {
-  //   fetchAlerts();
-  // }, [userInfo]);
-
   return (
     <div className="header-container">
       <header>

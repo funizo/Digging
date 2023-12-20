@@ -8,10 +8,8 @@ import formatTimeAgo from "../formatTime/formatTimeAgo";
 
 function ContentDetail(props) {
   const location = useLocation();
-  // const [wishlistCount, setWishlistCount] = useState(0);
   const contentData = location.state?.contentData || {};
   const navigate = useNavigate();
-  // const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [comment, setComment] = useState("");
   const [commentList, setCommentList] = useState([]);
@@ -45,32 +43,6 @@ function ContentDetail(props) {
     fetchData();
   }, []);
 
-  // const handleAddToWishlist = async () => {
-  //   setIsAddedToWishlist(!isAddedToWishlist);
-
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('title', bookData.title);
-  //     formData.append('content', bookData.content);
-  //     formData.append('image', bookData.image);
-  //     formData.append('price', bookData.price);
-  //     formData.append('id',userInfo.id);
-  //     formData.append('username',userInfo.username);
-  //     const response = await fetch('http://localhost:8080/addToWishlist', {
-  //       method: 'POST',
-  //       body: formData,
-  //     });
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       setWishlistCount(data.wishlistCount);
-  //     } else {
-  //       console.error('찜하기 요청 실패');
-  //     }
-  //   } catch (error) {
-  //     console.error('네트워크 오류', error);
-  //   }
-  // };
-
   const handleDelete = async () => {
     try {
       const response = await fetch(
@@ -91,15 +63,6 @@ function ContentDetail(props) {
       console.log(error);
     }
   };
-  // const handleBuy = () => {
-  //     navigate("/login");
-  // };
-
-  // const handleAuction = () => {
-  //   if (userInfo === null) {
-  //     navigate("/login");
-  //   }
-  // };
 
   const handleEdit = () => {
     navigate(`/edit/${props.Category}/${contentData.id}`, {
@@ -130,8 +93,6 @@ function ContentDetail(props) {
       if (response.ok) {
         console.log("서버 전송 완료");
         window.location.reload();
-        // const data = await response.json();
-        // setCommentList(data);
       } else {
         console.log("서버 전송 실패");
       }
@@ -190,16 +151,6 @@ function ContentDetail(props) {
         </div>
 
         <div className="button_container">
-          {/* <button className="button_buy" onClick={handleBuy}>
-          즉시구매
-        </button>
-        <button className="button_auction" onClick={handleAuction}>
-          경매입찰
-        </button>
-        <button className="button_wishlist">
-          {isAddedToWishlist ? "찜" : "관심 상품으로 찜하기"}
-        </button> */}
-
           <button
             className="button_wishlist"
             onClick={handleEdit}

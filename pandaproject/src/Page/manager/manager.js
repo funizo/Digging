@@ -23,7 +23,6 @@ function Manager() {
       }
     }
 
-    // `fetchUserInfo()` 함수를 먼저 정의합니다.
     fetchUserInfo();
   }, []);
 
