@@ -83,6 +83,16 @@ function ToolBar(props) {
   const headerAlarmClick = (alarmcategory) => {
     setSelectedAlarmCategory(alarmcategory); //헤더알람 / 혜택 버튼 선택
   };
+
+  const handleLinkClick = (e) => {
+    if (userInfo === null) {
+      alert("로그인이 필요합니다.")
+      e.preventDefault();
+    } else {
+      navigate("/register")
+    }
+  }
+
   return (
     <div className="header-container">
       <header>
@@ -203,7 +213,7 @@ function ToolBar(props) {
               HOME
             </a>
             <a href="/board">커뮤니티</a>
-            <a href="/register">판매하기</a>
+            <a href="/register" onClick={handleLinkClick}>판매하기</a>
             <a href="">사기조회</a>
           </div>
           <button className="searchbutton">
