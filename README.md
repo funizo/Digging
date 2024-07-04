@@ -16,7 +16,7 @@
 - 프로젝트 지속 기간 : 2023.11.13 ~ 2023.12.22
 - 개발 엔진 및 언어 : React & Node.js & Python
 - 팀원 : 김민석, 권민재, 김세준, 김연수, 이아인, 정재우
-- 주소 : https://web-diggingfront-wr4oe2alqrvinum.sel5.cloudtype.app/
+
 
 ## 프로젝트 설명
 
